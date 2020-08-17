@@ -11,10 +11,187 @@
 <template>
  
       
+    <div title="Multiple Lists">
+    <vx-card  code-toggler>
+        
+
+        <!-- List 1 -->
+        <div class="vx-row">
+            <div class="vx-col w-full md:w-1/3">
+                <vs-list>
+                    <vs-list-header title="La List Des Attributes" color="primary"></vs-list-header>
+                    <draggable :list="list1" group="people" class="p-2 cursor-move">
+                        <vs-list-item v-for="(listItem, index) in list1" :key="index" :title="listItem.attributeName" ></vs-list-item>
+                    </draggable>
+                </vs-list>
+            </div>
+            <div class="vx-col w-full md:w-1/3">
+                <vs-list>
+                    <vs-list-header title="Les Attributes Choisi" color="primary"></vs-list-header>
+                    <draggable :list="list2" group="people" class="p-2 cursor-move">
+                    <vs-list-item v-for="(listItem, index) in list2" :key="index" :title="listItem.attributeName" >
+                      <vs-dropdown class="cursor-pointer flex" vs-custom-content>
+
+                            <!--<feather-icon icon="InfoIcon" color="primary" svgClasses="h-7 w-7" @click.prevent></feather-icon>-->
+                             <vs-button radius color="primary" type="flat" iconPack="feather" icon="icon-code" @click.prevent></vs-button> 
+
+                            <vs-dropdown-menu style="z-index: 200001">
+                                    <vs-dropdown-item v-for="(tag, index) in operationsets" :key="index">
+                                        <vs-checkbox @click.stop  :vs-value="tag" v-model="listItem.operation">{{ tag }}</vs-checkbox>
+                                    </vs-dropdown-item>
+                            </vs-dropdown-menu>
+                        </vs-dropdown>
+                    </vs-list-item>
+                    </draggable>
+                </vs-list>
+            </div>
+            <div class="vx-col w-full md:w-1/3">
+                <vs-list>
+                    <vs-list-header title="La List Des Dimentions" color="primary"></vs-list-header>
+                    
+                     
+
+  <vs-collapse :type="type" accordion>
+
+    <vs-collapse-item  v-show="ck_cause">
+      <div slot="header">
+        Dim-cause
+      </div>
+      <v-select label="description" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+
+    <vs-collapse-item v-show="ck_objectif">
+      <div slot="header" >
+        Dim-objectif
+      </div><v-select label="code_objectif" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+
+    <vs-collapse-item v-show="ck_organisme">
+      <div slot="header">
+        Dim-organisme
+      </div>
+     
     
-    <vx-card title="Multiple Lists" code-toggler>
-        <p>Drag and drop items of more than one list. Add same <code>group</code> to <code>group</code> prop</p>
-<vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
+  <v-select :filter="fuseSearch" :options="organismes" v-model="contraintes.organisme" :getOptionLabel="option => option.type_organisme">
+    <template  #option="{ nom_pole,nom_unite,nom_centrale,num_grpe, type_organisme }">
+      <cite>{{ type_organisme}}</cite>
+     <p v-if="type_organisme==='Pole'"> {{ nom_pole  }}</p>
+     <p v-if="type_organisme==='Unite'"> {{ nom_unite  }}</p>
+     <p v-if="type_organisme==='Centrale'"> {{ nom_centrale  }}</p>
+     <p v-if="type_organisme==='Groupe'"> {{ nom_centrale+ "-"+num_grpe }}</p>
+      <br />
+      
+    </template>
+    
+  </v-select>
+
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+
+    <vs-collapse-item v-show="ck_regime_fct">
+      <div slot="header" >
+        Dim-regime-fct
+      </div>
+       <v-select label="description" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+    <vs-collapse-item v-show="ck_reseau">
+      <div slot="header">
+        Dim-reseau
+      </div>
+       <v-select label="libelle" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+    <vs-collapse-item v-show="ck_temps">
+      <div slot="header" >
+        Dim-temps
+      </div>
+      
+ <flat-pickr :config="configFromdateTimePicker" v-model="contraintes.tempsDebut" placeholder="From Date" @on-change="onFromChange" />
+ <br><br>
+  <flat-pickr :config="configTodateTimePicker" v-model="contraintes.tempsFin" placeholder="To Date" @on-change="onToChange" />
+  <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+    <vs-collapse-item v-show="ck_type_centrale">
+      <div slot="header">
+        Dim-type-centrale
+      </div>
+     <v-select label="description" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+    <vs-collapse-item v-show="ck_type_evenement">
+      <div slot="header">
+        Dim-type-evenement
+      </div>
+      <v-select label="description" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+    <vs-collapse-item v-show="ck_type_objectif">
+      <div slot="header">
+        Dim-type-objectif
+      </div>
+      <v-select label="libelle_objectif" :options="type_objectif" v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+    <vs-collapse-item v-show="ck_saisie_objectif">
+      <div slot="header">
+        Dim-saisie-objectif
+      </div>
+     <v-select label="libelle" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
+    </vs-collapse-item>
+    <vs-collapse-item class="bg-primary text-white" >
+      <div slot="header" >
+        Grouping By
+      </div>
+      <ul class="demo-alignment">
+      <li>
+        <vs-radio color="warning" v-model="radios2" vs-value="ROLLUP">Rollup</vs-radio>
+      </li>
+      <li>
+        <vs-radio color="success" v-model="radios2" vs-value="CUBE">Cube</vs-radio>
+      </li>
+      <li>
+        <vs-radio color="danger" v-model="radios2" vs-value="GROUPING SETS">Sets</vs-radio>
+      </li>
+      
+      </ul>
+      <div v-for="(set, index) in sets">
+    <v-select multiple :closeOnSelect="false" class="bg-white" v-model="set.value" :key="index" :options="groupeBy" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
+   
+  </div>
+  <br><br> 
+  <vs-row vs-type="flex" vs-justify="flex-end">
+  <vs-button class="bg-success text-white"  @click="addFind">
+    +
+  </vs-button>
+  </vs-row>
+   <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+   <br><br><br><br><br>
+    </vs-collapse-item>
+  </vs-collapse>
+
+
+
+
+        
+                </vs-list>
+            </div>
+
+        </div>
+
+        
+
+        
+        <vs-row vs-type="flex" vs-justify="flex-end">
+        <vs-button color="success" v-on:click="greet" type="filled">Done</vs-button>
+        </vs-row>
+         </vx-card>
+        <!--le tableau des résultas-->
+         <vx-card>
+        <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
         <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
         <v-select v-model="selectedFormat" :options="formats" class="my-4" />
         <div class="flex">
@@ -42,186 +219,8 @@
         
       </vs-table>
       </div>
-        <!-- List 1 -->
-        <div class="vx-row">
-            <div class="vx-col w-full md:w-1/3">
-                <vs-list>
-                    <vs-list-header title="People Group 1" color="primary"></vs-list-header>
-                    <draggable :list="list1" group="people" class="p-2 cursor-move">
-                        <vs-list-item v-for="(listItem, index) in list1" :key="index" :title="listItem.attributeName" ></vs-list-item>
-                    </draggable>
-                </vs-list>
-            </div>
-            <div class="vx-col w-full md:w-1/3">
-                <vs-list>
-                    <vs-list-header title="People Group 2" color="primary"></vs-list-header>
-                    <draggable :list="list2" group="people" class="p-2 cursor-move">
-                    <vs-list-item v-for="(listItem, index) in list2" :key="index" :title="listItem.attributeName" >
-                      <vs-dropdown class="cursor-pointer flex" vs-custom-content>
-
-                            <feather-icon icon="TagIcon" svgClasses="h-5 w-5" @click.prevent></feather-icon>
-                            <!-- <vs-button radius color="success" type="flat" iconPack="feather" icon="icon-tag" @click.prevent></vs-button> -->
-
-                            <vs-dropdown-menu style="z-index: 200001">
-                                    <vs-dropdown-item v-for="(tag, index) in operationsets" :key="index">
-                                        <vs-checkbox @click.stop  :vs-value="tag" v-model="listItem.operation">{{ tag }}</vs-checkbox>
-                                    </vs-dropdown-item>
-                            </vs-dropdown-menu>
-                        </vs-dropdown>
-                    </vs-list-item>
-                    </draggable>
-                </vs-list>
-            </div>
-            <div class="vx-col w-full md:w-1/3">
-                <vs-list>
-                    <vs-list-header title="People Group 3" color="primary"></vs-list-header>
-                    
-                     
-
-  <vs-collapse  >
-
-    <vs-collapse-item  v-if="ck_cause">
-      <div slot="header">
-        Dim-cause
-      </div>
-      <v-select label="description" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-
-    <vs-collapse-item v-if="ck_objectif">
-      <div slot="header" >
-        Dim-objectif
-      </div><v-select label="code_objectif" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-
-    <vs-collapse-item v-if="ck_organisme">
-      <div slot="header">
-        Dim-organisme
-      </div>
-     
-    
-  <v-select :filter="fuseSearch" :options="organismes" v-model="contraintes.organisme" :getOptionLabel="option => option.type_organisme">
-    <template  #option="{ nom_pole,nom_unite,nom_centrale,num_grpe, type_organisme }">
-      <cite>{{ type_organisme}}</cite>
-     <p v-if="type_organisme==='Pole'"> {{ nom_pole  }}</p>
-     <p v-if="type_organisme==='Unite'"> {{ nom_unite  }}</p>
-     <p v-if="type_organisme==='Centrale'"> {{ nom_centrale  }}</p>
-     <p v-if="type_organisme==='Groupe'"> {{ nom_centrale+ "-"+num_grpe }}</p>
-      <br />
-      
-    </template>
-    
-  </v-select>
-
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-
-    <vs-collapse-item v-if="ck_regime_fct">
-      <div slot="header" >
-        Dim-regime-fct
-      </div>
-       <v-select label="description" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-    <vs-collapse-item v-if="ck_reseau">
-      <div slot="header">
-        Dim-reseau
-      </div>
-       <v-select label="libelle" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-    <vs-collapse-item v-if="ck_temps">
-      <div slot="header" >
-        Dim-temps
-      </div>
- <flat-pickr :config="configFromdateTimePicker" v-model="contraintes.tempsDebut" placeholder="From Date" @on-change="onFromChange" />
-  <flat-pickr :config="configTodateTimePicker" v-model="contraintes.tempsFin" placeholder="To Date" @on-change="onToChange" />
-  <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-    <vs-collapse-item v-if="ck_type_centrale">
-      <div slot="header">
-        Dim-type-centrale
-      </div>
-     <v-select label="description" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-    <vs-collapse-item v-if="ck_type_evenement">
-      <div slot="header">
-        Dim-type-evenement
-      </div>
-      <v-select label="description" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-    <vs-collapse-item v-if="ck_type_objectif">
-      <div slot="header">
-        Dim-type-objectif
-      </div>
-      <v-select label="libelle_objectif" :options="type_objectif" v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-    <vs-collapse-item v-if="ck_saisie_objectif">
-      <div slot="header">
-        Dim-saisie-objectif
-      </div>
-     <v-select label="libelle" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-      <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-    <vs-collapse-item >
-      <div slot="header">
-        Grouping By
-      </div>
-      <ul class="demo-alignment">
-      <li>
-        <vs-radio v-model="radios2" vs-value="ROLLUP">Rollup</vs-radio>
-      </li>
-      <li>
-        <vs-radio color="success" v-model="radios2" vs-value="CUBE">Cube</vs-radio>
-      </li>
-      <li>
-        <vs-radio color="danger" v-model="radios2" vs-value="GROUPING SETS">Sets</vs-radio>
-      </li>
-      
-      </ul>
-      <div v-for="(set, index) in sets">
-    <v-select multiple :closeOnSelect="false" v-model="set.value" :key="index" :options="groupeBy" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
-   
-  </div>
-  <button @click="addFind">
-    New Find
-  </button>
-   <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    </vs-collapse-item>
-  </vs-collapse>
-
-
-
-
-        
-                </vs-list>
-            </div>
-
-        </div>
-
-        <!-- List 2 -->
-        <!--<div class="vx-row">
-            <div class="vx-col w-full md:w-1/2">
-                <prism language="js" class="rounded-lg">
-People Group 1: {{ list1 }}
-                </prism>
-            </div>
-            <div class="vx-col w-full md:w-1/2">
-                <prism language="js" class="rounded-lg">
-People Group 2: {{ list2 }}
-                </prism>
-            </div>
-        </div>-->
-
-        
-        <vs-row vs-type="flex" vs-justify="flex-end">
-        <vs-button color="success" v-on:click="greet" type="filled">Done</vs-button>
-        </vs-row>
     </vx-card>
+    </div>
     
   
 </template>
@@ -275,7 +274,7 @@ export default {
             configTodateTimePicker: {
               minDate: null
             },
-          type: 'border',
+          type: 'margin',
           
           contraintes:{
             cause:null,
@@ -33461,15 +33460,31 @@ type_centrale:[
       requet=requet.substring(0, requet.length -1)+" ) ;";
       alert(requet);
        console.log(requet);
+       this.$vs.loading();
              this.$http.get('http://localhost:3000/'+requet)
       .then((result) => {
-        
+        this.$vs.loading.close();
+            
+        this.$vs.notify({
+          
+        title: ' Requet envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      })
             this.header=Object.getOwnPropertyNames(result.data[0]);
         
         
       this.tableData = result.data;
+      }).catch(error => {
+        this.$vs.loading.close();
+         this.$vs.notify({
+        title: ' Requet erroné  ',
+        text: error,
+        color: 'danger'
+      })
       });
-            
+      
+      
             
             
             
