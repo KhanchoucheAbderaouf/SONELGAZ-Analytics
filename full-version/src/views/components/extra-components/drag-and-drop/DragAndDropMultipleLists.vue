@@ -12,7 +12,7 @@
  
       
     <div title="Multiple Lists">
-    <vx-card v-show="showRequestCreater"  code-toggler>
+    <vx-card  code-toggler>
         
 
         <!-- List 1 -->
@@ -165,7 +165,7 @@
   <br><br> 
   <vs-row vs-type="flex" vs-justify="flex-end">
   <vs-button class="bg-success text-white"  @click="addFind">
-    add
+    +
   </vs-button>
   </vs-row>
    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -190,8 +190,7 @@
         </vs-row>
          </vx-card>
         <!--le tableau des résultas-->
-         <vx-card v-show="showTable">
-           <!--prompt Excel Begin -->
+         <vx-card>
         <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
         <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
         <v-select v-model="selectedFormat" :options="formats" class="my-4" />
@@ -200,28 +199,12 @@
           <vs-switch v-model="cellAutoWidth">Cell Auto Width</vs-switch>
         </div>
     </vs-prompt>
-    <!--prompt Excel End -->
 
-    <!--prompt Graphe Begin -->
-     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Export" @close="clearFields" :active.sync="activePrompt2">
-        <v-select v-model="attributeGraphe" :options="operationGraphe"  class="my-4" />
-        <v-select v-model="DimGraphe" :options="setsGraphe" label="value" class="my-4" />
-        <v-select v-model="typeGraphe" :options="typesGraphes" class="my-4" />
-        
-    </vs-prompt>
-    <!--prompt Graphe End -->
-
-    <div v-show="showTable" class="export-table">
+    <div class="export-table">
       <vs-table :data="tableData" v-model="selectedUsers" multiple search>
 
-        <template slot="header" >
-          <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
-        </template>
         <template slot="header">
-          <vs-button style="margin-right:30px;" @click="activePrompt2=true">Create Charts</vs-button>
-        </template>
-        <template slot="header">
-          <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Creation</vs-button>
+          <vs-button @click="activePrompt=true">Export Selected</vs-button>
         </template>
   <template slot="thead">
           <vs-th :sort-key="heading" v-for="heading in header" :key="heading">{{ heading }}</vs-th>
@@ -237,22 +220,6 @@
       </vs-table>
       </div>
     </vx-card>
-      <vx-card v-if="showGraphe" >
-        
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe=false" class="bg-danger" >Back</vs-button>
-        
-                    <vue-apex-charts :type="typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
-
-                   
-                </vx-card>
-                <vx-card v-if="showGraphe2" >
-        
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe2=false" class="bg-danger" >Back</vs-button>
-        
-                    <vue-apex-charts type="pie" height="500" :options="pieChart.chartOptions" :series="pieChart.series"></vue-apex-charts>
-                    
-                   
-                </vx-card>
     </div>
     
   
@@ -264,12 +231,10 @@
 
   
 <script>
-import VueApexCharts from 'vue-apexcharts'
 import Fuse from "fuse.js"
 import draggable from 'vuedraggable'
 import Prism from 'vue-prism-component'
 import vSelect from 'vue-select'
-
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 
@@ -277,64 +242,12 @@ export default {
    
     data() {
         return {
- //------------------------variable du graphe-----------------------------------------------
-          attributeGraphe:'',
-          setsGraphe:[],
-          DimGraphe:'',
-          typeGraphe:'area',
-          operationGraphe:[],
-          typesGraphes:["area","bar","pie"],
-         showGraphe:false,
-         showGraphe2:false,
-         showTable:false,
-         showRequestCreater:true,
-
- lineAreaChartSpline: {
-        series: [{
-                name: 'series1',
-                data:[],
-            }],
-        chartOptions: {
-            dataLabels: {enabled: false},
-            labels:[],
-            stroke: {
-                curve: 'smooth'
-            },
-            colors: ['#7367F0', '#28C76F', '#EA5455', '#FF9F43', '#1E1E1E'],
-           // xaxis: {categories: []},
-      
-
-            }
-        },
-         pieChart: {
-        series:[],
-        chartOptions: {
-            labels: [],
-            colors: ['#7367F0', '#28C76F', '#EA5455', '#FF9F43', '#1E1E1E'],
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }]
-        }
-    },
-    
-
-
-
           fileName: "",
       formats:["xlsx", "csv", "txt"] ,
       cellAutoWidth: true,
       selectedFormat: "xlsx",
       selectedUsers: [],
       activePrompt: false,
-      activePrompt2: false,
         header : [],
       tableData:[],
           groupeBy:["description_cause","code_objectif","description_regime","nomreseau","description_type_centrale","code_type_objectif","code_typesaisie",
@@ -33369,8 +33282,7 @@ type_centrale:[
         draggable,
         Prism,
         vSelect,
-        flatPickr,
-        VueApexCharts
+        flatPickr
     },
     watch: {
     
@@ -33429,24 +33341,21 @@ type_centrale:[
       greet: function () {
       var requet="select ";
     
-    this.setsGraphe=[];
+
   this.sets.forEach(set => {
         if (set.value.length > 0){
-          this.setsGraphe.push(set);
         set.value.forEach(element=>{
-        
+
           requet=requet+"case grouping("+element+" ) when 1 then 'ALL " +element+"' else "+element+" end ,";
         });}
         
       });
 
-      this.operationGraphe=[];
+
       var tables=[];
       this.list2.forEach(element => {
         element.operation.forEach(op => {
-        requet=requet+""+op+"("+element.attributeName+") AS " +op+"_"+element.attributeName+" ,";
-        var opera=op+"_"+element.attributeName;
-        this.operationGraphe.push(opera);
+        requet=requet+""+op+"("+element.attributeName+") ,"
         });
       });
       requet=requet.substring(0, requet.length - 1)+"from ";
@@ -33566,8 +33475,6 @@ type_centrale:[
         
         
       this.tableData = result.data;
-      this.showTable=true;
-      this.showRequestCreater=false;
       }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
@@ -33647,64 +33554,6 @@ type_centrale:[
       },
       onToChange(selectedDates, dateStr, instance) {
         this.$set(this.configFromdateTimePicker, 'maxDate', dateStr);
-      },
-      createGraphe:function(){
-        var value=false;
-       this.lineAreaChartSpline.chartOptions.labels=[];
-       this.lineAreaChartSpline.series[0].data=[];
-       this.pieChart.chartOptions.labels=[];
-       this.pieChart.series=[];
-      // alert( this.attributeGraphe+";"+this.DimGraphe+";"+this.typeGraphe);
-        //console.log(this.attributeGraphe);
-        var contrlerIndex=this.header.indexOf(this.DimGraphe.value[0]);
-        var contrlerGraphe=this.header[contrlerIndex+1];
-         
-        this.operationGraphe.forEach(op => {
-       if(contrlerGraphe===op.toLowerCase()){
-              value=true;
-              
-            }
-        });
-      
-      
-          if(value){
-            this.tableData.forEach(element2=>{
-              if(element2[this.DimGraphe.value[0]].includes("ALL")===false){ 
-              if(this.typeGraphe=="pie"){
-          this.pieChart.chartOptions.labels.push(element2[this.DimGraphe.value[0]])  ;
-          
-          this.pieChart.series.push(element2[contrlerGraphe]); 
-              }else{
-           this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe.value[0]])  ;   
-          this.lineAreaChartSpline.series[0].data.push(element2[contrlerGraphe]); } }  
-           });
-          }
-          else{
-               this.tableData.forEach(element3=>{
-            if(element3[this.DimGraphe.value[0]].includes("ALL")===false){   
-            if(element3[contrlerGraphe].includes("ALL")){
-              if(this.typeGraphe=="pie"){
-          this.pieChart.chartOptions.labels.push(element3[this.DimGraphe.value[0]]);   
-          this.pieChart.series.push(element3[this.attributeGraphe.toLowerCase()]);
-          
-              }else{
-
-          this.lineAreaChartSpline.chartOptions.labels.push(element3[this.DimGraphe.value[0]]);   
-          this.lineAreaChartSpline.series[0].data.push(element3[this.attributeGraphe.toLowerCase()]);} } }  
-           });
-
-          }
-        if(this.typeGraphe=="pie"){
-
-        
-        this.showGraphe2=true;}else{
-          this.showGraphe=true;
-        }
-
-        this.showTable=false;
-
-
-        
       }
     
   }
