@@ -212,7 +212,7 @@
     <!--prompt Graphe End -->
 
     <div v-show="showTable" class="export-table">
-      <vs-table :data="tableData" v-model="selectedUsers" multiple search>
+      <vs-table :data="tableData" v-model="selectedUsers" pagination max-items="10" multiple search>
 
         <template slot="header" >
           <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
@@ -224,7 +224,7 @@
           <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Creation</vs-button>
         </template>
   <template slot="thead">
-          <vs-th :sort-key="heading" v-for="heading in header" :key="heading">{{ heading }}</vs-th>
+          <vs-th  v-for="heading in header" :key="heading" :sort-key="heading">{{ heading }}</vs-th>
   </template>
           <template slot-scope="{data}">
           <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
