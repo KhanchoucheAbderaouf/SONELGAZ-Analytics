@@ -9,11 +9,11 @@
 
 // MAIN COLORS - VUESAX THEME COLORS
 let colors = {
-	primary : '#7367F0',
-	success : '#28C76F',
-	danger  : '#EA5455',
-	warning : '#FF9F43',
-	dark    : '#1E1E1E',
+  primary: '#5b3cc4',
+  success: 'rgb(23, 201, 100)',
+  danger: 'rgb(242, 19, 93)',
+  warning: 'rgb(255, 130, 0)',
+  dark: 'rgb(36, 33, 69)'
 }
 
 // CONFIGS

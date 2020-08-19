@@ -11,42 +11,15 @@
 <template>
  
       
-    
-    <vx-card title="Multiple Lists" code-toggler>
-        <p>Drag and drop items of more than one list. Add same <code>group</code> to <code>group</code> prop</p>
-<vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
-        <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
-        <v-select v-model="selectedFormat" :options="formats" class="my-4" />
-        <div class="flex">
-          <span class="mr-4">Cell Auto Width:</span>
-          <vs-switch v-model="cellAutoWidth">Cell Auto Width</vs-switch>
-        </div>
-    </vs-prompt>
-
-    <div class="export-table">
-      <vs-table :data="tableData" v-model="selectedUsers" multiple search>
-
-        <template slot="header">
-          <vs-button @click="activePrompt=true">Export Selected</vs-button>
-        </template>
-  <template slot="thead">
-          <vs-th :sort-key="heading" v-for="heading in header" :key="heading">{{ heading }}</vs-th>
-  </template>
-          <template slot-scope="{data}">
-          <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-            <vs-td :data="col" v-for="(col, indexcol) in data[indextr]" :key="indexcol + col">
-              {{ col }}
-            </vs-td>
-          </vs-tr>
-          </template>
+    <div title="Multiple Lists">
+    <vx-card v-show="showRequestCreater"  code-toggler>
         
-      </vs-table>
-      </div>
+
         <!-- List 1 -->
         <div class="vx-row">
             <div class="vx-col w-full md:w-1/3">
                 <vs-list>
-                    <vs-list-header title="People Group 1" color="primary"></vs-list-header>
+                    <vs-list-header title="La List Des Attributes" color="primary"></vs-list-header>
                     <draggable :list="list1" group="people" class="p-2 cursor-move">
                         <vs-list-item v-for="(listItem, index) in list1" :key="index" :title="listItem.attributeName" ></vs-list-item>
                     </draggable>
@@ -54,13 +27,13 @@
             </div>
             <div class="vx-col w-full md:w-1/3">
                 <vs-list>
-                    <vs-list-header title="People Group 2" color="primary"></vs-list-header>
+                    <vs-list-header title="Les Attributes Choisi" color="primary"></vs-list-header>
                     <draggable :list="list2" group="people" class="p-2 cursor-move">
                     <vs-list-item v-for="(listItem, index) in list2" :key="index" :title="listItem.attributeName" >
                       <vs-dropdown class="cursor-pointer flex" vs-custom-content>
 
-                            <feather-icon icon="TagIcon" svgClasses="h-5 w-5" @click.prevent></feather-icon>
-                            <!-- <vs-button radius color="success" type="flat" iconPack="feather" icon="icon-tag" @click.prevent></vs-button> -->
+                            <!--<feather-icon icon="InfoIcon" color="primary" svgClasses="h-7 w-7" @click.prevent></feather-icon>-->
+                             <vs-button radius color="primary" type="flat" iconPack="feather" icon="icon-code" @click.prevent></vs-button> 
 
                             <vs-dropdown-menu style="z-index: 200001">
                                     <vs-dropdown-item v-for="(tag, index) in operationsets" :key="index">
@@ -74,13 +47,13 @@
             </div>
             <div class="vx-col w-full md:w-1/3">
                 <vs-list>
-                    <vs-list-header title="People Group 3" color="primary"></vs-list-header>
+                    <vs-list-header title="La List Des Dimentions" color="primary"></vs-list-header>
                     
                      
 
-  <vs-collapse  >
+  <vs-collapse :type="type" accordion>
 
-    <vs-collapse-item  v-if="ck_cause">
+    <vs-collapse-item  v-show="ck_cause">
       <div slot="header">
         Dim-cause
       </div>
@@ -88,14 +61,14 @@
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
-    <vs-collapse-item v-if="ck_objectif">
+    <vs-collapse-item v-show="ck_objectif">
       <div slot="header" >
         Dim-objectif
       </div><v-select label="code_objectif" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
-    <vs-collapse-item v-if="ck_organisme">
+    <vs-collapse-item v-show="ck_organisme">
       <div slot="header">
         Dim-organisme
       </div>
@@ -117,63 +90,65 @@
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
-    <vs-collapse-item v-if="ck_regime_fct">
+    <vs-collapse-item v-show="ck_regime_fct">
       <div slot="header" >
         Dim-regime-fct
       </div>
        <v-select label="description" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
-    <vs-collapse-item v-if="ck_reseau">
+    <vs-collapse-item v-show="ck_reseau">
       <div slot="header">
         Dim-reseau
       </div>
        <v-select label="libelle" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
-    <vs-collapse-item v-if="ck_temps">
+    <vs-collapse-item v-show="ck_temps">
       <div slot="header" >
         Dim-temps
       </div>
+      
  <flat-pickr :config="configFromdateTimePicker" v-model="contraintes.tempsDebut" placeholder="From Date" @on-change="onFromChange" />
+ <br><br>
   <flat-pickr :config="configTodateTimePicker" v-model="contraintes.tempsFin" placeholder="To Date" @on-change="onToChange" />
   <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
-    <vs-collapse-item v-if="ck_type_centrale">
+    <vs-collapse-item v-show="ck_type_centrale">
       <div slot="header">
         Dim-type-centrale
       </div>
      <v-select label="description" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
-    <vs-collapse-item v-if="ck_type_evenement">
+    <vs-collapse-item v-show="ck_type_evenement">
       <div slot="header">
         Dim-type-evenement
       </div>
       <v-select label="description" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
-    <vs-collapse-item v-if="ck_type_objectif">
+    <vs-collapse-item v-show="ck_type_objectif">
       <div slot="header">
         Dim-type-objectif
       </div>
       <v-select label="libelle_objectif" :options="type_objectif" v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
-    <vs-collapse-item v-if="ck_saisie_objectif">
+    <vs-collapse-item v-show="ck_saisie_objectif">
       <div slot="header">
         Dim-saisie-objectif
       </div>
      <v-select label="libelle" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
-    <vs-collapse-item >
-      <div slot="header">
+    <vs-collapse-item class="bg-primary text-white" >
+      <div slot="header" >
         Grouping By
       </div>
       <ul class="demo-alignment">
       <li>
-        <vs-radio v-model="radios2" vs-value="ROLLUP">Rollup</vs-radio>
+        <vs-radio color="warning" v-model="radios2" vs-value="ROLLUP">Rollup</vs-radio>
       </li>
       <li>
         <vs-radio color="success" v-model="radios2" vs-value="CUBE">Cube</vs-radio>
@@ -184,13 +159,17 @@
       
       </ul>
       <div v-for="(set, index) in sets">
-    <v-select multiple :closeOnSelect="false" v-model="set.value" :key="index" :options="groupeBy" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
+    <v-select multiple :closeOnSelect="false" class="bg-white" v-model="set.value" :key="index" :options="groupeBy" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
    
   </div>
-  <button @click="addFind">
-    New Find
-  </button>
-   <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br> 
+  <vs-row vs-type="flex" vs-justify="flex-end">
+  <vs-button class="bg-success text-white"  @click="addFind">
+    add
+  </vs-button>
+  </vs-row>
+   <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+   <br><br><br><br><br>
     </vs-collapse-item>
   </vs-collapse>
 
@@ -203,25 +182,78 @@
 
         </div>
 
-        <!-- List 2 -->
-        <!--<div class="vx-row">
-            <div class="vx-col w-full md:w-1/2">
-                <prism language="js" class="rounded-lg">
-People Group 1: {{ list1 }}
-                </prism>
-            </div>
-            <div class="vx-col w-full md:w-1/2">
-                <prism language="js" class="rounded-lg">
-People Group 2: {{ list2 }}
-                </prism>
-            </div>
-        </div>-->
+        
 
         
         <vs-row vs-type="flex" vs-justify="flex-end">
         <vs-button color="success" v-on:click="greet" type="filled">Done</vs-button>
         </vs-row>
+         </vx-card>
+        <!--le tableau des résultas-->
+         <vx-card v-show="showTable">
+           <!--prompt Excel Begin -->
+        <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
+        <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
+        <v-select v-model="selectedFormat" :options="formats" class="my-4" />
+        <div class="flex">
+          <span class="mr-4">Cell Auto Width:</span>
+          <vs-switch v-model="cellAutoWidth">Cell Auto Width</vs-switch>
+        </div>
+    </vs-prompt>
+    <!--prompt Excel End -->
+
+    <!--prompt Graphe Begin -->
+     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Export" @close="clearFields" :active.sync="activePrompt2">
+        <v-select v-model="attributeGraphe" :options="operationGraphe"  class="my-4" />
+        <v-select v-model="DimGraphe" :options="setsGraphe" label="value" class="my-4" />
+        <v-select v-model="typeGraphe" :options="typesGraphes" class="my-4" />
+        
+    </vs-prompt>
+    <!--prompt Graphe End -->
+
+    <div v-show="showTable" class="export-table">
+      <vs-table :data="tableData" v-model="selectedUsers" multiple search>
+
+        <template slot="header" >
+          <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
+        </template>
+        <template slot="header">
+          <vs-button style="margin-right:30px;" @click="activePrompt2=true">Create Charts</vs-button>
+        </template>
+        <template slot="header">
+          <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Creation</vs-button>
+        </template>
+  <template slot="thead">
+          <vs-th :sort-key="heading" v-for="heading in header" :key="heading">{{ heading }}</vs-th>
+  </template>
+          <template slot-scope="{data}">
+          <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+            <vs-td :data="col" v-for="(col, indexcol) in data[indextr]" :key="indexcol + col">
+              {{ col }}
+            </vs-td>
+          </vs-tr>
+          </template>
+        
+      </vs-table>
+      </div>
     </vx-card>
+      <vx-card v-if="showGraphe" >
+        
+          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe=false" class="bg-danger" >Back</vs-button>
+        
+                    <vue-apex-charts :type="typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
+
+                   
+                </vx-card>
+                <vx-card v-if="showGraphe2" >
+        
+          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe2=false" class="bg-danger" >Back</vs-button>
+        
+                    <vue-apex-charts type="pie" height="500" :options="pieChart.chartOptions" :series="pieChart.series"></vue-apex-charts>
+                    
+                   
+                </vx-card>
+    </div>
     
   
 </template>
@@ -232,10 +264,12 @@ People Group 2: {{ list2 }}
 
   
 <script>
+import VueApexCharts from 'vue-apexcharts'
 import Fuse from "fuse.js"
 import draggable from 'vuedraggable'
 import Prism from 'vue-prism-component'
 import vSelect from 'vue-select'
+
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 
@@ -243,12 +277,64 @@ export default {
    
     data() {
         return {
+ //------------------------variable du graphe-----------------------------------------------
+          attributeGraphe:'',
+          setsGraphe:[],
+          DimGraphe:'',
+          typeGraphe:'area',
+          operationGraphe:[],
+          typesGraphes:["area","bar","pie"],
+         showGraphe:false,
+         showGraphe2:false,
+         showTable:false,
+         showRequestCreater:true,
+
+ lineAreaChartSpline: {
+        series: [{
+                name: 'series1',
+                data:[],
+            }],
+        chartOptions: {
+            dataLabels: {enabled: false},
+            labels:[],
+            stroke: {
+                curve: 'smooth'
+            },
+            colors: ['#7367F0', '#28C76F', '#EA5455', '#FF9F43', '#1E1E1E'],
+           // xaxis: {categories: []},
+      
+
+            }
+        },
+         pieChart: {
+        series:[],
+        chartOptions: {
+            labels: [],
+            colors: ['#7367F0', '#28C76F', '#EA5455', '#FF9F43', '#1E1E1E'],
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        }
+    },
+    
+
+
+
           fileName: "",
       formats:["xlsx", "csv", "txt"] ,
       cellAutoWidth: true,
       selectedFormat: "xlsx",
       selectedUsers: [],
       activePrompt: false,
+      activePrompt2: false,
         header : [],
       tableData:[],
           groupeBy:["description_cause","code_objectif","description_regime","nomreseau","description_type_centrale","code_type_objectif","code_typesaisie",
@@ -275,7 +361,7 @@ export default {
             configTodateTimePicker: {
               minDate: null
             },
-          type: 'border',
+          type: 'margin',
           
           contraintes:{
             cause:null,
@@ -33283,7 +33369,8 @@ type_centrale:[
         draggable,
         Prism,
         vSelect,
-        flatPickr
+        flatPickr,
+        VueApexCharts
     },
     watch: {
     
@@ -33342,21 +33429,24 @@ type_centrale:[
       greet: function () {
       var requet="select ";
     
-
+    this.setsGraphe=[];
   this.sets.forEach(set => {
         if (set.value.length > 0){
+          this.setsGraphe.push(set);
         set.value.forEach(element=>{
-
+        
           requet=requet+"case grouping("+element+" ) when 1 then 'ALL " +element+"' else "+element+" end ,";
         });}
         
       });
 
-
+      this.operationGraphe=[];
       var tables=[];
       this.list2.forEach(element => {
         element.operation.forEach(op => {
-        requet=requet+""+op+"("+element.attributeName+") ,"
+        requet=requet+""+op+"("+element.attributeName+") AS " +op+"_"+element.attributeName+" ,";
+        var opera=op+"_"+element.attributeName;
+        this.operationGraphe.push(opera);
         });
       });
       requet=requet.substring(0, requet.length - 1)+"from ";
@@ -33461,15 +33551,33 @@ type_centrale:[
       requet=requet.substring(0, requet.length -1)+" ) ;";
       alert(requet);
        console.log(requet);
+       this.$vs.loading();
              this.$http.get('http://localhost:3000/'+requet)
       .then((result) => {
-        
+        this.$vs.loading.close();
+            
+        this.$vs.notify({
+          
+        title: ' Requet envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      })
             this.header=Object.getOwnPropertyNames(result.data[0]);
         
         
       this.tableData = result.data;
+      this.showTable=true;
+      this.showRequestCreater=false;
+      }).catch(error => {
+        this.$vs.loading.close();
+         this.$vs.notify({
+        title: ' Requet erroné  ',
+        text: error,
+        color: 'danger'
+      })
       });
-            
+      
+      
             
             
             
@@ -33539,6 +33647,64 @@ type_centrale:[
       },
       onToChange(selectedDates, dateStr, instance) {
         this.$set(this.configFromdateTimePicker, 'maxDate', dateStr);
+      },
+      createGraphe:function(){
+        var value=false;
+       this.lineAreaChartSpline.chartOptions.labels=[];
+       this.lineAreaChartSpline.series[0].data=[];
+       this.pieChart.chartOptions.labels=[];
+       this.pieChart.series=[];
+      // alert( this.attributeGraphe+";"+this.DimGraphe+";"+this.typeGraphe);
+        //console.log(this.attributeGraphe);
+        var contrlerIndex=this.header.indexOf(this.DimGraphe.value[0]);
+        var contrlerGraphe=this.header[contrlerIndex+1];
+         
+        this.operationGraphe.forEach(op => {
+       if(contrlerGraphe===op.toLowerCase()){
+              value=true;
+              
+            }
+        });
+      
+      
+          if(value){
+            this.tableData.forEach(element2=>{
+              if(element2[this.DimGraphe.value[0]].includes("ALL")===false){ 
+              if(this.typeGraphe=="pie"){
+          this.pieChart.chartOptions.labels.push(element2[this.DimGraphe.value[0]])  ;
+          
+          this.pieChart.series.push(element2[contrlerGraphe]); 
+              }else{
+           this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe.value[0]])  ;   
+          this.lineAreaChartSpline.series[0].data.push(element2[contrlerGraphe]); } }  
+           });
+          }
+          else{
+               this.tableData.forEach(element3=>{
+            if(element3[this.DimGraphe.value[0]].includes("ALL")===false){   
+            if(element3[contrlerGraphe].includes("ALL")){
+              if(this.typeGraphe=="pie"){
+          this.pieChart.chartOptions.labels.push(element3[this.DimGraphe.value[0]]);   
+          this.pieChart.series.push(element3[this.attributeGraphe.toLowerCase()]);
+          
+              }else{
+
+          this.lineAreaChartSpline.chartOptions.labels.push(element3[this.DimGraphe.value[0]]);   
+          this.lineAreaChartSpline.series[0].data.push(element3[this.attributeGraphe.toLowerCase()]);} } }  
+           });
+
+          }
+        if(this.typeGraphe=="pie"){
+
+        
+        this.showGraphe2=true;}else{
+          this.showGraphe=true;
+        }
+
+        this.showTable=false;
+
+
+        
       }
     
   }
