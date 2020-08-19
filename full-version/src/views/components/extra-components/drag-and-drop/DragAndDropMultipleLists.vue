@@ -33461,7 +33461,7 @@ type_centrale:[
       requet=requet.substring(0, requet.length -1)+" ) ;";
       alert(requet);
        console.log(requet);
-             this.$http.get('http://localhost:8082/requests/'+requet)
+             this.$http.get('http://localhost:3000/'+requet)
       .then((result) => {
         
             this.header=Object.getOwnPropertyNames(result.data[0]);
