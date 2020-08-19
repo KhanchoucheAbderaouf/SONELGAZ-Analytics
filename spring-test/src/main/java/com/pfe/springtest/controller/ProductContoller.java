@@ -7,7 +7,11 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.ribbon.proxy.annotation.Hystrix;
+import com.pfe.springtest.model.AuthenticationRequest;
+import com.pfe.springtest.model.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -51,19 +55,28 @@ public class ProductContoller {
                         @HystrixProperty(name="maxQueueSize",value = "10"),
 
         )*/
-    @RequestMapping("/{req}")
+    @GetMapping("/{req}")
     public List<Map<String,Object>> Requests(@PathVariable("req") String req) {
             System.out.println(req);
-            //String b = restTemplate.getForObject("https://localhost:8080/vuejs/" + req,String.class);
             List<Map<String,Object>> a = jdbcTemplate.queryForList(req);
             return  a;
 
     }
 
+    @GetMapping(value="/authenticate/{username}/{password}",consumes = "application/json",produces = "application/json")
+    public void test(@PathVariable("username") String username,@PathVariable("password") String password) {
+        System.out.println(username+ " " + password);
+       AuthenticationRequest authenticationRequest = new AuthenticationRequest(username,password);
+       // AuthenticationRequest authenticationRequest = new AuthenticationRequest("zinou","zinou");
+        String jwt =
+                restTemplate.postForObject("http://users-manager-jwt/authenticate",authenticationRequest,String.class);
+        System.out.println(jwt);
+        System.out.println();
+        /*HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+);
+    */}
 
-    /*public List<Map<String,Object>> getFallbackRequest(@PathVariable("req") String req) {
-        return Arrays.asList();
-        }*/
     }
 
 
