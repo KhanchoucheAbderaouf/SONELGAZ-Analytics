@@ -1,8 +1,10 @@
-package com.pfe.loginpartjwt;
+package com.pfe.loginpartjwt.controller;
 
 
 import com.pfe.loginpartjwt.models.AuthenticationRequest;
 import com.pfe.loginpartjwt.models.AuthenticationResponse;
+import com.pfe.loginpartjwt.models.MyUserDetails;
+import com.pfe.loginpartjwt.models.Users;
 import com.pfe.loginpartjwt.services.MyUserDetailsService;
 import com.pfe.loginpartjwt.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +14,19 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
-class LogController {
+public class LogController {
 
 
 /*    @Autowired
     PasswordEncoder passwordEncoder;
 
 */
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -35,30 +37,34 @@ class LogController {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
+    private Users currentUser;
+
     @RequestMapping({ "/hello" })
     public String firstPage() {
+
         return "Hello World";
     }
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-
+    @PostMapping(value="/authenticate",consumes = "application/json",produces = "application/json")
+    public MyUserDetails createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         }
         catch (BadCredentialsException e) {
+            System.out.println(e.toString());
             throw new Exception("Incorrect username or password", e);
         }
-
-
-        final UserDetails userDetails = userDetailsService
+        System.out.println(authenticationRequest.getUsername() + " " + authenticationRequest.getPassword());
+        final MyUserDetails theUserDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
-
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        System.out.println(theUserDetails.getUsername()+" "+theUserDetails.getPassword()+" "+theUserDetails.getAuthorities()+theUserDetails);
+        final String jwt = jwtTokenUtil.generateToken(theUserDetails);
+        theUserDetails.setJwt(jwt);
+        System.out.println(jwt);
+        return theUserDetails;
     }
+
 
 }
