@@ -24,7 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/requests")
-public class ProductContoller {
+public class MainController {
 
 
     @Autowired
@@ -38,7 +38,6 @@ public class ProductContoller {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
 
 
     /*@HystrixCommand(fallbackMethod = "getFallbackRequest",
@@ -56,26 +55,28 @@ public class ProductContoller {
 
         )*/
     @GetMapping("/{req}")
-    public List<Map<String,Object>> Requests(@PathVariable("req") String req) {
-            System.out.println(req);
-            List<Map<String,Object>> a = jdbcTemplate.queryForList(req);
-            return  a;
+    public List<Map<String, Object>> Requests(@PathVariable("req") String req) {
+        System.out.println(req);
+        List<Map<String, Object>> a = jdbcTemplate.queryForList(req);
+        return a;
 
     }
 
-    @GetMapping(value="/authenticate/{username}/{password}",consumes = "application/json",produces = "application/json")
-    public void test(@PathVariable("username") String username,@PathVariable("password") String password) {
-        System.out.println(username+ " " + password);
-       AuthenticationRequest authenticationRequest = new AuthenticationRequest(username,password);
-       // AuthenticationRequest authenticationRequest = new AuthenticationRequest("zinou","zinou");
+    @GetMapping(value = "/authenticate/{username}/{password}", consumes = "application/json", produces = "application/json")
+    public void test(@PathVariable("username") String username, @PathVariable("password") String password) {
+        System.out.println(username + " " + password);
+        AuthenticationRequest authenticationRequest = new AuthenticationRequest(username, password);
+        // AuthenticationRequest authenticationRequest = new AuthenticationRequest("zinou","zinou");
         String jwt =
-                restTemplate.postForObject("http://users-manager-jwt/authenticate",authenticationRequest,String.class);
+                restTemplate.postForObject("http://users-manager-jwt/authenticate", authenticationRequest, String.class);
         System.out.println(jwt);
         System.out.println();
+    }
+}
         /*HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer "+);
-    */}
+    }
 
     }
 
