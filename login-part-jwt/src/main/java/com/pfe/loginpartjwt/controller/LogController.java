@@ -45,10 +45,8 @@ public class LogController {
     public String firstPage() {
         return "Welcome Home";
     }
-    @RequestMapping({ "/Index" })
-    public String PageLogin() {
-        return "Login";
-    }
+
+    @CrossOrigin
     @PostMapping(value="/authenticate",consumes = "application/json",produces = "application/json")
     public MyUserDetails createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
