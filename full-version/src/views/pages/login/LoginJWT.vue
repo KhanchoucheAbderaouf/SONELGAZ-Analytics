@@ -1,16 +1,16 @@
 <template>
   <div>
     <vs-input
-        v-validate="'required|email|min:3'"
+        v-validate="'required|min:3'"
         data-vv-validate-on="blur"
-        name="email"
+        name="username"
         icon-no-border
         icon="icon icon-user"
         icon-pack="feather"
-        label-placeholder="Email"
-        v-model="email"
+        label-placeholder="username"
+        v-model="username"
         class="w-full"/>
-    <span class="text-danger text-sm">{{ errors.first('email') }}</span>
+    <span class="text-danger text-sm">{{ errors.first('username') }}</span>
 
     <vs-input
         data-vv-validate-on="blur"
@@ -40,14 +40,14 @@
 export default {
   data() {
     return {
-      email: 'admin@admin.com',
-      password: 'adminadmin',
+      username: 'drakswolfs',
+      password: '048565835',
       checkbox_remember_me: false
     }
   },
   computed: {
     validateForm() {
-      return !this.errors.any() && this.email != '' && this.password != '';
+      return !this.errors.any() && this.username != '' && this.password != '';
     },
   },
   methods: {
@@ -80,7 +80,7 @@ export default {
       const payload = {
         checkbox_remember_me: this.checkbox_remember_me,
         userDetails: {
-          email: this.email,
+          username: this.username,
           password: this.password
         }
       }
