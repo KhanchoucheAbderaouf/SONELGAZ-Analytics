@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class LogController {
@@ -39,12 +40,15 @@ public class LogController {
 
     private Users currentUser;
 
-    @RequestMapping({ "/hello" })
+
+    @RequestMapping( "/home" )
     public String firstPage() {
-
-        return "Hello World";
+        return "Welcome Home";
     }
-
+    @RequestMapping({ "/Index" })
+    public String PageLogin() {
+        return "Login";
+    }
     @PostMapping(value="/authenticate",consumes = "application/json",produces = "application/json")
     public MyUserDetails createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
