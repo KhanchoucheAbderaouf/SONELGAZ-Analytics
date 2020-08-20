@@ -44,8 +44,8 @@ export default {
       return Promise.reject(error)
     })
   },
-  login(email, pwd) {
-    return axios.post("/api/auth/login", {email: email, password: pwd})
+  login(username, pwd) {
+    return axios.post("http://localhost:8087/authenticate", {username: username, password: pwd})
   },
   registerUser(name, email, pwd) {
     return axios.post("/api/auth/register", {displayName: name, email: email, password: pwd})
