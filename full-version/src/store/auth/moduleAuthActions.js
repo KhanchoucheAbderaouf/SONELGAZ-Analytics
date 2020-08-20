@@ -307,7 +307,7 @@ export default {
           .then(response => {
 
             // If there's user data in response
-            if(response.data.jwt) {
+            if(response.data) {
               // Navigate User to homepage
               router.push(router.currentRoute.query.to || '/')
 
@@ -318,7 +318,7 @@ export default {
               commit('UPDATE_USER_INFO', response.data.userData, {root: true})
 
               // Set bearer token in axios
-              commit("SET_BEARER", 'Bearer '+response.data.jwt)
+              commit("SET_BEARER", response.data.jwt)
 
               resolve(response)
             }else {
