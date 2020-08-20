@@ -307,7 +307,7 @@ export default {
           .then(response => {
 
             // If there's user data in response
-            if(response.data.userData) {
+            if(response.data.jwt) {
               // Navigate User to homepage
               router.push(router.currentRoute.query.to || '/')
 
