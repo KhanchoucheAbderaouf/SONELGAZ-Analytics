@@ -35,6 +35,7 @@ const getUserInfo = () => {
   // Update property in user
   Object.keys(userDefaults).forEach((key) => {
     // If property is defined in localStorage => Use that
+   
     userInfo[key] = userInfoLocalStorage[key] ?  userInfoLocalStorage[key] : userDefaults[key]
   })
 
