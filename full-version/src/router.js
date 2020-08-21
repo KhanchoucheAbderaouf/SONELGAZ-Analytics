@@ -46,7 +46,7 @@ const router = new Router({
         // =============================================================================
                 {
                     path: '/',
-                    redirect: '/Pages/login'
+                    redirect: '/dashboard/analytics'
                 },
                 {
                     path: '/dashboard/analytics',
@@ -54,6 +54,7 @@ const router = new Router({
                     component: () => import('./views/DashboardAnalytics.vue'),
                     meta: {
                         rule: 'editor',
+                        authRequired: true,
                     }
                 },
                 {
@@ -68,16 +69,12 @@ const router = new Router({
                     path: '/dashboard/dashboard',
                     name: 'dashboard-dashboard',
                     component: () => import('./views/Dashboard.vue'),
+                 
                     meta: {
-                        rule: 'admin'
-                    },
-                       beforeEnter: (to, from, next) => {
-                if (AuthenticationService.isUserLoggedIn()) {
-                    next()
-                } else {
-                    next({ path: '/Pages/login'})
-                }
-            }
+                        rule: 'admin',
+                        authRequired: true,
+                    }
+               
                 },
 
 

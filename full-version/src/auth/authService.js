@@ -103,9 +103,18 @@ class AuthService extends EventEmitter {
         this.emit(loginEvent, { loggedIn: false });
     }
 
+    localelogOut() {
+        localStorage.removeItem(localStorageKey);
+        localStorage.removeItem(tokenExpiryKey);
+        localStorage.removeItem('userInfo');
+
+
+       
+    }
+
     isAuthenticated() {
         return (
-            new Date(Date.now()) < new Date(localStorage.getItem(tokenExpiryKey)) &&
+            
             localStorage.getItem(localStorageKey) === 'true'
         );
     }

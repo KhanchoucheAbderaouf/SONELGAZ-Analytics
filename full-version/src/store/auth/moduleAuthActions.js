@@ -307,15 +307,27 @@ export default {
           .then(response => {
 
             // If there's user data in response
-            if(response.data) {
+            if(response.data.jwt) {
               // Navigate User to homepage
               router.push(router.currentRoute.query.to || '/')
 
               // Set accessToken
-              localStorage.setItem("accessToken", response.data.jwt)
+              localStorage.setItem("accessToken",response.data.jwt)
+               localStorage.setItem("loggedIn",'true')
+              
+              let userInfo = {
+                  uid         : 0,          // From Auth
+                  displayName : "John Doe", // From Auth
+                  about       : "Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.",
+                  photoURL    : require("@/assets/images/portrait/small/avatar-s-11.jpg"), // From Auth
+                  status      : "online",
+                  userRole    : "admin"
+              }
+              userInfo.uid=1;
+              userInfo.displayName=response.data.nom;
 
               // Update user details
-              commit('UPDATE_USER_INFO', response.data.userData, {root: true})
+              commit('UPDATE_USER_INFO', userInfo, {root: true})
 
               // Set bearer token in axios
               commit("SET_BEARER", response.data.jwt)
@@ -329,6 +341,7 @@ export default {
           .catch(error => { reject(error) })
       })
     },
+
     registerUserJWT({ commit }, payload) {
 
       const { displayName, email, password, confirmPassword } = payload.userDetails
