@@ -310,7 +310,7 @@ export default {
             if(response.data.jwt) {
               // Navigate User to homepage
               router.push(router.currentRoute.query.to || '/')
-
+              
               // Set accessToken
               localStorage.setItem("accessToken",response.data.jwt)
                localStorage.setItem("loggedIn",'true')
@@ -330,8 +330,9 @@ export default {
               commit('UPDATE_USER_INFO', userInfo, {root: true})
 
               // Set bearer token in axios
-              commit("SET_BEARER", response.data.jwt)
-
+              commit("SET_BEARER",response.data.jwt)
+              //console.log( commit("SET_BEARER", "Bearer " + response.data.jwt))
+              
               resolve(response)
             }else {
               reject({message: "Wrong username or Password"})
