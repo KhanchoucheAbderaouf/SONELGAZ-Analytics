@@ -46,7 +46,7 @@ const router = new Router({
         // =============================================================================
                 {
                     path: '/',
-                    redirect: '/Pages/login'
+                    redirect: '/pages/login'
                 },
                 {
                     path: '/dashboard/analytics',
@@ -71,13 +71,13 @@ const router = new Router({
                     meta: {
                         rule: 'admin'
                     },
-                       beforeEnter: (to, from, next) => {
-                if (AuthenticationService.isUserLoggedIn()) {
+                     /*  beforeEnter: (to, from, next) => {
+                if (auth.isAuthenticated()) {
                     next()
                 } else {
-                    next({ path: '/Pages/login'})
+                    next({ path: '/pages/login'})
                 }
-            }
+            }*/
                 },
 
 
