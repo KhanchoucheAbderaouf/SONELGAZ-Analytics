@@ -21,11 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class LogController {
 
-
-/*    @Autowired
-    PasswordEncoder passwordEncoder;
-
-*/
     @Autowired
     private RestTemplate restTemplate;
 
@@ -38,13 +33,8 @@ public class LogController {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
-    private Users currentUser;
 
 
-    @RequestMapping( "/home" )
-    public String firstPage() {
-        return "Welcome Home";
-    }
 
     @CrossOrigin
     @PostMapping(value="/authenticate",consumes = "application/json",produces = "application/json")
