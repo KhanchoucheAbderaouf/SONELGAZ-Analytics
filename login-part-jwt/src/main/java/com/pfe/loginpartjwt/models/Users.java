@@ -1,11 +1,15 @@
 package com.pfe.loginpartjwt.models;
 
+import org.hibernate.annotations.ManyToAny;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class Users {
 
     @Id
@@ -25,9 +29,14 @@ public class Users {
     @Column(length=100)
     private String email;
     private long idorganism;
-    @OneToOne
-    private Roles role;
     private Date date_creation;
+    @ManyToMany
+    @JoinTable(name="queries",joinColumns = @JoinColumn(name="id_user"),inverseJoinColumns = @JoinColumn(name="idquery"))
+    private List<Queries> listqueries;
+    @OneToOne
+    @JoinColumn(name="idrole")
+    private Roles role;
+
 
     public long getIduser() {
         return iduser;
@@ -101,19 +110,27 @@ public class Users {
         this.idorganism = idorganism;
     }
 
-    public Roles getRole() {
-        return role;
-    }
-
-    public void Roles(Roles role) {
-        this.role = role;
-    }
-
     public Date getDate_creation() {
         return date_creation;
     }
 
-    public void setDate_creation() {
-        this.date_creation = new Date();
+    public void setDate_creation(Date date_creation) {
+        this.date_creation = date_creation;
+    }
+
+    public List<Queries> getListqueries() {
+        return listqueries;
+    }
+
+    public void setListqueries(Queries listqueries) {
+        this.listqueries.add(listqueries);
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 }
