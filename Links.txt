@@ -1,0 +1,45 @@
+----- API REST : ----------- 
+
+http://localhost:8087
+
+----- Authentication : -----
+
+http://localhost:8087/authenticate
+(Body : username + password,
+ Method : POST)
+
+----- Users : -----
+
+http://localhost:8087/users
+
+1- all users : http://localhost:8087/users/allUsers ; Method : GET
+
+2- find one user by a giving username : http://localhost:8087/users/oneUser/{username} , Method : GET
+
+3- add user : http://localhost:8087/users/addUser/{intitule} (intitule c le nom du role) , Method : POST , Body : users infos(username,password,nom,prenom,telephone,email,idorganisme).
+
+4- delete user by a giving username : http://localhost:8087/users/deleteUser/{username} , Method : DELETE
+
+5- updates :  Method : PUT ,
+	a- user general infos : http://localhost:8087/users/updateUserInfos/{username}. , Body : users infos(nom,prenom,telephone,email,idorganisme)
+	b- login : http://localhost:8087/users/updateUserNamePass/{username}. ,  Body : (username,password)
+	c- role : http://localhost:8087/users/updateUserRole/{username}/{intitule}. , No need Body
+
+
+----- Roles : -----
+http://localhost:8087/roles
+
+1- all roles: http://localhost:8087/roles/allRoles ; Method : GET
+
+2- add role : http://localhost:8087/addRole , Method : POST , Body : (intitule)
+
+----- Requests : ----
+
+http://localhost:8087/requests/{req} , req = string of the request without ; at the end.
+	 		 
+
+----- Queries: -----
+
+http://localhost:8087/queries
+
+1- save Query : http://localhost:8087/queries/saveQuery/{username} , method : POST, Body : (titre,valeur).

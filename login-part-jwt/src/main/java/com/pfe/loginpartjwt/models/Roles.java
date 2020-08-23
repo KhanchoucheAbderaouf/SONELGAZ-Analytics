@@ -1,30 +1,31 @@
 package com.pfe.loginpartjwt.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
+@Table(name = "roles")
 public class Roles {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Idrole;
-    @Column(length=50)
-    private String Intitule;
+    private long idrole;
+
+    private String intitule;
 
     public long getIdrole() {
-        return Idrole;
+        return idrole;
     }
 
     public void setIdrole(long idrole) {
-        Idrole = idrole;
+        this.idrole = idrole;
     }
 
     public String getIntitule() {
-        return Intitule;
+        return intitule;
     }
 
     public void setIntitule(String intitule) {
-        Intitule = intitule;
+        this.intitule = intitule;
     }
 }
 

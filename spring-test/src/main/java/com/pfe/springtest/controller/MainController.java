@@ -9,6 +9,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.ribbon.proxy.annotation.Hystrix;
 import com.pfe.springtest.model.AuthenticationRequest;
 import com.pfe.springtest.model.AuthenticationResponse;
+import com.pfe.springtest.model.JSONAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -55,30 +56,15 @@ public class MainController {
 
         )*/
     @GetMapping("/{req}")
-    public List<Map<String, Object>> Requests(@PathVariable("req") String req) {
+    public JSONAnswer Requests(@PathVariable("req") String req) {
         System.out.println(req);
-        List<Map<String, Object>> a = jdbcTemplate.queryForList(req);
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList(req));
         return a;
-
     }
 
-    @GetMapping(value = "/authenticate/{username}/{password}", consumes = "application/json", produces = "application/json")
-    public void test(@PathVariable("username") String username, @PathVariable("password") String password) {
-        System.out.println(username + " " + password);
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(username, password);
-        // AuthenticationRequest authenticationRequest = new AuthenticationRequest("zinou","zinou");
-        String jwt =
-                restTemplate.postForObject("http://users-manager-jwt/authenticate", authenticationRequest, String.class);
-        System.out.println(jwt);
-        System.out.println();
-    }
+
 }
-        /*HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer "+);
-    }
-
-    }
 
 
 
@@ -89,6 +75,3 @@ Movie movie = webClientBuilder.build().get().uri("http://localhost:8082/movies/"
 .retrieve().bodyToMono(Movie.class).block();
 */
 
-/*ObjectMapper objectMapper =  new ObjectMapper();
-            String json = objectMapper.writeValueAsString(a);
-            System.out.println(json);*/
