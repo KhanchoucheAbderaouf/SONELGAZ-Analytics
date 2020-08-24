@@ -17,8 +17,7 @@ public class Queries {
     private String titre;
     private String valeur;
     private Date date_creation;
-
-
+    private String creator;
     @ManyToMany(mappedBy = "listqueries")
     private List<Users> usersAuthorized;
 
@@ -60,4 +59,13 @@ public class Queries {
     public void setUsersAuthorized(Users usersAuthorized) {
         this.usersAuthorized.add(usersAuthorized);
     }
+
+    public String getCreator() {
+        return this.creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 public class UsersController {
 
@@ -58,7 +59,7 @@ public class UsersController {
     }
 
     @DeleteMapping("/deleteUser/{username}")
-    public String deleteUser(@PathVariable String username) throws Exception {
+    public String deleteUser(@PathVariable("username") String username) throws Exception {
 
             if(!(userRepository.findByUsername(username).isPresent())) {
                 throw new Exception(
@@ -106,7 +107,7 @@ public class UsersController {
     public Users updateUserNamePass(@PathVariable("intitule") String intitule,@PathVariable("username") String username) throws  Exception {
         if (!(userRepository.findByUsername(username).isPresent())) {
             throw new Exception(
-                    "User " + username + " not found : "
+                    "User " + username + " not found !! "
             );
         } else {
             Users U = userRepository.findByUsername(username).get();
@@ -116,6 +117,18 @@ public class UsersController {
         }
     }
 
+
+    @GetMapping("/queriesUser/{username}")
+    public List<Queries> findUserQueries(@PathVariable("username") String username) throws Exception {
+        if(userRepository.findByUsername(username).isPresent()) {
+            return userRepository.findByUsername(username).get().getListqueries();
+        }
+        else{
+            throw new Exception(
+                    "Users " + username + " not found !!"
+            );
+        }
+    }
 
 
 }

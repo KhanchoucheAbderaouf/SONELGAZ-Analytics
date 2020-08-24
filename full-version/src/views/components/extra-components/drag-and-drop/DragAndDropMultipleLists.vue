@@ -613,8 +613,9 @@ type_centrale:[
         VueApexCharts
     },
      mounted(){
-        
-      this.$http.get('http://localhost:3000/select * from bi.dim_organisme ;').then((result) => {
+    var look=this.$http.get('http://localhost:8087/users/allUsers')
+         console.log(look);
+     this.$http.get('http://localhost:8087/requests/select * from bi.dim_organisme').then((result) => {
         this.$vs.loading.close();
             
         this.$vs.notify({
@@ -633,7 +634,7 @@ type_centrale:[
       })
 
       });
-          this.$http.get('http://localhost:3000/select * from bi.dim_cause ;').then((result) => {
+          this.$http.get('http://localhost:8087/requests/select * from bi.dim_cause').then((result) => {
         this.$vs.loading.close();
             
         this.$vs.notify({
@@ -836,7 +837,7 @@ type_centrale:[
       alert(requet);
        console.log(requet);
        this.$vs.loading();
-             this.$http.get('http://localhost:3000/'+requet)
+             this.$http.get('http://localhost:8087/requests/'+requet)
       .then((result) => {
         this.$vs.loading.close();
             

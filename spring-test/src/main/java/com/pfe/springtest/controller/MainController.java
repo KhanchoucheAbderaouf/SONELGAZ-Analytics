@@ -24,6 +24,7 @@ import java.util.Map;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/requests")
 public class MainController {
 
@@ -60,6 +61,7 @@ public class MainController {
         System.out.println(req);
         JSONAnswer a = new JSONAnswer();
         a.setJsonAnswer(jdbcTemplate.queryForList(req));
+        System.out.println(a.getJsonAnswer());
         return a;
     }
 
