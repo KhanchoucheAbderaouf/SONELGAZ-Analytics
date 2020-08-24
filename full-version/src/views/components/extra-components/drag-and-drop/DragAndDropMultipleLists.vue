@@ -613,17 +613,33 @@ type_centrale:[
         VueApexCharts
     },
      mounted(){
-        
-      this.$http.get('http://localhost:3000/select * from bi.dim_organisme ;').then((result) => {
-        this.$vs.loading.close();
-            
-        this.$vs.notify({
-          
-        title: ' Requet organismes ',
-        text: 'votre requet a été envoyé avec succès',
-        color: 'success'
-      })
-      this.organismes=  result.data;
+      var id_user=this.$store.state.AppActiveUser.code_organisme;
+      var requet_user='select * from bi.dim_organisme where code_organisme='+id_user;
+ 
+      this.$http.get('http://localhost:3000/' + requet_user).then((result) => {
+        console.log(result.data);
+      var type_organisme=  result.data[0].type_organisme;
+      console.log(type_organisme);
+      var requet_organisme='';
+         switch (type_organisme) {
+        case "Pole":
+          requet_organisme="id_pole = "+result.data[0].id_pole;
+          break;
+        case "Unite" :
+          requet_organisme="id_unite = "+result.data[0].id_unite;
+          break;
+        case "Centrale" :
+         requet_organisme="id_centrale = "+result.data[0].id_centrale;
+          break;
+        case "Groupe" :
+         requet_organisme="id_grpe = "+result.data[0].id_grpe;
+          break;
+        default:
+          requet_organisme="code_organisme = "+result.data[0].code_organisme;
+      }
+       this.$http.get('http://localhost:3000/select * from bi.dim_organisme where ' + requet_organisme).then((result) => {
+          this.organismes=  result.data;
+       })
       }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
@@ -631,8 +647,8 @@ type_centrale:[
         text: error,
         color: 'danger'
       })
-
       });
+      
           this.$http.get('http://localhost:3000/select * from bi.dim_cause ;').then((result) => {
         this.$vs.loading.close();
             

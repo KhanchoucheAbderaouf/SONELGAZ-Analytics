@@ -316,7 +316,8 @@ export default {
                localStorage.setItem("loggedIn",'true')
               
               let userInfo = {
-                  uid         : 0,          // From Auth
+                  uid         : 0, 
+                  code_organisme:1,         // From Auth
                   displayName : "John Doe", // From Auth
                   about       : "Dessert chocolate cake lemon drops jujubes. Biscuit cupcake ice cream bear claw brownie brownie marshmallow.",
                   photoURL    : require("@/assets/images/portrait/small/avatar-s-11.jpg"), // From Auth
@@ -325,6 +326,8 @@ export default {
               }
               userInfo.uid=1;
               userInfo.displayName=response.data.nom;
+              
+              userInfo.code_organisme=response.data.idorganism;
 
               // Update user details
               commit('UPDATE_USER_INFO', userInfo, {root: true})
