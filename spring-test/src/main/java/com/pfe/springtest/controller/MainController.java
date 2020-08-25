@@ -56,7 +56,6 @@ public class MainController {
                         @HystrixProperty(name="maxQueueSize",value = "10"),
 
         )*/
-    @CrossOrigin
     @GetMapping("/{req}")
     public JSONAnswer Requests(@PathVariable("req") String req) {
         System.out.println(req);
