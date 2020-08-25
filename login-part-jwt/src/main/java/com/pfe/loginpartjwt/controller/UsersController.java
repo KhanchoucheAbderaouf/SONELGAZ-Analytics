@@ -26,8 +26,6 @@ public class UsersController {
     @Autowired
     RoleRepository roleRepository;
 
-    @Autowired
-    QueryRepository queryRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -70,7 +68,7 @@ public class UsersController {
                         "This user doesn't exists"
                 );}
             else{
-
+                    userRepository.findById(iduser).get().getListQueries().removeAll(userRepository.findById(iduser).get().getListQueries());
                     userRepository.delete(userRepository.findById(iduser).get());
                 }
             }
