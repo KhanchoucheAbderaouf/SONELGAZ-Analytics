@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @CrossOrigin
@@ -29,36 +28,30 @@ public class QueriesController {
         return queryRepository.findAll();
     }
 
-    @PostMapping("/saveQuery/{username}")
-    public void saveQuery(@RequestBody Queries query, @PathVariable("username") String username) throws Exception {
-        Queries q = new Queries();
-        Users u = new Users();
-        if (userRepository.findByUsername(username).isPresent() && !(queryRepository.findByTitre(query.getTitre()).isPresent())) {
+    @PostMapping("/saveQuery/{iduser}")
+    public Queries saveQuery(@RequestBody Queries query, @PathVariable("iduser") Long iduser) throws Exception {
+
+        if (userRepository.findById(iduser).isPresent() && !(queryRepository.findByTitre(query.getTitre()).isPresent())) {
             Queries Q = new Queries();
             Q.setDate_creation(new Date());
             Q.setTitre(query.getTitre());
             Q.setValeur(query.getValeur());
-            Users U = userRepository.findByUsername(username).get();
+            Users U = userRepository.findById(iduser).get();
             Q.setCreator(U.getUsername());
             U.setListQueries(Q);
-            queryRepository.save(Q);
+            return queryRepository.save(Q);
         } else {
             throw new Exception(
                     "no such username or query exists !!");
         }
 
-          /*  Long idquery = queryRepository.findByTitre(q.getTitre()).get().getIdquery();
-
-            queryRepository.saveRef(u.getIduser(), idquery);
-*/
     }
 
-    @PostMapping("/addQueryUser/{idquery}/{idorganism}")
+    @PostMapping("/addQueryOrganism/{idquery}/{idorganism}")
     public void addAuthorization(@PathVariable("idquery") Long idquery, @PathVariable("idorganism") Long idorganism) throws Exception {
 
         if (userRepository.findByIdorganism(idorganism).isPresent() && queryRepository.findById(idquery).isPresent()) {
             Queries q = queryRepository.findById(idquery).get();
-            System.out.println(q.getIdquery() + " " + q.getCreator() + " " + q.getTitre());
             List<Users> U = userRepository.findByIdorganism(idorganism).get();
             for (Users u : U) {
                 if (u.getListQueries().contains(q)) {
@@ -70,30 +63,35 @@ public class QueriesController {
                     userRepository.save(u);
                 }
             }
+        } else {
+            throw new Exception(
+                    "not found organism or query !"
+            );
+
         }
     }
 
 
-    @DeleteMapping("/deleteQuery/{titre}")
-    public void deleteUser(@PathVariable("titre") String titre) throws Exception {
+    @DeleteMapping("/deleteQuery/{idquery}")
+    public void deleteUser(@PathVariable("idquery") Long idquery) throws Exception {
 
-        if (!(queryRepository.findByTitre(titre).isPresent())) {
+        if (!(queryRepository.findById(idquery).isPresent())) {
             throw new Exception(
-                    "This query : " + titre + " doesn't exists"
+                    "This query  doesn't exists !! "
             );
         } else {
             List<Users> liste = userRepository.findAll();
             for (Users user : liste
             ) {
-                user.getListQueries().remove(queryRepository.findByTitre(titre).get());
+                user.getListQueries().remove(queryRepository.findById(idquery).get());
             }
 
-            queryRepository.delete(queryRepository.findByTitre(titre).get());
+            queryRepository.delete(queryRepository.findById(idquery).get());
         }
     }
 
     @PutMapping("/UpdateQuery/{idquery}")
-    public void deleteUser(@RequestBody Queries query, @PathVariable("idquery") Long idquery) throws Exception {
+    public Queries deleteUser(@RequestBody Queries query, @PathVariable("idquery") Long idquery) throws Exception {
 
         if (!(queryRepository.findById(idquery).isPresent())) {
             throw new Exception(
@@ -103,7 +101,7 @@ public class QueriesController {
             Queries q = queryRepository.findById(idquery).get();
             if (query.getTitre() != null) q.setTitre(query.getTitre());
             if (query.getValeur() != null) q.setValeur(query.getValeur());
-            queryRepository.save(q);
+            return queryRepository.save(q);
         }
     }
 

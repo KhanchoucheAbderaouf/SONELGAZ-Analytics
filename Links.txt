@@ -14,17 +14,18 @@ http://localhost:8087/users
 
 1- all users : http://localhost:8087/users/allUsers ; Method : GET
 
-2- find one user by a giving username : http://localhost:8087/users/oneUser/{username} , Method : GET
+2- find one user by a giving username : http://localhost:8087/users/oneUser/{iduser}, Method : GET
 
-3- add user : http://localhost:8087/users/addUser/{intitule} (intitule c le nom du role) , Method : POST , Body : users infos(username,password,nom,prenom,telephone,email,idorganisme).
+3- add user : http://localhost:8087/users/addUser/{intitule}(intitule c le nom du role) , Method : POST , Body : users infos(username,password,nom,prenom,telephone,email,idorganisme).
 
-4- delete user by a giving username : http://localhost:8087/users/deleteUser/{username} , Method : DELETE
+4- delete user by a giving username : http://localhost:8087/users/deleteUser/{iduser} , Method : DELETE
 
 5- updates :  Method : PUT ,
-	a- user general infos : http://localhost:8087/users/updateUserInfos/{username}. , Body : users infos(nom,prenom,telephone,email,idorganisme)
-	b- login : http://localhost:8087/users/updateUserNamePass/{username}. ,  Body : (username,password)
-	c- role : http://localhost:8087/users/updateUserRole/{username}/{intitule}. , No need Body
+	a- user general infos : http://localhost:8087/users/updateUserInfos/{iduser}. , Body : users infos(nom,prenom,telephone,email,idorganisme)
+	b- login : http://localhost:8087/users/updateUserNamePass/{iduser}. ,  Body : (username,password)
+	c- role : http://localhost:8087/users/updateUserRole/{iduser}/{intitule}. , No need Body
 
+6- http://localhost:8087/users/queriesUser/{iduser} : queries of all user by a giving iduser, Method : GET , Body : no need
 
 ----- Roles : -----
 http://localhost:8087/roles
@@ -42,4 +43,14 @@ http://localhost:8087/requests/{req} , req = string of the request without ; at 
 
 http://localhost:8087/queries
 
-1- save Query : http://localhost:8087/queries/saveQuery/{username} , method : POST, Body : (titre,valeur).
+1- save Query : http://localhost:8087/queries/saveQuery/{iduser} , method : POST, Body : (titre,valeur).
+
+2- get AllSavedQueries : http://localhost:8087/queries/allQueries , method : GET , no body
+
+3- Add Query to an organism : http://localhost:8087/queries/addQueryOrganism/{idquery}/{idorganism}, method : POST , no body
+
+4- Delete query : http://localhost:8087/queries/deleteQuery/{idquery},method : DELETE, no body
+
+5- Update query : http://localhost:8087/queries/UpdateQuery/{idquery}, method : PUT, no body
+
+6- delete authorization from an organism : http://localhost:8087/queries/deleteAuthorization/{idorganism}/{idquery} , method : DELETE, no body
