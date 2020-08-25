@@ -127,6 +127,40 @@ public class QueriesController {
 
     }
 
+    @PostMapping("/addQueryUser/{idquery}/{iduser}")
+    public void addAuthorizationUser(@PathVariable("idquery") Long idquery, @PathVariable("iduser") Long iduser) throws Exception {
 
+        if (userRepository.findById(iduser).isPresent() && queryRepository.findById(idquery).isPresent()) {
+            Queries q = queryRepository.findById(idquery).get();
+            Users U = userRepository.findById(iduser).get();
+                    U.setListQueries(q);
+                    userRepository.save(U);
+        } else {
+            throw new Exception(
+                    "not found organism or query !"
+            );
+
+        }
+    }
+
+    @DeleteMapping("/deleteAuthorizationUser/{iduser}/{idquery}")
+    public void deleteAuthorizarionUser(@PathVariable("iduser") Long iduser, @PathVariable("idquery") Long idquery) throws Exception {
+
+        if (!(queryRepository.findById(idquery).isPresent())) {
+            throw new Exception(
+                    "This query doesn't exists"
+            );
+        } else if (userRepository.findById(iduser).isPresent()){
+            Users U = userRepository.findById(iduser).get();
+                U.getListQueries().remove(queryRepository.findById(idquery).get());
+                userRepository.save(U);
+
+            } else {
+            throw new Exception(
+                    "organism not found"
+            );
+        }
+
+    }
 
 }

@@ -54,3 +54,7 @@ http://localhost:8087/queries
 5- Update query : http://localhost:8087/queries/UpdateQuery/{idquery}, method : PUT, no body
 
 6- delete authorization from an organism : http://localhost:8087/queries/deleteAuthorization/{idorganism}/{idquery} , method : DELETE, no body
+
+7- delete authorization from a user: http://localhost:8087/queries/deleteAuthorizationUser/{iduser}/{idquery} , method : DELETE, no body
+
+8- Add Query to a user : http://localhost:8087/queries/addQueryUser/{idquery}/{iduser}, method : POST , no body
