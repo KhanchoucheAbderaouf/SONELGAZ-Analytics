@@ -4,6 +4,7 @@ package com.pfe.loginpartjwt.controller;
 import com.pfe.loginpartjwt.models.Queries;
 import com.pfe.loginpartjwt.models.Roles;
 import com.pfe.loginpartjwt.models.Users;
+import com.pfe.loginpartjwt.repositories.QueryRepository;
 import com.pfe.loginpartjwt.repositories.RoleRepository;
 import com.pfe.loginpartjwt.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 public class UsersController {
 
@@ -25,12 +27,15 @@ public class UsersController {
     RoleRepository roleRepository;
 
     @Autowired
+    QueryRepository queryRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
 
-    @GetMapping("/oneUser/{username}")
-    public Optional<Users> findUserByUsername(@PathVariable("username") String username){
-        return userRepository.findByUsername(username);
+    @GetMapping("/oneUser/{iduser}")
+    public Optional<Users> findUserByUsername(@PathVariable("iduser") Long iduser){
+        return userRepository.findById(iduser);
     }
 
     @GetMapping("/allUsers")
@@ -57,28 +62,28 @@ public class UsersController {
         return userRepository.save(U);
     }
 
-    @DeleteMapping("/deleteUser/{username}")
-    public String deleteUser(@PathVariable String username) throws Exception {
+    @DeleteMapping("/deleteUser/{iduser}")
+    public void deleteUser(@PathVariable("iduser") Long iduser) throws Exception {
 
-            if(!(userRepository.findByUsername(username).isPresent())) {
+            if(!(userRepository.findById(iduser).isPresent())) {
                 throw new Exception(
-                        "This user : " + username + " doesn't exists"
+                        "This user doesn't exists"
                 );}
             else{
-                    userRepository.delete(userRepository.findByUsername(username).get());
-                    return "success";
+
+                    userRepository.delete(userRepository.findById(iduser).get());
                 }
             }
 
 
-    @PutMapping("/updateUserInfos/{username}")
-    public Users updateUserInfos(@RequestBody Users user,@PathVariable("username") String username) throws  Exception {
-        if(!(userRepository.findByUsername(username).isPresent())){
+    @PutMapping("/updateUserInfos/{iduser}")
+    public Users updateUserInfos(@RequestBody Users user,@PathVariable("iduser") Long iduser) throws  Exception {
+        if(!(userRepository.findById(iduser).isPresent())){
             throw new Exception(
-                    "User " + username + " not found : "
+                    "User not found ! "
             );
         }else {
-            Users U = userRepository.findByUsername(username).get();
+            Users U = userRepository.findById(iduser).get();
             U.setTelephone(user.getTelephone());
             U.setIdorganism(user.getIdorganism());
             U.setEmail(user.getEmail());
@@ -88,34 +93,46 @@ public class UsersController {
         }
     }
 
-    @PutMapping("/updateUserNamePass/{username}")
-    public Users updateUserNamePass(@RequestBody Users user,@PathVariable("username") String username) throws  Exception {
-        if (!(userRepository.findByUsername(username).isPresent())) {
+    @PutMapping("/updateUserNamePass/{iduser}")
+    public Users updateUserNamePass(@RequestBody Users user,@PathVariable("iduser") Long iduser) throws  Exception {
+        if (!(userRepository.findById(iduser).isPresent())) {
             throw new Exception(
-                    "User " + username + " not found : "
+                    "User  not found ! "
             );
         } else {
-            Users U = userRepository.findByUsername(username).get();
+            Users U = userRepository.findById(iduser).get();
             U.setUsername(user.getUsername());
             U.setPassword(passwordEncoder.encode(user.getPassword()));
             return userRepository.save(U);
         }
     }
 
-    @PutMapping("/updateUserRole/{username}/{intitule}")
-    public Users updateUserNamePass(@PathVariable("intitule") String intitule,@PathVariable("username") String username) throws  Exception {
-        if (!(userRepository.findByUsername(username).isPresent())) {
+    @PutMapping("/updateUserRole/{iduser}/{intitule}")
+    public Users updateUserNamePass(@PathVariable("intitule") String intitule,@PathVariable("iduser") Long iduser) throws  Exception {
+        if (!(userRepository.findById(iduser).isPresent())) {
             throw new Exception(
-                    "User " + username + " not found : "
+                    "User  not found !! "
             );
         } else {
-            Users U = userRepository.findByUsername(username).get();
+            Users U = userRepository.findById(iduser).get();
             Roles roleUser  = roleRepository.findByIntitule(intitule).get();
             U.setRole(roleUser);
             return userRepository.save(U);
         }
     }
 
+
+    @GetMapping("/queriesUser/{iduser}")
+    public List<Queries> findUserQueries(@PathVariable("iduser") Long iduser) throws Exception {
+        if(userRepository.findById(iduser).isPresent()) {
+            return userRepository.findById(iduser).get().getListQueries();
+        }
+        else{
+            throw new Exception(
+                    "User not found !!"
+            );
+        }
+    }
 
 
 }

@@ -1,10 +1,8 @@
 package com.pfe.loginpartjwt.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 
 
 @Entity
@@ -12,15 +10,24 @@ import java.util.List;
 public class Queries {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="queries",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "queries", sequenceName = "id_query",initialValue=1, allocationSize=1)
     private long idquery;
     private String titre;
     private String valeur;
     private Date date_creation;
+    private String creator;
 
+    @ManyToMany
+    List<Users> users;
 
-    @ManyToMany(mappedBy = "listqueries")
-    private List<Users> usersAuthorized;
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
+    }
 
     public long getIdquery() {
         return idquery;
@@ -53,11 +60,19 @@ public class Queries {
         this.valeur = valeur;
     }
 
-    public List<Users> getUsersAuthorized(Users u) {
-        return usersAuthorized;
+
+
+    public String getCreator() {
+        return this.creator;
     }
 
-    public void setUsersAuthorized(Users usersAuthorized) {
-        this.usersAuthorized.add(usersAuthorized);
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
+
+
+
+
+
+
 }

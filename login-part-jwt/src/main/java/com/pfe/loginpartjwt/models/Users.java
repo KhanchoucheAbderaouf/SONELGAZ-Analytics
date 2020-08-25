@@ -1,6 +1,7 @@
 package com.pfe.loginpartjwt.models;
 
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ import java.util.List;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="users",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "users", sequenceName = "id_user",initialValue=1, allocationSize=1)
     private long iduser;
     @Column(length=255)
     private String username;
@@ -30,12 +32,18 @@ public class Users {
     private String email;
     private long idorganism;
     private Date date_creation;
-    @ManyToMany
-    @JoinTable(name="queries",joinColumns = @JoinColumn(name="id_user"),inverseJoinColumns = @JoinColumn(name="idquery"))
-    private List<Queries> listqueries;
     @OneToOne
     @JoinColumn(name="idrole")
     private Roles role;
+    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable
+            (
+                    name="table_ref",
+                    joinColumns={ @JoinColumn(name="iduser", referencedColumnName="iduser") },
+                    inverseJoinColumns={ @JoinColumn(name="idquery", referencedColumnName="idquery") }
+            )
+    private List<Queries> listQueries;
+
 
 
     public long getIduser() {
@@ -118,14 +126,6 @@ public class Users {
         this.date_creation = date_creation;
     }
 
-    public List<Queries> getListqueries() {
-        return listqueries;
-    }
-
-    public void setListqueries(Queries listqueries) {
-        this.listqueries.add(listqueries);
-    }
-
     public Roles getRole() {
         return role;
     }
@@ -133,4 +133,15 @@ public class Users {
     public void setRole(Roles role) {
         this.role = role;
     }
+
+
+
+    public List<Queries> getListQueries() {
+        return listQueries;
+    }
+
+    public void setListQueries(Queries q) {
+        this.listQueries.add(q);
+    }
+
 }

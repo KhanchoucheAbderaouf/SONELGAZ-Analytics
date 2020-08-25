@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class Roles {
 
     @Id
+    @GeneratedValue(generator="roles",strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "roles", sequenceName = "id_role",initialValue=1, allocationSize=1)
     private long idrole;
 
     private String intitule;

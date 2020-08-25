@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/roles")
 public class RolesController {
 
@@ -24,17 +25,16 @@ public class RolesController {
         return roleRepository.findAll();
     }
 
-    @PostMapping("/addRole")
-    public Roles addRole(@RequestBody Roles role) throws Exception{
+    @PostMapping("/addRole/{intitule}")
+    public Roles addRole(@PathVariable("intitule") String intitule) throws Exception{
 
-        if(roleRepository.findByIntitule(role.getIntitule()).isPresent()){
+        if(roleRepository.findByIntitule(intitule).isPresent()){
             throw new Exception(
                     "This role exists!!"
             );
         }else {
             Roles R = new Roles();
-            R.setIntitule(role.getIntitule());
-            R.setIdrole(roleRepository.findAll().get(roleRepository.findAll().size()-1).getIdrole() + 1);
+            R.setIntitule(intitule);
             return roleRepository.save(R);
         }
     }

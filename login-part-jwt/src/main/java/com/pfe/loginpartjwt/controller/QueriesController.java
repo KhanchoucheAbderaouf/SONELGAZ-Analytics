@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/queries")
 public class QueriesController {
 
@@ -20,28 +22,110 @@ public class QueriesController {
     @Autowired
     UserRepository userRepository;
 
-    @PostMapping("/saveQuery/{username}")
-    public void saveQuery(@RequestBody Queries query, @PathVariable("username") String username) throws Exception {
 
-        if (userRepository.findByUsername(username).isPresent()) {
+    @GetMapping("/allQueries")
+    public List<Queries> allQueries() {
+        return queryRepository.findAll();
+    }
+
+    @PostMapping("/saveQuery/{iduser}")
+    public Queries saveQuery(@RequestBody Queries query, @PathVariable("iduser") Long iduser) throws Exception {
+
+        if (userRepository.findById(iduser).isPresent() && !(queryRepository.findByTitre(query.getTitre()).isPresent())) {
             Queries Q = new Queries();
             Q.setDate_creation(new Date());
             Q.setTitre(query.getTitre());
             Q.setValeur(query.getValeur());
-            Users U = userRepository.findByUsername(username).get();
-            U.setListqueries(Q);
-            try {
-                queryRepository.saveQuery(Q.getTitre(), Q.getValeur(), U.getIduser());
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
+            Users U = userRepository.findById(iduser).get();
+            Q.setCreator(U.getUsername());
+            U.setListQueries(Q);
+            return queryRepository.save(Q);
         } else {
             throw new Exception(
-                    "no such username");
+                    "no such username or query exists !!");
         }
 
     }
 
+    @PostMapping("/addQueryOrganism/{idquery}/{idorganism}")
+    public void addAuthorization(@PathVariable("idquery") Long idquery, @PathVariable("idorganism") Long idorganism) throws Exception {
+
+        if (userRepository.findByIdorganism(idorganism).isPresent() && queryRepository.findById(idquery).isPresent()) {
+            Queries q = queryRepository.findById(idquery).get();
+            List<Users> U = userRepository.findByIdorganism(idorganism).get();
+            for (Users u : U) {
+                if (u.getListQueries().contains(q)) {
+                    throw new Exception(
+                            "query already accessed by this organism !"
+                    );
+                } else {
+                    u.setListQueries(q);
+                    userRepository.save(u);
+                }
+            }
+        } else {
+            throw new Exception(
+                    "not found organism or query !"
+            );
+
+        }
+    }
+
+
+    @DeleteMapping("/deleteQuery/{idquery}")
+    public void deleteUser(@PathVariable("idquery") Long idquery) throws Exception {
+
+        if (!(queryRepository.findById(idquery).isPresent())) {
+            throw new Exception(
+                    "This query  doesn't exists !! "
+            );
+        } else {
+            List<Users> liste = userRepository.findAll();
+            for (Users user : liste
+            ) {
+                user.getListQueries().remove(queryRepository.findById(idquery).get());
+            }
+
+            queryRepository.delete(queryRepository.findById(idquery).get());
+        }
+    }
+
+    @PutMapping("/UpdateQuery/{idquery}")
+    public Queries deleteUser(@RequestBody Queries query, @PathVariable("idquery") Long idquery) throws Exception {
+
+        if (!(queryRepository.findById(idquery).isPresent())) {
+            throw new Exception(
+                    "This query  doesn't exists"
+            );
+        } else {
+            Queries q = queryRepository.findById(idquery).get();
+            if (query.getTitre() != null) q.setTitre(query.getTitre());
+            if (query.getValeur() != null) q.setValeur(query.getValeur());
+            return queryRepository.save(q);
+        }
+    }
+
+    @DeleteMapping("/deleteAuthorization/{idorganism}/{idquery}")
+    public void deleteAuthorizarion(@PathVariable("idorganism") Long idorganism, @PathVariable("idquery") Long idquery) throws Exception {
+
+        if (!(queryRepository.findById(idquery).isPresent())) {
+            throw new Exception(
+                    "This query doesn't exists"
+            );
+        } else if (userRepository.findByIdorganism(idorganism).isPresent()){
+            List<Users> liste = userRepository.findByIdorganism(idorganism).get();
+            for (Users user : liste
+            ) {
+                user.getListQueries().remove(queryRepository.findById(idquery).get());
+                userRepository.save(user);
+            }
+        } else {
+            throw new Exception(
+                    "organism not found"
+            );
+        }
+
+    }
 
 
 
