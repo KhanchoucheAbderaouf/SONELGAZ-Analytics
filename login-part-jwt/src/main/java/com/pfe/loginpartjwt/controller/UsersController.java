@@ -121,7 +121,7 @@ public class UsersController {
     @GetMapping("/queriesUser/{username}")
     public List<Queries> findUserQueries(@PathVariable("username") String username) throws Exception {
         if(userRepository.findByUsername(username).isPresent()) {
-            return userRepository.findByUsername(username).get().getListqueries();
+            return userRepository.findByUsername(username).get().getListQueries();
         }
         else{
             throw new Exception(
