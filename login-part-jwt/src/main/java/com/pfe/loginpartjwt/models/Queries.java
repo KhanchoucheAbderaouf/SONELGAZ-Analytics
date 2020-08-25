@@ -2,6 +2,7 @@ package com.pfe.loginpartjwt.models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -17,7 +18,16 @@ public class Queries {
     private Date date_creation;
     private String creator;
 
+    @ManyToMany
+    List<Users> users;
 
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
+    }
 
     public long getIdquery() {
         return idquery;

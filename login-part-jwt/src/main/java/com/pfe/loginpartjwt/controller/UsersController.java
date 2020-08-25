@@ -4,6 +4,7 @@ package com.pfe.loginpartjwt.controller;
 import com.pfe.loginpartjwt.models.Queries;
 import com.pfe.loginpartjwt.models.Roles;
 import com.pfe.loginpartjwt.models.Users;
+import com.pfe.loginpartjwt.repositories.QueryRepository;
 import com.pfe.loginpartjwt.repositories.RoleRepository;
 import com.pfe.loginpartjwt.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class UsersController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    QueryRepository queryRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -66,6 +70,7 @@ public class UsersController {
                         "This user doesn't exists"
                 );}
             else{
+
                     userRepository.delete(userRepository.findById(iduser).get());
                 }
             }

@@ -614,9 +614,9 @@ type_centrale:[
     },
      mounted(){
       var id_user=this.$store.state.AppActiveUser.code_organisme;
-      var requet_user='select * from bi.dim_organisme where code_organisme='+id_user;
+      var requet_user='select * from bi.dim_organisme where code_organisme='+id_user
  
-      this.$http.get('http://localhost:3000/' + requet_user).then((result) => {
+      this.$http.get('http://localhost:8087/requests/' + requet_user,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
         console.log(result.data);
       var type_organisme=  result.data[0].type_organisme;
       console.log(type_organisme);
@@ -635,9 +635,9 @@ type_centrale:[
          requet_organisme="id_grpe = "+result.data[0].id_grpe;
           break;
         default:
-          requet_organisme="code_organisme = "+result.data[0].code_organisme;
+          requet_organisme="code_organisme = "+result.data[0].code_organisme
       }
-       this.$http.get('http://localhost:3000/select * from bi.dim_organisme where ' + requet_organisme).then((result) => {
+       this.$http.get('http://localhost:8087/requests/select * from bi.dim_organisme where ' + requet_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
           this.organismes=  result.data;
        })
       }).catch(error => {
@@ -649,7 +649,7 @@ type_centrale:[
       })
       });
       
-          this.$http.get('http://localhost:3000/select * from bi.dim_cause ;').then((result) => {
+          this.$http.get('http://localhost:8087/requests/select * from bi.dim_cause',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
         this.$vs.loading.close();
             
         this.$vs.notify({
@@ -848,7 +848,7 @@ type_centrale:[
         requet=requet.substring(0, requet.length -1)+" ) ,";
         }
       });
-      requet=requet.substring(0, requet.length -1)+" ) ;";
+      requet=requet.substring(0, requet.length -1)+" ) ";
       alert(requet);
        console.log(requet);
        this.$vs.loading();

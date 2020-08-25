@@ -1,6 +1,7 @@
 package com.pfe.loginpartjwt.models;
 
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class Users {
     @OneToOne
     @JoinColumn(name="idrole")
     private Roles role;
-
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (
