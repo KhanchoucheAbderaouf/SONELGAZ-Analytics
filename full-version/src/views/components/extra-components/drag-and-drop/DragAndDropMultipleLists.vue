@@ -224,13 +224,21 @@
     <!--prompt Excel End -->
 
     <!--prompt Graphe Begin -->
-     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Export" @close="clearFields" :active.sync="activePrompt2">
+     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Create" @close="clearFields" :active.sync="activePrompt2">
         <v-select v-model="attributeGraphe" :options="operationGraphe"  class="my-4" />
         <v-select v-model="DimGraphe" :options="setsGraphe" label="value" class="my-4" />
         <v-select v-model="typeGraphe" :options="typesGraphes" class="my-4" />
         
     </vs-prompt>
     <!--prompt Graphe End -->
+
+    <!--prompt requet Begin -->
+     <vs-prompt title="Save Query" class="export-options" @cancle="clearFields" @accept="saveQuery" accept-text="Save" @close="clearFields" :active.sync="activePrompt3">
+         <vs-input label-placeholder="Title" v-model="titreRequet"/>
+        
+    </vs-prompt>
+    <!--prompt requet End -->
+
 
     <div v-show="showTable" class="export-table">
       <vs-table :data="tableData" v-model="selectedUsers" pagination max-items="10" multiple search>
@@ -257,6 +265,7 @@
         
       </vs-table>
       </div>
+      <vs-button class="bg-success" @click="activePrompt3=true">Save Query</vs-button>
     </vx-card>
       <vx-card v-if="showGraphe" >
         
@@ -356,6 +365,9 @@ export default {
       selectedUsers: [],
       activePrompt: false,
       activePrompt2: false,
+      activePrompt3:false,
+      requetOlap:'',
+      titreRequet:'',
         header : [],
       tableData:[],
           groupeBy:["description_cause","code_objectif","description_regime","nomreseau","description_type_centrale","code_type_objectif","code_typesaisie",
@@ -849,8 +861,7 @@ type_centrale:[
         }
       });
       requet=requet.substring(0, requet.length -1)+" ) ";
-      alert(requet);
-       console.log(requet);
+      this.requetOlap=requet;
        this.$vs.loading();
              this.$http.get('http://localhost:8087/requests/'+requet)
       .then((result) => {
@@ -1005,6 +1016,26 @@ type_centrale:[
 
 
         
+      },
+      saveQuery:function(){
+        console.log(this.$store.state.AppActiveUser.uid);
+        console.log(this.titreRequet);
+        console.log(this.requetOlap);
+  this.$http.post('http://localhost:8087/queries/saveQuery/' + this.$store.state.AppActiveUser.uid,{titre:this.titreRequet,valeur:this.requetOlap},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+         this.$vs.notify({
+        title: ' Requet saved ',
+        text: this.titreRequet,
+        color: 'success'
+      })
+       }).catch(error => {
+        
+         this.$vs.notify({
+        title: ' Requet Not Saved  ',
+        text: error,
+        color: 'danger'
+      })
+      });
+
       }
     
   }
