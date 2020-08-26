@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @EnableWebSecurity
 public class MyUserDetails implements UserDetails {
 
-
+    private Long iduser;
     private String username;
     private String password;
     private boolean active;
@@ -30,6 +30,7 @@ public class MyUserDetails implements UserDetails {
     }
 
     public MyUserDetails(Users user){
+        this.iduser = user.getIduser();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.active = user.isActive();
@@ -44,7 +45,13 @@ public class MyUserDetails implements UserDetails {
     }
 
 
+    public Long getIduser() {
+        return iduser;
+    }
 
+    public void setIduser(Long iduser) {
+        this.iduser = iduser;
+    }
     public void setUsername(String username) {
         this.username = username;
     }
