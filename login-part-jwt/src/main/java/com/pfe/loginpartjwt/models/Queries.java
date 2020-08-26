@@ -13,10 +13,17 @@ public class Queries {
     @GeneratedValue(generator="queries",strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "queries", sequenceName = "id_query",initialValue=1, allocationSize=1)
     private long idquery;
+    @Column(length = 100,nullable = false)
     private String titre;
+    @Lob
+    @Column
     private String valeur;
     private Date date_creation;
+    @Column(length = 255,nullable = false)
     private String creator;
+
+
+
 
     public long getIdquery() {
         return idquery;

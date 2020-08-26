@@ -11,7 +11,7 @@ public class Roles {
     @GeneratedValue(generator="roles",strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "roles", sequenceName = "id_role",initialValue=1, allocationSize=1)
     private long idrole;
-
+    @Column(length = 100,nullable = false)
     private String intitule;
 
     public long getIdrole() {

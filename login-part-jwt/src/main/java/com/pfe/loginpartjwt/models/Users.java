@@ -1,10 +1,8 @@
 package com.pfe.loginpartjwt.models;
 
-import org.hibernate.annotations.ManyToAny;
-import org.hibernate.annotations.OnDelete;
+
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,16 +15,16 @@ public class Users {
     @GeneratedValue(generator="users",strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "users", sequenceName = "id_user",initialValue=1, allocationSize=1)
     private long iduser;
-    @Column(length=255)
+    @Column(length=255,unique = true,nullable = false)
     private String username;
     @Column(length=255)
     private String password;
     private boolean active;
-    @Column(length=50)
+    @Column(length=50,nullable = false)
     private String nom;
-    @Column(length=50)
+    @Column(length=50,nullable = false)
     private String prenom;
-    @Column(length=20)
+    @Column(length=10)
     private String telephone;
     @Column(length=100)
     private String email;
