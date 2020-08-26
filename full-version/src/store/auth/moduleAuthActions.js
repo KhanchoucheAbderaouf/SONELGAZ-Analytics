@@ -324,7 +324,7 @@ export default {
                   status      : "online",
                   userRole    : "admin"
               }
-              userInfo.uid=1;
+              userInfo.uid=response.data.iduser;
               userInfo.displayName=response.data.nom;
               
               userInfo.code_organisme=response.data.idorganism;
