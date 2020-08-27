@@ -56,9 +56,7 @@ public class QueriesController {
             Queries q = queryRepository.findById(idquery).get();
             List<Users> U = userRepository.findByIdorganism(idorganism).get();
             for (Users u : U) {
-                if (u.getListQueries().contains(q)) {
-
-                } else {
+                if (!(u.getListQueries().contains(q))) {
                     u.setListQueries(q);
                     userRepository.save(u);
                 }
