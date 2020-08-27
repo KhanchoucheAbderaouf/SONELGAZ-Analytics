@@ -57,9 +57,7 @@ public class QueriesController {
             List<Users> U = userRepository.findByIdorganism(idorganism).get();
             for (Users u : U) {
                 if (u.getListQueries().contains(q)) {
-                    throw new Exception(
-                            "query already accessed by this organism !"
-                    );
+
                 } else {
                     u.setListQueries(q);
                     userRepository.save(u);

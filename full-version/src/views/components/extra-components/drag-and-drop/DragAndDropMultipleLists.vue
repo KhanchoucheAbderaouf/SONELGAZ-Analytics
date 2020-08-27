@@ -863,7 +863,7 @@ type_centrale:[
       requet=requet.substring(0, requet.length -1)+" ) ";
       this.requetOlap=requet;
        this.$vs.loading();
-             this.$http.get('http://localhost:8087/requests/'+requet)
+             this.$http.get('http://localhost:8087/requests/'+requet,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
         this.$vs.loading.close();
             
@@ -971,6 +971,8 @@ type_centrale:[
         var contrlerGraphe=this.header[contrlerIndex+1];
          
         this.operationGraphe.forEach(op => {
+
+          //if next is an operation
        if(contrlerGraphe===op.toLowerCase()){
               value=true;
               

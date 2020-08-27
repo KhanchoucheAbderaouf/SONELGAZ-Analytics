@@ -11,7 +11,7 @@
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
-        <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} ITEM</h4>
+        <h4>Partage Requet</h4>
         <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
@@ -20,55 +20,45 @@
 
       <div class="p-6">
 
-        <!-- Product Image -->
-        <template v-if="dataImg">
 
-          <!-- Image Container -->
-          <div class="img-container w-64 mx-auto flex items-center justify-center">
-            <img :src="dataImg" alt="img" class="responsive">
-          </div>
-
-          <!-- Image upload Buttons -->
-          <div class="modify-img flex justify-between mt-5">
-            <input type="file" class="hidden" ref="updateImgInput" @change="updateCurrImg" accept="image/*">
-            <vs-button class="mr-4" type="flat" @click="$refs.updateImgInput.click()">Update Image</vs-button>
-            <vs-button type="flat" color="#999" @click="dataImg = null">Remove Image</vs-button>
-          </div>
-        </template>
-
-        <!-- NAME -->
-        <vs-input label="Name" v-model="dataName" class="mt-5 w-full" name="item-name" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
+     
 
         <!-- CATEGORY -->
-        <vs-select v-model="dataCategory" label="Category" class="mt-5 w-full" name="item-category" v-validate="'required'">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
-        </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>
-
-        <!-- ORDER STATUS -->
-        <vs-select v-model="dataOrder_status" label="Order Status" class="mt-5 w-full">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in order_status_choices" />
-        </vs-select>
-
-        <!-- PRICE -->
-        <vs-input
-          icon-pack="feather"
-          icon="icon-dollar-sign"
-          label="Price"
-          v-model="dataPrice"
-          class="mt-5 w-full"
-          v-validate="{ required: true, regex: /\d+(\.\d+)?$/ }"
-          name="item-price" />
-        <span class="text-danger text-sm" v-show="errors.has('item-price')">{{ errors.first('item-price') }}</span>
-
-        <!-- Upload -->
-        <!-- <vs-upload text="Upload Image" class="img-upload" ref="fileUpload" /> -->
-
-        <div class="upload-img mt-5" v-if="!dataImg">
-          <input type="file" class="hidden" ref="uploadImgInput" @change="updateCurrImg" accept="image/*">
-          <vs-button @click="$refs.uploadImgInput.click()">Upload Image</vs-button>
+        <div class="flex">
+          <span class="mr-4"> users:</span>
+          <vs-switch v-model="partageUser">partager par users</vs-switch>
         </div>
+        <div  v-show="partageUser">
+       
+        <v-select label="username" name="users" :options="Users_choices" class="mt-5 w-full" v-model="dataUser" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+        <br><br>
+        </div>
+
+       <!-- ORDER STATUS -->
+        <div class="flex">
+          <span class="mr-4"> organisme:</span>
+          <vs-switch v-model="partageOrganisme">partager par organisme</vs-switch>
+        </div>
+        <div  v-show="partageOrganisme">
+       
+       <v-select name="organismes" class="mt-5 w-full" :filter="fuseSearch" :options="Organismes_choices" v-model="dataOrganisme" :getOptionLabel="option => option.type_organisme">
+          <template  #option="{ nom_pole,nom_unite,nom_centrale,num_grpe, type_organisme }">
+            <cite>{{ type_organisme}}</cite>
+            <p v-if="type_organisme==='Pole'"> {{ nom_pole  }}</p>
+            <p v-if="type_organisme==='Unite'"> {{ nom_unite  }}</p>
+            <p v-if="type_organisme==='Centrale'"> {{ nom_centrale  }}</p>
+            <p v-if="type_organisme==='Groupe'"> {{ nom_centrale+ "-"+num_grpe }}</p>
+              <br />
+            
+          </template>
+    
+  </v-select>
+        </div>
+        
+
+       
+
+        
       </div>
     </VuePerfectScrollbar>
 
@@ -81,7 +71,8 @@
 
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-
+import vSelect from 'vue-select'
+import Fuse from "fuse.js"
 export default {
   props: {
     isSidebarActive: {
@@ -95,19 +86,54 @@ export default {
   },
   watch: {
     isSidebarActive(val) {
+        this.$http.get('http://localhost:8087/users/allUsers',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {
+       ;
+            
+        this.$vs.notify({
+          
+        title: ' Requet all user envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      })
+ this.Users_choices=result.data;
+      }).catch(error => {
+         this.$vs.notify({
+        title: ' Requet all user erroné  ',
+        text: error,
+        color: 'danger'
+      })
+      });
+
+
+         this.$http.get('http://localhost:8087/requests/select * from bi.dim_organisme',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {
+       ;
+            
+        this.$vs.notify({
+          
+        title: ' Requet all organisme envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      })
+ this.Organismes_choices=result.data;
+      }).catch(error => {
+         this.$vs.notify({
+        title: ' Requet all organisme erroné  ',
+        text: error,
+        color: 'danger'
+      })
+      });
       if(!val) return
       if(Object.entries(this.data).length === 0) {
         this.initValues()
         this.$validator.reset()
       }else {
-        let { category, id, img, name, order_status, price } = JSON.parse(JSON.stringify(this.data))
-        this.dataId = id
-        this.dataCategory = category
-        this.dataImg = img
-        this.dataName = name
-        this.dataOrder_status = order_status
-        this.dataPrice = price
-        this.initValues()
+        let { idquery, creator, date_creation, titre, valeur } = JSON.parse(JSON.stringify(this.data))
+        this.dataId = idquery
+       console.log(this.dataId);
+       
+        
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     }
@@ -116,25 +142,16 @@ export default {
     return {
 
       dataId: null,
-      dataName: "",
-      dataCategory: null,
-      dataImg: null,
-      dataOrder_status: "pending",
-      dataPrice: 0,
+    partageOrganisme:false,
+    partageUser:false,
+      dataUser: null,
+      
+      dataOrganisme: null,
+      
 
-      category_choices: [
-        {text:'Audio',value:'audio'},
-        {text:'Computers',value:'computers'},
-        {text:'Fitness',value:'fitness'},
-        {text:'Appliance',value:'appliance'}
-      ],
+      Users_choices: [],
 
-      order_status_choices: [
-        {text:'Pending',value:'pending'},
-        {text:'Canceled',value:'canceled'},
-        {text:'Delivered',value:'delivered'},
-        {text:'On Hold',value:'on_hold'}
-      ],
+      Organismes_choices: [],
       settings: { // perfectscrollbar settings
           maxScrollbarLength: 60,
           wheelSpeed: .60,
@@ -155,37 +172,63 @@ export default {
       }
     },
     isFormValid() {
-      return !this.errors.any() && this.dataName && this.dataCategory && (this.dataPrice > 0)
+      return !this.errors.any() && (this.dataUser || this.dataOrganisme) 
     }
   },
   methods: {
     initValues() {
       if(this.data.id) return
         this.dataId = null
-        this.dataName = ""
-        this.dataCategory = null
-        this.dataOrder_status = "pending"
-        this.dataPrice = 0
-        this.dataImg = null
+        
+        this.dataUser= null
+      
+      this.dataOrganisme=null
+       
     },
     submitData() {
       this.$validator.validateAll().then(result => {
           if (result) {
-            const obj = {
-              id: this.dataId,
-              name: this.dataName,
-              img: this.dataImg,
-              category: this.dataCategory,
-              order_status: this.dataOrder_status,
-              price: this.dataPrice
-            }
+            
 
-            if(this.dataId !== null && this.dataId >= 0) {
-              this.$store.dispatch("dataList/updateItem", obj).catch(err => { console.error(err) })
-            }else{
-              delete obj.id
-              obj.popularity = 0
-              this.$store.dispatch("dataList/addItem", obj).catch(err => { console.error(err) })
+            if(this.partageUser) {
+                    this.$http.post(' http://localhost:8087/queries/addQueryUser/'+this.dataId+'/'+this.dataUser.iduser,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+                          .then((result) => {
+                          ;
+                                
+                            this.$vs.notify({
+                              
+                            title: ' Requet partage user envoyé  ',
+                            text: 'votre requet a été envoyé avec succès',
+                            color: 'success'
+                          })
+                    
+                          }).catch(error => {
+                            this.$vs.notify({
+                            title: ' Requet partage user erroné  ',
+                            text: error,
+                            color: 'danger'
+                          })
+                    });
+            };
+            if(this.partageOrganisme){
+               this.$http.post(' http://localhost:8087/queries/addQueryOrganism/'+this.dataId+'/'+this.dataOrganisme.code_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+                          .then((result) => {
+                          ;
+                                
+                            this.$vs.notify({
+                              
+                            title: ' Requet partage organisme envoyé  ',
+                            text: 'votre requet a été envoyé avec succès',
+                            color: 'success'
+                          })
+                    
+                          }).catch(error => {
+                            this.$vs.notify({
+                            title: ' Requet partage organisme erroné  ',
+                            text: error,
+                            color: 'danger'
+                          })
+                    });
             }
 
             this.$emit('closeSidebar')
@@ -193,18 +236,21 @@ export default {
           }
       })
     },
-    updateCurrImg(input) {
-      if (input.target.files && input.target.files[0]) {
-        var reader = new FileReader()
-        reader.onload = e => {
-          this.dataImg = e.target.result
-        }
-        reader.readAsDataURL(input.target.files[0])
-      }
-    }
+    fuseSearch(options, search) {
+      const fuse = new Fuse(options, {
+        keys: ["type_organisme","nom_pole", "nom_unite","nom_centrale","num_grpe"],
+        shouldSort: true
+      });
+      return search.length
+        ? fuse.search(search).map(({ item }) => item)
+        : fuse.list;
+    },
+   
+    
   },
   components: {
     VuePerfectScrollbar,
+    vSelect,
   }
 }
 </script>
