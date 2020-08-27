@@ -21,6 +21,7 @@
                 <vs-list>
                     <vs-list-header title="La List Des Attributes" color="primary"></vs-list-header>
                     <vs-collapse :type="type" accordion>
+                    <!--fait_consommation-->
                       <vs-collapse-item class="bg-primary text-white"  >
                         <div slot="header">
                           fait_consommation
@@ -31,8 +32,18 @@
                         </div>
                     </draggable>
                       </vs-collapse-item>
-
-
+                      <!--fait_objectif-->
+                    <vs-collapse-item class="bg-primary text-white" >
+                        <div slot="header">
+                          fait_objectif
+                        </div>
+                    <draggable :list="list1" group="people" class="p-2 cursor-move">
+                      <div v-for="(listItem, index) in list1" :key="index" >
+                        <vs-list-item  v-if="listItem.TableFait==='fait_objectif'" :title="listItem.attributeName" ></vs-list-item>
+                        </div>
+                    </draggable>
+                      </vs-collapse-item>
+                    <!--fait_production-->
                       <vs-collapse-item class="bg-primary text-white" >
                         <div slot="header">
                           fait_production
@@ -40,6 +51,50 @@
                     <draggable :list="list1" group="people" class="p-2 cursor-move">
                       <div v-for="(listItem, index) in list1" :key="index" >
                         <vs-list-item  v-if="listItem.TableFait==='fait_production'" :title="listItem.attributeName" ></vs-list-item>
+                        </div>
+                    </draggable>
+                      </vs-collapse-item>
+                    <!--fait_pv-->
+                        <vs-collapse-item class="bg-primary text-white" >
+                        <div slot="header">
+                          fait_pv
+                        </div>
+                    <draggable :list="list1" group="people" class="p-2 cursor-move">
+                      <div v-for="(listItem, index) in list1" :key="index" >
+                        <vs-list-item  v-if="listItem.TableFait==='fait_pv'" :title="listItem.attributeName" ></vs-list-item>
+                        </div>
+                    </draggable>
+                      </vs-collapse-item>
+                        <!--fait_qualite_service-->
+                        <vs-collapse-item class="bg-primary text-white" >
+                        <div slot="header">
+                          fait_qualite_service
+                        </div>
+                    <draggable :list="list1" group="people" class="p-2 cursor-move">
+                      <div v-for="(listItem, index) in list1" :key="index" >
+                        <vs-list-item  v-if="listItem.TableFait==='fait_qualite_service'" :title="listItem.attributeName" ></vs-list-item>
+                        </div>
+                    </draggable>
+                      </vs-collapse-item>
+                        <!-- fait_qualite_service_imed-->
+                        <vs-collapse-item class="bg-primary text-white" >
+                        <div slot="header">
+                          fait_qualite_service_imed
+                        </div>
+                    <draggable :list="list1" group="people" class="p-2 cursor-move">
+                      <div v-for="(listItem, index) in list1" :key="index" >
+                        <vs-list-item  v-if="listItem.TableFait==='fait_qualite_service_imed'" :title="listItem.attributeName" ></vs-list-item>
+                        </div>
+                    </draggable>
+                      </vs-collapse-item>
+                       <!-- fait_separation_reseau-->
+                        <vs-collapse-item class="bg-primary text-white" >
+                        <div slot="header">
+                          fait_separation_reseau
+                        </div>
+                    <draggable :list="list1" group="people" class="p-2 cursor-move">
+                      <div v-for="(listItem, index) in list1" :key="index" >
+                        <vs-list-item  v-if="listItem.TableFait==='fait_separation_reseau'" :title="listItem.attributeName" ></vs-list-item>
                         </div>
                     </draggable>
                       </vs-collapse-item>
@@ -410,209 +465,83 @@ export default {
             saisieObjectif:null
 
           },
-             list1: [
-            {
-              attributeName: "densite_fuel",
-              TableFait: "fait_consommation",
-              TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],
-              operation:[],
-              },
-            {attributeName: "comsommation_combus_fuel_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "consommation_combus_gaz_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "consommation_specifique_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "comsommation_combus_fuel_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "consommation_combus_gaz_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "consommation_specifique_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "stock_fuel_initial",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "consommation_aux_marche",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "consommation_aux_arret",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "consommation_commune",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "reception_fuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "pcsfuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "pcsgaz",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "production_bu_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "production_ba_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "production_bu_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "production_ba_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "puissance_inst_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "puissance_dev_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "energie_productible",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "energie_productible_pointe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-            {attributeName: "heures_jour",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
- 
+list1: [
+{
+  attributeName: "densite_fuel",
+  TableFait: "fait_consommation",
+  TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],
+  operation:[],
+  },
+{attributeName: "comsommation_combus_fuel_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_combus_gaz_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_specifique_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "comsommation_combus_fuel_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_combus_gaz_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_specifique_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "stock_fuel_initial",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_aux_marche",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_aux_arret",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_commune",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "reception_fuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "pcsfuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "pcsgaz",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+//fait production
+{attributeName: "production_bu_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "production_ba_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "production_bu_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "production_ba_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "puissance_inst_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "puissance_dev_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_productible",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_productible_pointe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heures_jour",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+//fait_objectif
+{attributeName: "objectif_annuel",TableFait: "fait_objectif",TablesDimentions:["dim_type_objectif","dim_type_saisieobjectif","dim_objectif","dim_organisme"],operation:[]},
+//fait_pv
+{attributeName: "production_bu",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_gaz",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
+{attributeName: "consommation_fuel",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
+{attributeName: "densite_fuel_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
+{attributeName: "pcsfuel_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
+{attributeName: "pcsgaz_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
+//fait_qualite_service
+{attributeName: "energie_perdue",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_perdue_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_productible_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_productible_pointe_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_indispo",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_indispo_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+//fait_qualite_service_imed
+{attributeName: "energie_perdue_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_perdue_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_productible_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_productible_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_indispo_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_indispo_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "date_debut",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+//fait_separation_reseau
+{attributeName: "nombre_dt",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_marche_vide",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_marche_gaz",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_marche_fuel",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_indiponibilite",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "heur_reserve",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "nombre_demarrage",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "nbre_declanchement_reussi",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
 
-            ],
-
-            list2: [],
-  organismes:[],
-  
-  
-
-
-        causes: [],
-objectif:[
-  {
-    "code_objectif": 2409,
-    "annee": 2015,
-    "date_saisie": "2015-04-27 00:00:00",
-    "date_revesion": "2015-01-01 00:00:00"
-  },
-  {
-    "code_objectif": 2410,
-    "annee": 2015,
-    "date_saisie": "2015-04-27 00:00:00",
-    "date_revesion": "2015-01-01 00:00:00"
-  },
-  {
-    "code_objectif": 2411,
-    "annee": 2015,
-    "date_saisie": "2015-04-27 00:00:00",
-    "date_revesion": "2015-01-01 00:00:00"
-  }],
-  regime:[
-  {
-    "code_regime": 1,
-    "description": "Sans Regime",
-    "date_chargement": "2015-04-16 14:38:49.636"
-  },
-  {
-    "code_regime": 38,
-    "description": "TG Pointe",
-    "date_chargement": "2015-04-16 14:47:39.422"
-  },
-  {
-    "code_regime": 39,
-    "description": "TG Basse",
-    "date_chargement": "2015-04-16 14:47:39.426"
-  },
-  {
-    "code_regime": 41,
-    "description": "CC Base",
-    "date_chargement": "2018-07-20 01:00:01.802"
-  },
-  {
-    "code_regime": 42,
-    "description": "TG Base",
-    "date_chargement": "2018-07-23 01:00:05.007"
-  },
-  {
-    "code_regime": 43,
-    "description": "TG Base",
-    "date_chargement": "2018-07-23 01:00:05.012"
-  },
-  {
-    "code_regime": 44,
-    "description": "TG Base",
-    "date_chargement": "2018-07-23 01:00:05.015"
-  }
 ],
-reseau:[
-  {
-    "code_reseau": 12,
-    "nomreseau": "Réseau Isoles",
-    "libelle": "Réseau Isoles",
-    "date_chargement": "2015-01-29"
-  },
-  {
-    "code_reseau": 13,
-    "nomreseau": "Réseau Interconnecté",
-    "libelle": "Réseau Interconnecté",
-    "date_chargement": "2015-01-29"
-  },
-  {
-    "code_reseau": 11,
-    "nomreseau": "Boucle Adrar",
-    "libelle": "Boucle Adrar",
-    "date_chargement": "2015-01-29"
-  }
-],
-type_centrale:[
-  {
-    "code_type_centrale": 53,
-    "description": "MD",
-    "date_chargement": "2015-04-16",
-    "id_type_centrale": 11
-  },
-  {
-    "code_type_centrale": 54,
-    "description": "EO",
-    "date_chargement": "2015-04-16",
-    "id_type_centrale": 12
-  },
-  {
-    "code_type_centrale": 55,
-    "description": "CC",
-    "date_chargement": "2015-04-16",
-    "id_type_centrale": 13
-  }],
-  type_evenement:[
-  {
-    "code_evenement": 40,
-    "description": "Réduction de charge pour redémarrage (cogénération/CC)",
-    "date_chargement": "2015-04-16",
-    "id_type_evenement": 1
-  },
-  {
-    "code_evenement": 41,
-    "description": "Déclenchement de groupe",
-    "date_chargement": "2015-04-16",
-    "id_type_evenement": 2
-  },
-  {
-    "code_evenement": 42,
-    "description": "Arrêt groupe (hors programme) sur ordre DN",
-    "date_chargement": "2015-04-16",
-    "id_type_evenement": 3
-  },
-  {
-    "code_evenement": 43,
-    "description": "Arrêt groupe accordé par l'OS",
-    "date_chargement": "2015-04-16",
-    "id_type_evenement": 4
-  }],
-  type_objectif:[
-  {
-    "code_type_objectif": 1,
-    "libelle_objectif": "Production",
-    "unite_mesure": "GWH"
-  },
-  {
-    "code_type_objectif": 2,
-    "libelle_objectif": "Consommation specifique",
-    "unite_mesure": "TH/KWH"
-  },
-  {
-    "code_type_objectif": 7,
-    "libelle_objectif": "Consommation combustible",
-    "unite_mesure": "MTH"
-  },
-  {
-    "code_type_objectif": 8,
-    "libelle_objectif": "Consommation combustible gaz",
-    "unite_mesure": "MTH"
-  },
-  {
-    "code_type_objectif": 9,
-    "libelle_objectif": "Consommation combustible fuel",
-    "unite_mesure": "MTH"
-  }],
-  type_saisie:[
-  {
-    "code_typesaisie": 1,
-    "libelle": "Total"
-  },
-  {
-    "code_typesaisie": 2,
-    "libelle": "Total thermique"
-  },
-  {
-    "code_typesaisie": 11,
-    "libelle": "TG>=100MW"
-  },
-  {
-    "code_typesaisie": 12,
-    "libelle": "TG<100MW"
-  }]
+
+list2: [],
+//les tables de DIM
+organismes:[],
+causes: [],
+objectif:[],
+regime:[],
+reseau:[],
+type_centrale:[],
+type_evenement:[],
+type_objectif:[],
+type_saisie:[]
   
 
         }
@@ -627,7 +556,7 @@ type_centrale:[
      mounted(){
       var id_user=this.$store.state.AppActiveUser.code_organisme;
       var requet_user='select * from bi.dim_organisme where code_organisme='+id_user
- 
+ //requet pour avoir Dim organisme
       this.$http.get('http://localhost:8087/requests/' + requet_user,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
         console.log(result.data);
       var type_organisme=  result.data[0].type_organisme;
@@ -652,37 +581,49 @@ type_centrale:[
        this.$http.get('http://localhost:8087/requests/select * from bi.dim_organisme where ' + requet_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
           this.organismes=  result.data;
        })
-      }).catch(error => {
-        this.$vs.loading.close();
-         this.$vs.notify({
-        title: ' Requet organisme  ',
-        text: error,
-        color: 'danger'
-      })
       });
-      
-          this.$http.get('http://localhost:8087/requests/select * from bi.dim_cause',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
-        this.$vs.loading.close();
-            
-        this.$vs.notify({
-          
-        title: ' Requet causes ',
-        text: 'votre requet a été envoyé avec succès',
-        color: 'success'
-      })
-      this.causes=  result.data;
-      }).catch(error => {
-        this.$vs.loading.close();
-         this.$vs.notify({
-        title: ' Requet causes  ',
-        text: error,
-        color: 'danger'
-      })
+      //requet pour avoir Dim cause
+          this.$http.get('http://localhost:8087/requests/select * from bi.dim_cause',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.causes=  result.data;
       });
 
-
+//requet pour avoir Dim Objectif
+   this.$http.get('http://localhost:8087/requests/select * from bi.dim_objectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.objectif=  result.data;
+      });
+      //requet pour avoir Dim regime
+   this.$http.get('http://localhost:8087/requests/select * from bi.dim_regime_fct',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.regime=  result.data;
+      });
+        //requet pour avoir Dim reseau
+   this.$http.get('http://localhost:8087/requests/select * from bi.dim_reseau',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.reseau=  result.data;
+      });
+           //requet pour avoir Dim type_centrale
+   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_centrale',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.type_centrale=  result.data;
+      });
+        //requet pour avoir Dim type_evenement
+   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_evenement',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.type_evenement=  result.data;
+      });
+           //requet pour avoir Dim type_objectif
+   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_objectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.type_objectif=  result.data;
+      });
+             //requet pour avoir Dim type_saisie
+   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_saisieobjectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          .then((result) => {   
+        this.type_saisie=  result.data;
+      });
       
-
      },
     watch: {
     

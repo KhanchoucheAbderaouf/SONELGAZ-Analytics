@@ -121,7 +121,7 @@
 
               <vs-td class="whitespace-no-wrap">
                 <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
-                <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="createTable(tr)" />
+                <feather-icon icon="InboxIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="createTable(tr)" />
               </vs-td>
 
             </vs-tr>
