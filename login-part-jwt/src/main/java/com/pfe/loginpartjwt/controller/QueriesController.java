@@ -131,8 +131,10 @@ public class QueriesController {
         if (userRepository.findById(iduser).isPresent() && queryRepository.findById(idquery).isPresent()) {
             Queries q = queryRepository.findById(idquery).get();
             Users U = userRepository.findById(iduser).get();
-                    U.setListQueries(q);
-                    userRepository.save(U);
+            if(!(U.getListQueries().contains(q))) {
+                U.setListQueries(q);
+                userRepository.save(U);
+            }
         } else {
             throw new Exception(
                     "not found organism or query !"
@@ -149,7 +151,7 @@ public class QueriesController {
                     "This query doesn't exists"
             );
         } else if (userRepository.findById(iduser).isPresent()){
-            Users U = userRepository.findById(iduser).get();
+                Users U = userRepository.findById(iduser).get();
                 U.getListQueries().remove(queryRepository.findById(idquery).get());
                 userRepository.save(U);
 
@@ -162,5 +164,25 @@ public class QueriesController {
     }
 
 
+    @DeleteMapping("/deleteAuthorizationOthers/{idquery}")
+    public void deleteAuthorizarionOthers( @PathVariable("idquery") Long idquery) throws Exception {
+
+        if (!(queryRepository.findById(idquery).isPresent())) {
+            throw new Exception(
+                    "This query doesn't exists"
+            );
+        } else {
+           String createur = queryRepository.findById(idquery).get().getCreator();
+           List<Users> liste = userRepository.findAllByListQueries(queryRepository.findById(idquery).get()).get();
+            for (Users u: liste
+                 ) {
+                if (!(u.getUsername().equals(createur))) {
+                    u.getListQueries().remove(queryRepository.findById(idquery).get());
+                    userRepository.save(u);
+                }
+            }
+        }
+
+    }
 
 }
