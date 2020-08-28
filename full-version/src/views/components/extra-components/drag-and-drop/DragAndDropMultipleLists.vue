@@ -133,7 +133,7 @@
       <div slot="header">
         Dim-cause
       </div>
-      <v-select label="description" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select label="description_cause" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
@@ -170,14 +170,14 @@
       <div slot="header" >
         Dim-regime-fct
       </div>
-       <v-select label="description" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+       <v-select label="description_regime" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_reseau">
       <div slot="header">
         Dim-reseau
       </div>
-       <v-select label="libelle" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+       <v-select label="libelle_reseau" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_temps">
@@ -194,14 +194,14 @@
       <div slot="header">
         Dim-type-centrale
       </div>
-     <v-select label="description" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+     <v-select label="description_type_centrale" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_evenement">
       <div slot="header">
         Dim-type-evenement
       </div>
-      <v-select label="description" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select label="description_evenement" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_objectif">
@@ -215,7 +215,7 @@
       <div slot="header">
         Dim-saisie-objectif
       </div>
-     <v-select label="libelle" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+     <v-select label="libelle_type_saisieobjectif" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item class="bg-primary text-white" >

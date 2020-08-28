@@ -316,6 +316,7 @@ export default {
                localStorage.setItem("loggedIn",'true')
               
               let userInfo = {
+                  username:'',
                   uid         : 0, 
                   code_organisme:1,         // From Auth
                   displayName : "John Doe", // From Auth
@@ -324,6 +325,7 @@ export default {
                   status      : "online",
                   userRole    : "admin"
               }
+              userInfo.username=response.data.username;
               userInfo.uid=response.data.iduser;
               userInfo.displayName=response.data.nom;
               

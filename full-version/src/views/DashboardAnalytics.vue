@@ -120,8 +120,9 @@
               </vs-td>
 
               <vs-td class="whitespace-no-wrap">
-                <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
-                <feather-icon icon="InboxIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="createTable(tr)" />
+                <feather-icon icon="EditIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
+                <feather-icon icon="InboxIcon"  svgClasses="w-5 h-5 hover:text-success stroke-current" class="ml-2" @click.stop="createTable(tr)" />
+                 <feather-icon icon="TrashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="supprimePermission(tr)" />
               </vs-td>
 
             </vs-tr>
@@ -313,6 +314,27 @@ export default {
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },
+    supprimePermission(tr){
+      this.$vs.loading();
+       this.$http.delete('http://localhost:8087/deleteAuthorizationOthers/'+tr.idquery,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {
+        this.$vs.loading.close();
+            
+        this.$vs.notify({
+          
+        title: ' Requet envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      })
+      }).catch(error => {
+        this.$vs.loading.close();
+         this.$vs.notify({
+        title: ' Requet erroné  ',
+        text: error,
+        color: 'danger'
+      })
+      });
+    },
     getOrderStatusColor(status) {
       if(status == 'on_hold') return "warning"
       if(status == 'delivered') return "success"
@@ -478,7 +500,7 @@ export default {
   },
   mounted() {
     this.isMounted = true;
-    this.$http.get('http://localhost:8087/queries/allQueries',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+    this.$http.get('http://localhost:8087/users/queriesUser/'+this.$store.state.AppActiveUser.uid,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {this.products=result.data});
   },
 
