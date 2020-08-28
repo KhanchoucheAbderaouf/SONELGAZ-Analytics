@@ -133,24 +133,24 @@
       <div slot="header">
         Dim-cause
       </div>
-      <v-select label="description_cause" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select multiple label="description_cause" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
     <vs-collapse-item v-show="ck_objectif">
       <div slot="header" >
         Dim-objectif
-      </div><v-select label="code_objectif" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      </div><v-select multiple label="code_objectif" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
-    <vs-collapse-item v-show="ck_organisme">
+    <vs-collapse-item v-show="ck_type_organisme">
       <div slot="header">
         Dim-organisme
       </div>
      
     
-  <v-select :filter="fuseSearch" :options="organismes" v-model="contraintes.organisme" :getOptionLabel="option => option.type_organisme">
+  <v-select  :filter="fuseSearch" :options="organismes" v-model="contraintes.organisme" :getOptionLabel="option => option.type_organisme">
     <template  #option="{ nom_pole,nom_unite,nom_centrale,num_grpe, type_organisme }">
       <cite>{{ type_organisme}}</cite>
      <p v-if="type_organisme==='Pole'"> {{ nom_pole  }}</p>
@@ -170,14 +170,14 @@
       <div slot="header" >
         Dim-regime-fct
       </div>
-       <v-select label="description_regime" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+       <v-select multiple label="description_regime" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_reseau">
       <div slot="header">
         Dim-reseau
       </div>
-       <v-select label="libelle_reseau" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+       <v-select multiple label="libelle_reseau" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_temps">
@@ -194,28 +194,28 @@
       <div slot="header">
         Dim-type-centrale
       </div>
-     <v-select label="description_type_centrale" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+     <v-select multiple label="description_type_centrale" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_evenement">
       <div slot="header">
         Dim-type-evenement
       </div>
-      <v-select label="description_evenement" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select multiple label="description_evenement" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_objectif">
       <div slot="header">
         Dim-type-objectif
       </div>
-      <v-select label="libelle_objectif" :options="type_objectif" v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select multiple label="libelle_objectif" :options="type_objectif" v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_saisie_objectif">
       <div slot="header">
         Dim-saisie-objectif
       </div>
-     <v-select label="libelle_type_saisieobjectif" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+     <v-select multiple label="libelle_type_saisieobjectif" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item class="bg-primary text-white" >
@@ -305,7 +305,7 @@
           <vs-button style="margin-right:30px;" @click="activePrompt2=true">Create Charts</vs-button>
         </template>
         <template slot="header">
-          <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Creation</vs-button>
+          <vs-button class="bg-danger" @click="backToCreation">Back To Creation</vs-button>
         </template>
   <template slot="thead">
           <vs-th  v-for="heading in header" :key="heading" :sort-key="heading">{{ heading }}</vs-th>
@@ -425,9 +425,7 @@ export default {
       titreRequet:'',
         header : [],
       tableData:[],
-          groupeBy:["description_cause","code_objectif","description_regime","nomreseau","description_type_centrale","code_type_objectif","code_typesaisie",
-          "nom_pole","nom_unite","nom_centrale","num_grpe",
-          "annee","trimestre","saison","mois","semaine_dans_annee","jour_du_mois"],
+          groupeBy:[],
           sets: [],
           operationsets:["sum","AVG","MIN","MAX"],
            radios2:'primary',
@@ -436,12 +434,23 @@ export default {
            ck_objectif:false,
            ck_type_centrale:false,
            ck_type_organisme:false,
-           ck_type_regime_fct:false,
+           ck_regime_fct:false,
            ck_temps:false,
            ck_type_evenement:false,
            ck_type_objectif:false,
            ck_saisie_objectif:false,
           
+            ck_cause2:true,
+           ck_reseau2:true,
+           ck_objectif2:true,
+           ck_type_centrale2:true,
+           ck_type_organisme2:true,
+           ck_regime_fct2:true,
+           ck_temps2:true,
+           ck_type_evenement2:true,
+           ck_type_objectif2:true,
+           ck_saisie_objectif2:true,
+
             configFromdateTimePicker: {
               minDate: null,
               maxDate: null
@@ -628,7 +637,17 @@ type_saisie:[]
     watch: {
     
     list2: function () {
-      
+      this.groupeBy=["nom_pole","nom_unite","nom_centrale","num_grpe"];
+      this.ck_cause2=true;
+      this.ck_reseau2=true;
+      this.ck_objectif2=true;
+      this.ck_type_centrale2=true;
+      this.ck_type_organisme2=true;
+      this.ck_regime_fct2=true;
+      this.ck_temps2=true;
+      this.ck_type_evenement2=true;
+      this.ck_type_objectif2=true;
+      this.ck_saisie_objectif2=true;
       this.ck_cause=false;
       this.ck_type_evenement=false;
       this.ck_type_objectif=false;
@@ -636,40 +655,86 @@ type_saisie:[]
       this.ck_reseau=false;
       this.ck_objectif=false;
       this.ck_type_centrale=false;
-      this.ck_organisme=false;
+      this.ck_type_organisme=false;
       this.ck_regime_fct=false;
       this.ck_temps=false;
       this.list2.forEach(list => {
-        if(list.TablesDimentions.includes("dim_cause")){
+        //dim_cause
+        if(list.TablesDimentions.includes("dim_cause") && this.ck_cause2){
+               
+              if(this.ck_cause===false) { this.groupeBy.push("description_cause")};
                this.ck_cause=true;
-        }
-        if(list.TablesDimentions.includes("dim_objectif")){
+        }else{ this.ck_cause2=false; 
+          if(this.ck_cause) {this.groupeBy.splice(this.groupeBy.indexOf("description_cause"),1)};
+          this.ck_cause=false;}
+        //dim_objectif
+        if(list.TablesDimentions.includes("dim_objectif") && this.ck_objectif2){
+               
+               if(this.ck_objectif===false) {this.groupeBy.push("code_objectif")};
                this.ck_objectif=true;
-        }
-        if(list.TablesDimentions.includes("dim_reseau")){
-               this.ck_reseau=true;
-        }
-        if(list.TablesDimentions.includes("dim_type_centrale")){
-               this.ck_type_centrale=true;
-        }
-        if(list.TablesDimentions.includes("dim_organisme")){
-               this.ck_organisme=true;
-        }
-        if(list.TablesDimentions.includes("dim_regime_fct")){
-               this.ck_regime_fct=true;
-        }
-        if(list.TablesDimentions.includes("dim_temps")){
+        }else{this.ck_ojectif2=false;
+          if(this.ck_objectif) {this.groupeBy.splice(this.groupeBy.indexOf("code_objectif"),1)};
+          this.ck_objectif=false;}
+          //dim_reseau
+        if(list.TablesDimentions.includes("dim_reseau") && this.ck_reseau2){
+               
+              if( this.ck_reseau===false) { this.groupeBy.push("nomreseau")};
+              this.ck_reseau=true;
+        }else{this.ck_reseau2=false;
+        if(this.ck_reseau) {this.groupeBy.splice(this.groupeBy.indexOf("nomreseau"),1)};
+        this.ck_reseau=false;}
+        //dim_type_centrale
+        if(list.TablesDimentions.includes("dim_type_centrale") && this.ck_type_centrale2){
+               
+              if( this.ck_type_centrale===false) {  this.groupeBy.push("description_type_centrale")};
+              this.ck_type_centrale=true;
+        }else{this.ck_type_centrale2=false;
+        if(this.ck_type_centrale) {this.groupeBy.splice(this.groupeBy.indexOf("description_type_centrale"),1)};
+        this.ck_type_centrale=false;}
+        //dim_organisme
+        if(list.TablesDimentions.includes("dim_organisme") && this.ck_type_organisme2){
+               this.ck_type_organisme=true;
+        }else{this.ck_type_organisme2=false;this.ck_type_organisme=false}
+        //dim_regime_fct
+        if(list.TablesDimentions.includes("dim_regime_fct") && this.ck_regime_fct2){
+               
+                if( this.ck_regime_fct===false) {this.groupeBy.push("description_regime")};
+                this.ck_regime_fct=true;
+        }else{this.ck_regime_fct2=false;
+        if(this.ck_regime_fct) {this.groupeBy.splice(this.groupeBy.indexOf("description_regime"),1)};
+        this.ck_regime_fct=false;}
+        //dim_temps
+        if(list.TablesDimentions.includes("dim_temps") && this.ck_temps2){
+          if( this.ck_temps===false) {this.groupeBy.push("annee","trimestre","saison","mois","semaine_dans_annee","jour_du_mois")};
                this.ck_temps=true;
-        }
-        if(list.TablesDimentions.includes("dim_type_evenement")){
+        }else{this.ck_temps2=false;
+        if(this.ck_regime_fct) {this.groupeBy.splice(this.groupeBy.indexOf("annee"),6)};
+        this.ck_temps=false;}
+        //dim_evenement
+        if(list.TablesDimentions.includes("dim_type_evenement") && this.ck_type_evenement2){
+               
+               if( this.ck_type_evenement===false) {this.groupeBy.push("description_evenement")};
                this.ck_type_evenement=true;
-        }
-        if(list.TablesDimentions.includes("dim_type_objectif")){
-               this.ck_type_objectif=true;
-        }
-        if(list.TablesDimentions.includes("dim_saisie_objectif")){
-               this.ck_saisie_objectif=true;
-        }
+        }else{this.ck_type_evenement2=false;
+        if(this.ck_type_evenement) {this.groupeBy.splice(this.groupeBy.indexOf("description_evenement"),1)};
+        this.ck_type_evenement=false;}
+        //dim_type_objectif
+        if(list.TablesDimentions.includes("dim_type_objectif") && this.ck_type_objectif2){
+               
+                if( this.ck_type_objectif===false) {this.groupeBy.push("code_type_objectif")};
+                this.ck_type_objectif=true;
+        }else{this.ck_type_objectif2=false;
+        if(this.ck_type_objectif) {this.groupeBy.splice(this.groupeBy.indexOf("code_type_objectif"),1)};
+        this.ck_type_objectif=false;}
+      //dim_type_saisie
+        if(list.TablesDimentions.includes("dim_saisie_objectif") && this.ck_saisie_objectif2){
+               
+              if( this.ck_saisie_objectif===false) {this.groupeBy.push("code_typesaisie")};
+              this.ck_saisie_objectif=true;
+               
+        }else{this.ck_saisie_objectif2=false;
+       if(this.ck_saisie_objectif) {this.groupeBy.splice(this.groupeBy.indexOf("code_typesaisie"),1)};
+        this.ck_saisie_objectif=false;}
 
         
         });
@@ -678,7 +743,23 @@ type_saisie:[]
   },
       methods:{
       
-      
+      backToCreation:function(){
+        this.showRequestCreater=true; 
+        this.showTable=false;
+        this.contraintes.cause=null;
+        this.contraintes.objectif=null;
+        this.contraintes.organisme=null;
+        this.contraintes.regimeFct=null;
+        this.contraintes.reseau=null;
+        this.contraintes.tempsDebut=null;
+        this.contraintes.tempsFin=null;
+        this.contraintes.typeCentrale=null;
+        this.contraintes.evenment=null;
+        this.contraintes.typeObjectif=null;
+        this.contraintes.saisieObjectif=null;
+
+        
+      },
       greet: function () {
       var requet="select ";
     
@@ -688,7 +769,7 @@ type_saisie:[]
           this.setsGraphe.push(set);
         set.value.forEach(element=>{
         
-          requet=requet+"case grouping("+element+" ) when 1 then 'ALL " +element+"' else "+element+" end ,";
+          requet=requet+"case grouping("+element+" ) when 1 then 'ALL " +element+"s' else cast("+element+" as varchar(255)) end ,";
         });}
         
       });
@@ -732,10 +813,18 @@ type_saisie:[]
         requet=requet+" where ";
       } 
       if (this.contraintes.typeCentrale){
-      requet=requet+"description_type_centrale = '"+this.contraintes.typeCentrale.description+"' and ";
+      requet=requet+"description_type_centrale IN ('";
+        this.contraintes.typeCentrale.forEach(set => {
+         requet=requet+set.description_type_centrale+"', '";
+        });
+        requet=requet.substring(0, requet.length -3)+") and ";
       }
       if (this.contraintes.cause){
-      requet=requet+"description_cause = '"+this.contraintes.cause.description+"' and ";
+      requet=requet+"description_cause IN ('";
+      this.contraintes.cause.forEach(set => {
+         requet=requet+set.description_cause+"', '";
+        });
+        requet=requet.substring(0, requet.length -3)+") and ";
       }
       if (this.contraintes.tempsDebut){
       requet=requet+"date >= '"+this.contraintes.tempsDebut+"' and ";
@@ -765,22 +854,46 @@ type_saisie:[]
       }
       }
        if (this.contraintes.objectif){
-      requet=requet+"code_objectif = "+this.contraintes.objectif.code_objectif+" and ";
+      requet=requet+"code_objectif IN (";
+      this.contraintes.objectif.forEach(set => {
+         requet=requet+set.code_objectif+", ";
+        });
+        requet=requet.substring(0, requet.length -2)+") and ";
       }
        if (this.contraintes.regimeFct){
-      requet=requet+"code_regime = "+this.contraintes.regimeFct.code_regime+" and ";
+      requet=requet+"code_regime IN (";
+       this.contraintes.regimeFct.forEach(set => {
+         requet=requet+set.code_regime+", ";
+        });
+        requet=requet.substring(0, requet.length -2)+") and ";
       }
       if (this.contraintes.reseau){
-      requet=requet+"code_reseau = "+this.contraintes.reseau.code_reseau+" and ";
+      requet=requet+"code_reseau IN (";
+      this.contraintes.reseau.forEach(set => {
+         requet=requet+set.code_reseau+", ";
+        });
+      requet=requet.substring(0, requet.length -2)+") and ";
       }
        if (this.contraintes.evenment){
-      requet=requet+"code_evenement = "+this.contraintes.evenment.code_evenement+" and ";
+      requet=requet+"code_evenement IN (";
+      this.contraintes.evenment.forEach(set => {
+         requet=requet+set.code_evenement+", ";
+        });
+      requet=requet.substring(0, requet.length -2)+") and ";
       }
       if (this.contraintes.typeObjectif){
-      requet=requet+"code_type_objectif = "+this.contraintes.typeObjectif.code_type_objectif+" and ";
+      requet=requet+"code_type_objectif IN (";
+      this.contraintes.typeObjectif.forEach(set => {
+         requet=requet+set.code_type_objectif+", ";
+        });
+      requet=requet.substring(0, requet.length -2)+") and ";
       }
       if (this.contraintes.saisieObjectif){
-      requet=requet+"code_typesaisie = "+this.contraintes.saisieObjectif.code_typesaisie+" and ";
+      requet=requet+"code_typesaisie IN (";
+      this.contraintes.saisieObjectif.forEach(set => {
+         requet=requet+set.code_typesaisie+", ";
+        });
+      requet=requet.substring(0, requet.length -2)+") and ";
       }
 
       if(condition===true){
@@ -964,14 +1077,16 @@ type_saisie:[]
         console.log(this.$store.state.AppActiveUser.uid);
         console.log(this.titreRequet);
         console.log(this.requetOlap);
+        this.$vs.loading();
   this.$http.post('http://localhost:8087/queries/saveQuery/' + this.$store.state.AppActiveUser.uid,{titre:this.titreRequet,valeur:this.requetOlap},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+         this.$vs.loading.close();
          this.$vs.notify({
         title: ' Requet saved ',
         text: this.titreRequet,
         color: 'success'
       })
        }).catch(error => {
-        
+        this.$vs.loading.close();
          this.$vs.notify({
         title: ' Requet Not Saved  ',
         text: error,
