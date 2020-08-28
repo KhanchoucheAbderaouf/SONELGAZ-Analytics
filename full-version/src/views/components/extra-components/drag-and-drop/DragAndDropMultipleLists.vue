@@ -555,9 +555,8 @@ type_saisie:[]
     },
      mounted(){
       var id_user=this.$store.state.AppActiveUser.code_organisme;
-      var requet_user='select * from bi.dim_organisme where code_organisme='+id_user
  //requet pour avoir Dim organisme
-      this.$http.get('http://localhost:8087/requests/' + requet_user,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+      this.$http.get('http://localhost:8087/requests/codeorganism/' + id_user,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
         console.log(result.data);
       var type_organisme=  result.data[0].type_organisme;
       console.log(type_organisme);
@@ -578,48 +577,48 @@ type_saisie:[]
         default:
           requet_organisme="code_organisme = "+result.data[0].code_organisme
       }
-       this.$http.get('http://localhost:8087/requests/select * from bi.dim_organisme where ' + requet_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+       this.$http.get('http://localhost:8087/requests/organism/' + requet_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
           this.organismes=  result.data;
        })
       });
       //requet pour avoir Dim cause
-          this.$http.get('http://localhost:8087/requests/select * from bi.dim_cause',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          this.$http.get('http://localhost:8087/requests/causes',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.causes=  result.data;
       });
 
 //requet pour avoir Dim Objectif
-   this.$http.get('http://localhost:8087/requests/select * from bi.dim_objectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+   this.$http.get('http://localhost:8087/requests/objectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.objectif=  result.data;
       });
       //requet pour avoir Dim regime
-   this.$http.get('http://localhost:8087/requests/select * from bi.dim_regime_fct',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+   this.$http.get('http://localhost:8087/requests/regime',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.regime=  result.data;
       });
         //requet pour avoir Dim reseau
-   this.$http.get('http://localhost:8087/requests/select * from bi.dim_reseau',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+   this.$http.get('http://localhost:8087/requests/reseau',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.reseau=  result.data;
       });
            //requet pour avoir Dim type_centrale
-   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_centrale',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+   this.$http.get('http://localhost:8087/requests/typecentrale',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.type_centrale=  result.data;
       });
         //requet pour avoir Dim type_evenement
-   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_evenement',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+   this.$http.get('http://localhost:8087/requests/typeevent',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.type_evenement=  result.data;
       });
            //requet pour avoir Dim type_objectif
-   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_objectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+   this.$http.get('http://localhost:8087/requests/typeobjectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.type_objectif=  result.data;
       });
              //requet pour avoir Dim type_saisie
-   this.$http.get('http://localhost:8087/requests/select * from bi.dim_type_saisieobjectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+   this.$http.get('http://localhost:8087/requests/typesaisieobjectif',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
         this.type_saisie=  result.data;
       });

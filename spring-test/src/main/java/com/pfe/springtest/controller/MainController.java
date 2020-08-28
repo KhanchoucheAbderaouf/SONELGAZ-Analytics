@@ -7,20 +7,13 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.ribbon.proxy.annotation.Hystrix;
-import com.pfe.springtest.model.AuthenticationRequest;
-import com.pfe.springtest.model.AuthenticationResponse;
 import com.pfe.springtest.model.JSONAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -56,6 +49,93 @@ public class MainController {
                         @HystrixProperty(name="maxQueueSize",value = "10"),
 
         )*/
+    @GetMapping("/codeorganism/{organism}")
+    public JSONAnswer RequestCodeOrganism(@PathVariable("organism") Long organism) {
+        System.out.println(organism);
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_organisme where code_organisme = " + organism));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+
+
+    @GetMapping("/organism/{organism}")
+    public JSONAnswer RequestOrganism(@PathVariable("organism") String organism) {
+        System.out.println(organism);
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_organisme where " + organism));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+
+    @GetMapping("/causes")
+    public JSONAnswer RequestCauses() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_cause "));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+    @GetMapping("/objectif")
+    public JSONAnswer RequestObjectif() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_objectif "));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+    @GetMapping("/regime")
+    public JSONAnswer RequestRegime() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_regime_fct "));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+
+    @GetMapping("/reseau")
+    public JSONAnswer RequestReseau() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_reseau"));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+    @GetMapping("/typecentrale")
+    public JSONAnswer RequestTypeCentrale() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_type_centrale"));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+
+    @GetMapping("/typeevent")
+    public JSONAnswer RequestTypeEvent() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_type_evenement "));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+    @GetMapping("/typeobjectif")
+    public JSONAnswer RequestTypeObjectif() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_type_objectif "));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
+    @GetMapping("/typesaisieobjectif")
+    public JSONAnswer RequestTypeSaisieObjectif() {
+        JSONAnswer a = new JSONAnswer();
+        a.setJsonAnswer(jdbcTemplate.queryForList("select * from bi.dim_type_saisieobjectif"));
+        System.out.println(a.getJsonAnswer());
+        return a;
+    }
+
     @GetMapping("/{req}")
     public JSONAnswer Requests(@PathVariable("req") String req) {
         System.out.println(req);
