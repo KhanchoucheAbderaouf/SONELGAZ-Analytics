@@ -28,34 +28,42 @@ export default [
   //   i18n: "Email",
   // },
   {
-    url: null,
-    name: "Dashboard",
-    tag: "3",
-    tagColor: "warning",
-    icon: "HomeIcon",
-    i18n: "Dashboard",
-    submenu: [
-      {
-        url: '/dashboard/analytics',
-        name: "Analytics",
-        slug: "dashboard-analytics",
-        i18n: "Analytics",
-      },
+    header: "App",
+    icon: "FileIcon",
+    i18n: "apps",
+    items: [
       {
         url: '/dashboard/ecommerce',
-        name: "eCommerce",
+        name: "Dashboard",
         slug: "dashboard-ecommerce",
-        i18n: "eCommerce",
+        icon: "LayoutIcon",
+        i18n: "Dashboard",
       },
       {
         url: '/dashboard/dashboard',
-        name: "dashboard",
+        name: "Query Creater",
         slug: "dashboard",
-        i18n: "Dashboard",
+        icon: "PieChartIcon",
+        i18n: "Query Creater",
       },
-    ]
-  },
-  {
+      {
+        url: '/dashboard/analytics',
+        name: "Query Saver",
+        slug: "dashboard-analytics",
+        icon: "ArchiveIcon",
+        i18n: "Query Saver",
+      },
+      {
+        url: "/import-export/import",
+        name: "Import",
+        icon: "MoreHorizontalIcon",
+        slug: "import",
+        i18n: "Import"
+      },
+   
+    ]},
+   
+  /*{
     header: "Apps",
     icon: "PackageIcon",
     i18n: "Apps",
@@ -148,8 +156,9 @@ export default [
         ]
       },
     ]
-  },
-  {
+  },*/
+
+  /*{
     header: "UI",
     icon: "LayersIcon",
     i18n: "UI",
@@ -507,8 +516,8 @@ export default [
         ]
       },
     ]
-  },
-  {
+  },*/
+ /* {
     header: "Forms & Table",
     icon: "Edit3Icon",
     i18n: "FormsAndTable",
@@ -606,19 +615,19 @@ export default [
         i18n: "agGridTable",
       },
     ]
-  },
+  },*/
   {
     header: "Pages",
     icon: "FileIcon",
     i18n: "Pages",
     items: [
-      {
+     /* {
         url: '/pages/profile',
         slug: 'page-profile',
         name: "Profile",
         icon: "UserIcon",
         i18n: "Profile",
-      },
+      },*/
       {
         url: '/pages/user-settings',
         slug: 'page-user-settings',
@@ -626,13 +635,13 @@ export default [
         icon: "SettingsIcon",
         i18n: "UserSettings",
       },
-      {
+      /*{
         url: '/pages/faq',
         slug: 'page-faq',
         name: "FAQ",
         icon: "HelpCircleIcon",
         i18n: "FAQ",
-      },
+      },*/
       {
         url: '/pages/knowledge-base',
         slug: 'page-knowledge-base',
@@ -640,7 +649,7 @@ export default [
         icon: "InfoIcon",
         i18n: "KnowledgeBase",
       },
-      {
+      /*{
         url: '/pages/search',
         slug: 'page-search',
         name: "Search",
@@ -742,10 +751,10 @@ export default [
             target: '_blank',
           }
         ]
-      },
+      },*/
     ]
   },
-  {
+ /* {
     header: "Charts & Maps",
     icon: "PieChartIcon",
     i18n: "ChartsAndMaps",
@@ -786,8 +795,8 @@ export default [
         i18n: "GoogleMap",
       },
     ]
-  },
-  {
+  },*/
+ /* {
     header: "Others",
     icon: "MoreHorizontalIcon",
     i18n: "Others",
@@ -854,6 +863,6 @@ export default [
         ]
       },
     ]
-  },
+  },*/
 ]
 

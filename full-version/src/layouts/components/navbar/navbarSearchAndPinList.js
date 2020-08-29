@@ -2,12 +2,17 @@ export default {
   pages: {
     key: "title",
     data: [
+   
+     
       // DASHBOARDS
-      {title: "Analytics Dashboard",        url: "/dashboard/analytics",                icon: "HomeIcon",           is_bookmarked: false},
-      {title: "eCommerce Dashboard",        url: "/dashboard/ecommerce",                icon: "HomeIcon",           is_bookmarked: false},
-      {title: "Dashboard",                  url: "/dashboard/dashboard",                icon: "HomeIcon",           is_bookmarked: false},
+      {title: "Query Saver",                url: "/dashboard/analytics",              icon: "ArchiveIcon",          is_bookmarked: true},
+      {title: "Dashboard",                  url: "/dashboard/ecommerce",              icon: "LayoutIcon",           is_bookmarked: true},
+      {title: "Import",                     url: "/import-export/import",             icon: "FileTextIcon",         is_bookmarked: true},
+      {title: "Query Creater",              url: "/dashboard/dashboard",              icon: "PieChartIcon",         is_bookmarked: true},
+      {title: "KnowledgeBase Page",         url: "/pages/knowledge-base",             icon: "BookIcon",             is_bookmarked: false},
+      {title: "User Settings",              url: "/pages/user-settings",              icon: "SettingsIcon",         is_bookmarked: false},
 
-      // APPS
+      /* APPS
       {title: "Todo",                       url: "/apps/todo",                          icon: "CheckSquareIcon",    is_bookmarked: true},
       {title: "Chat",                       url: "/apps/chat",                          icon: "MessageSquareIcon",  is_bookmarked: true},
       {title: "Email",                      url: "/apps/email",                         icon: "MailIcon",           is_bookmarked: true},
@@ -146,6 +151,6 @@ export default {
       {img: require("@/assets/images/portrait/small/avatar-s-23.jpg"), name: "Shellie Muster", email: "maxillary@equalize.co.uk", time: "26/07/2019"},
       {img: require("@/assets/images/portrait/small/avatar-s-20.jpg"), name: "Jesenia Vanbramer", email: "hypotony@phonetist.net", time: "12/09/2017"},
       {img: require("@/assets/images/portrait/small/avatar-s-23.jpg"), name: "Mardell Channey", email: "peseta@myrica.com", time: "11/11/2019"},
-    ]
+    */]
   },
 }

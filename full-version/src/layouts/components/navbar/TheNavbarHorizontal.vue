@@ -18,16 +18,14 @@
 
       <router-link tag="div" to="/" class="vx-logo cursor-pointer mx-auto flex items-center">
         <logo class="w-10 mr-4 fill-current text-primary" />
-        <span class="vx-logo-text text-primary">SnlgA</span>
+        <span class="vx-logo-text text-primary">SNLA</span>
       </router-link>
 
       <i18n />
 
-      <search-bar />
+      
 
-      <cart-drop-down />
-
-      <notification-drop-down />
+    
 
       <profile-drop-down />
 
@@ -39,9 +37,8 @@
 <script>
 import Bookmarks            from "./components/Bookmarks.vue"
 import I18n                 from "./components/I18n.vue"
-import SearchBar            from "./components/SearchBar.vue"
-import CartDropDown         from "./components/CartDropDown.vue"
-import NotificationDropDown from "./components/NotificationDropDown.vue"
+
+
 import ProfileDropDown      from "./components/ProfileDropDown.vue"
 import Logo                 from "../Logo.vue"
 
@@ -58,9 +55,7 @@ export default {
     Logo,
     Bookmarks,
     I18n,
-    SearchBar,
-    CartDropDown,
-    NotificationDropDown,
+    
     ProfileDropDown,
   },
   computed: {

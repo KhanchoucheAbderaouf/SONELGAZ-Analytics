@@ -5,10 +5,15 @@
   display: block;
   position: absolute;
 }
+#loading-bg img{
+  width: 90%;
+  height: 90%;
+  
+}
 .loading-logo{
   position: absolute;
-  left: calc(50% - 45px);
-  top: 40%;
+  left: calc(50% - 70px);
+  top: 25%;
 }
 .loading {
   position: absolute;
