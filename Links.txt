@@ -25,7 +25,9 @@ http://localhost:8087/users
 	b- login : http://localhost:8087/users/updateUserNamePass/{iduser}. ,  Body : (username,password)
 	c- role : http://localhost:8087/users/updateUserRole/{iduser}/{intitule}. , No need Body
 
-6- http://localhost:8087/users/queriesUser/{iduser} : queries of all user by a giving iduser, Method : GET , Body : no need
+6- http://localhost:8087/users/queriesUser/{iduser} : queries of a user by a giving iduser, Method : GET , Body : no need
+
+7- http://localhost:8087/users/rapports/{iduser} : all rapports of a user by a giving iduser, Method : GET , Body : no need
 
 ----- Roles : -----
 http://localhost:8087/roles
@@ -60,3 +62,23 @@ http://localhost:8087/queries
 8- Add Query to a user : http://localhost:8087/queries/addQueryUser/{idquery}/{iduser}, method : POST , no body
 
 9-delete authorization from all except creator :  http://localhost:8087/queries/deleteAuthorizationOthers/{idquery} , method : DELETE , no body
+
+
+---- Rapports : -------
+http://localhost:8087/rapports
+
+1- http://localhost:8087/rapports/allRapports  , method : GET
+
+2- http://localhost:8087/rapports/addRapport/{iduser}   , method : POST , body : titre
+
+3- http://localhost:8087/rapports/addQueryRapport/{idrapport}/{idquery} , method : GET
+
+4- http://localhost:8087/rapports/addRapportOrganism/{idrapport}/{idorganism} , method : GET
+
+5- http://localhost:8087/rapports/deleteRapport/{idrapport} , method : DELETE
+
+6- http://localhost:8087/rapports/addRapportUser/{idrapport}/{iduser} , method : GET
+
+7- http://localhost:8087/rapports/deleteAuthorizationOthers/{idrapports} , method : DELETE
+
+
