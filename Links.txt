@@ -59,4 +59,4 @@ http://localhost:8087/queries
 
 8- Add Query to a user : http://localhost:8087/queries/addQueryUser/{idquery}/{iduser}, method : POST , no body
 
-9-delete authorization from all except creator :  http://localhost:8087/deleteAuthorizationOthers/{idquery} , method : DELETE , no body
+9-delete authorization from all except creator :  http://localhost:8087/queries/deleteAuthorizationOthers/{idquery} , method : DELETE , no body
