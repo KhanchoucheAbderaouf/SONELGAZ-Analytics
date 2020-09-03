@@ -2,9 +2,11 @@ package com.pfe.loginpartjwt.controller;
 
 
 import com.pfe.loginpartjwt.models.Queries;
+import com.pfe.loginpartjwt.models.Rapports;
 import com.pfe.loginpartjwt.models.Roles;
 import com.pfe.loginpartjwt.models.Users;
 import com.pfe.loginpartjwt.repositories.QueryRepository;
+import com.pfe.loginpartjwt.repositories.RapportsRepository;
 import com.pfe.loginpartjwt.repositories.RoleRepository;
 import com.pfe.loginpartjwt.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @RestController
@@ -28,6 +27,9 @@ public class UsersController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    RapportsRepository rapportsRepository;
 
 
     @Autowired
@@ -134,5 +136,25 @@ public class UsersController {
             );
         }
     }
+
+    @GetMapping("/rapports/{iduser}")
+    public List<Rapports> findUserRapports(@PathVariable("iduser") Long iduser) throws Exception{
+        if(userRepository.findById(iduser).isPresent()) {
+            Users U = userRepository.findById(iduser).get();
+            List<Rapports> allRapports = rapportsRepository.findAll();
+            List<Rapports> listeRapportsUser = new ArrayList<Rapports>();
+            for (Rapports r: allRapports) {
+                if(r.getListUsers().contains(U)) listeRapportsUser.add(r);
+            }
+            return listeRapportsUser;
+        }
+        else{
+            throw new Exception(
+                    "User not found !!"
+            );
+        }
+
+    }
+
 
 }

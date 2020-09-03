@@ -191,9 +191,10 @@ export default {
             
 
             if(this.partageUser) {
-                    this.$http.post(' http://localhost:8087/queries/addQueryUser/'+this.dataId+'/'+this.dataUser.iduser,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
-                          
-                                
+                    this.$http.get(' http://localhost:8087/queries/addQueryUser/'+this.dataId+'/'+this.dataUser.iduser,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+                          .then((result) => {   
+                            ;
+
                             this.$vs.notify({
                               
                             title: ' Requet partage user envoyé  ',
@@ -210,7 +211,7 @@ export default {
                     });
             };
             if(this.partageOrganisme){
-               this.$http.post(' http://localhost:8087/queries/addQueryOrganism/'+this.dataId+'/'+this.dataOrganisme.code_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+               this.$http.get(' http://localhost:8087/queries/addQueryOrganism/'+this.dataId+'/'+this.dataOrganisme.code_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
                           .then((result) => {
                           ;
                                 

@@ -316,7 +316,7 @@ export default {
     },
     supprimePermission(tr){
       this.$vs.loading();
-       this.$http.delete('http://localhost:8087/deleteAuthorizationOthers/'+tr.idquery,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+       this.$http.delete('http://localhost:8087/queries/deleteAuthorizationOthers/'+tr.idquery,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
         this.$vs.loading.close();
             

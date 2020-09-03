@@ -125,7 +125,7 @@ public class QueriesController {
 
     }
 
-    @PostMapping("/addQueryUser/{idquery}/{iduser}")
+    @GetMapping("/addQueryUser/{idquery}/{iduser}")
     public void addAuthorizationUser(@PathVariable("idquery") Long idquery, @PathVariable("iduser") Long iduser) throws Exception {
 
         if (userRepository.findById(iduser).isPresent() && queryRepository.findById(idquery).isPresent()) {
