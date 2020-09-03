@@ -113,7 +113,7 @@
 
                             <vs-dropdown-menu style="z-index: 200001">
                                     <vs-dropdown-item v-for="(tag, index) in operationsets" :key="index">
-                                        <vs-checkbox @click.stop  :vs-value="tag" v-model="listItem.operation">{{ tag }}</vs-checkbox>
+                                        <vs-checkbox :vs-value="tag" v-model="listItem.operation" v-on:change="operationWatcher" @click.stop >{{ tag }}</vs-checkbox>
                                     </vs-dropdown-item>
                             </vs-dropdown-menu>
                         </vs-dropdown>
@@ -243,7 +243,12 @@
   <vs-button class="bg-success text-white"  @click="addFind">
     add
   </vs-button>
+  <br>
   </vs-row>
+  <br>
+  <v-select class="bg-white" v-model="orderBy" placeholder="Order BY" :key="index" :options="operationGraphe" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
+  <v-select class="bg-white" v-model="partitionBy" placeholder="Partition BY" :key="index" :options="groupeBy" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
+
    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
    <br><br><br><br><br>
     </vs-collapse-item>
@@ -429,7 +434,7 @@ export default {
           groupeBy:[],
           sets: [],
           operationsets:["sum","AVG","MIN","MAX"],
-           radios2:'primary',
+           radios2:'GROUPING SETS',
            ck_cause:false,
            ck_reseau:false,
            ck_objectif:false,
@@ -480,64 +485,64 @@ list1: [
   attributeName: "densite_fuel",
   TableFait: "fait_consommation",
   TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],
-  operation:[],
+    operation:["sum"],
   },
-{attributeName: "comsommation_combus_fuel_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_combus_gaz_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_specifique_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "comsommation_combus_fuel_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_combus_gaz_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_specifique_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "stock_fuel_initial",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_aux_marche",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_aux_arret",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_commune",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "reception_fuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "pcsfuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "pcsgaz",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "comsommation_combus_fuel_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_combus_gaz_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_specifique_centrale",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "comsommation_combus_fuel_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_combus_gaz_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_specifique_groupe",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "stock_fuel_initial",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_aux_marche",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_aux_arret",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_commune",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "reception_fuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "pcsfuel",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "pcsgaz",TableFait: "fait_consommation",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
 //fait production
-{attributeName: "production_bu_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "production_ba_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "production_bu_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "production_ba_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "puissance_inst_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "puissance_dev_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_productible",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_productible_pointe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heures_jour",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "production_bu_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "production_ba_centrale",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "production_bu_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "production_ba_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "puissance_inst_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "puissance_dev_grpe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_productible",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_productible_pointe",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heures_jour",TableFait: "fait_production",TablesDimentions:["dim_reseau","dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
 //fait_objectif
-{attributeName: "objectif_annuel",TableFait: "fait_objectif",TablesDimentions:["dim_type_objectif","dim_type_saisieobjectif","dim_objectif","dim_organisme"],operation:[]},
+{attributeName: "objectif_annuel",TableFait: "fait_objectif",TablesDimentions:["dim_type_objectif","dim_type_saisieobjectif","dim_objectif","dim_organisme"],  operation:["sum"]},
 //fait_pv
-{attributeName: "production_bu",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_gaz",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
-{attributeName: "consommation_fuel",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
-{attributeName: "densite_fuel_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
-{attributeName: "pcsfuel_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
-{attributeName: "pcsgaz_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],operation:[]},
+{attributeName: "production_bu",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_gaz",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "consommation_fuel",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "densite_fuel_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "pcsfuel_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "pcsgaz_pv",TableFait: "fait_pv",TablesDimentions:["dim_temps","dim_organisme"],  operation:["sum"]},
 //fait_qualite_service
-{attributeName: "energie_perdue",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_perdue_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_productible_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_productible_pointe_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_indispo",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_indispo_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_perdue",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_perdue_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_productible_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_productible_pointe_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_indispo",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_indispo_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 //fait_qualite_service_imed
-{attributeName: "energie_perdue_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_perdue_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_productible_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "energie_productible_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_indispo_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_indispo_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "date_debut",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "energie_perdue_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_perdue_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_productible_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "energie_productible_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_indispo_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_indispo_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "date_debut",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 //fait_separation_reseau
-{attributeName: "nombre_dt",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_marche_vide",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_marche_gaz",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_marche_fuel",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_indiponibilite",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "heur_reserve",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "nombre_demarrage",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
-{attributeName: "nbre_declanchement_reussi",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],operation:[]},
+{attributeName: "nombre_dt",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_marche_vide",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_marche_gaz",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_marche_fuel",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_indiponibilite",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heur_reserve",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "nombre_demarrage",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "nbre_declanchement_reussi",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
 
 ],
 
@@ -551,8 +556,10 @@ reseau:[],
 type_centrale:[],
 type_evenement:[],
 type_objectif:[],
-type_saisie:[]
-  
+type_saisie:[],
+orderBy:null,
+partitionBy:null,
+
 
         }
     },
@@ -637,6 +644,7 @@ type_saisie:[]
     watch: {
     
     list2: function () {
+      
       this.groupeBy=["nom_pole","nom_unite","nom_centrale","num_grpe"];
       this.ck_cause2=true;
       this.ck_reseau2=true;
@@ -766,9 +774,9 @@ type_saisie:[]
     this.setsGraphe=[];
   this.sets.forEach(set => {
         if (set.value.length > 0){
-          
+          if(!this.setsGraphe.includes(set.value[set.value.length-1])) {this.setsGraphe.push(set.value[set.value.length-1]);}
         set.value.forEach(element=>{
-         if(!this.setsGraphe.includes(element)) {this.setsGraphe.push(element);}
+         
           requet=requet+"case grouping("+element+" ) when 1 then 'ALL " +element+"s' else cast("+element+" as varchar(255)) end ,";
         });}
         
@@ -783,7 +791,12 @@ type_saisie:[]
         this.operationGraphe.push(opera);
         });
       });
-      requet=requet.substring(0, requet.length - 1)+"from ";
+      if(this.orderBy){
+      requet=requet+"RANK () OVER ( PARTITION BY "+this.partitionBy +" ORDER BY "+
+      this.orderBy+" DESC ) AS classement from " ;}
+      else{
+        requet=requet.substring(0, requet.length - 1)+"from " ;
+      }
         this.list2.forEach(element => {
           if(tables.includes(element.TableFait)==false){
 
@@ -1021,7 +1034,7 @@ type_saisie:[]
        this.pieChart.series=[];
       // alert( this.attributeGraphe+";"+this.DimGraphe+";"+this.typeGraphe);
         //console.log(this.attributeGraphe);
-        var contrlerIndex=this.header.indexOf(this.DimGraphe.value[0]);
+        var contrlerIndex=this.header.indexOf(this.DimGraphe);
         var contrlerGraphe=this.header[contrlerIndex+1];
          
         this.operationGraphe.forEach(op => {
@@ -1036,27 +1049,27 @@ type_saisie:[]
       
           if(value){
             this.tableData.forEach(element2=>{
-              if(element2[this.DimGraphe.value[0]].includes("ALL")===false){ 
+              if(element2[this.DimGraphe].includes("ALL")===false){ 
               if(this.typeGraphe=="pie"){
-          this.pieChart.chartOptions.labels.push(element2[this.DimGraphe.value[0]])  ;
+          this.pieChart.chartOptions.labels.push(element2[this.DimGraphe])  ;
           
           this.pieChart.series.push(element2[contrlerGraphe]); 
               }else{
-           this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe.value[0]])  ;   
+           this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe])  ;   
           this.lineAreaChartSpline.series[0].data.push(element2[contrlerGraphe]); } }  
            });
           }
           else{
                this.tableData.forEach(element3=>{
-            if(element3[this.DimGraphe.value[0]].includes("ALL")===false){   
+            if(element3[this.DimGraphe].includes("ALL")===false){   
             if(element3[contrlerGraphe].includes("ALL")){
               if(this.typeGraphe=="pie"){
-          this.pieChart.chartOptions.labels.push(element3[this.DimGraphe.value[0]]);   
+          this.pieChart.chartOptions.labels.push(element3[this.DimGraphe]);   
           this.pieChart.series.push(element3[this.attributeGraphe.toLowerCase()]);
           
               }else{
 
-          this.lineAreaChartSpline.chartOptions.labels.push(element3[this.DimGraphe.value[0]]);   
+          this.lineAreaChartSpline.chartOptions.labels.push(element3[this.DimGraphe]);   
           this.lineAreaChartSpline.series[0].data.push(element3[this.attributeGraphe.toLowerCase()]);} } }  
            });
 
@@ -1094,7 +1107,17 @@ type_saisie:[]
       })
       });
 
-      }
+      },
+      operationWatcher:function(){
+          this.operationGraphe=[];
+        this.list2.forEach(element => {
+        element.operation.forEach(op => {
+        
+        var opera=op+"("+element.attributeName+")";
+        this.operationGraphe.push(opera);
+        });
+      });
+      },
     
   }
     }
