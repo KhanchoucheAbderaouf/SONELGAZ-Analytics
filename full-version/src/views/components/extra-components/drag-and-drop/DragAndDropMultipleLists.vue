@@ -365,6 +365,7 @@ export default {
  //------------------------variable du graphe-----------------------------------------------
           attributeGraphe:'',
           setsGraphe:[],
+          
           DimGraphe:'',
           typeGraphe:'area',
           operationGraphe:[],
@@ -765,9 +766,9 @@ type_saisie:[]
     this.setsGraphe=[];
   this.sets.forEach(set => {
         if (set.value.length > 0){
-          this.setsGraphe.push(set);
+          
         set.value.forEach(element=>{
-        
+         if(!this.setsGraphe.includes(element)) {this.setsGraphe.push(element);}
           requet=requet+"case grouping("+element+" ) when 1 then 'ALL " +element+"s' else cast("+element+" as varchar(255)) end ,";
         });}
         

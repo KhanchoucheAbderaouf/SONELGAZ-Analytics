@@ -191,9 +191,8 @@ export default {
             
 
             if(this.partageUser) {
-                    this.$http.post(' http://localhost:8087/queries/addQueryUser/'+this.dataId+'/'+this.dataUser.iduser,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
-                          .then((result) => {
-                          ;
+                    this.$http.post(' http://localhost:8087/queries/addQueryUser/'+this.dataId+'/'+this.dataUser.iduser,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+                          
                                 
                             this.$vs.notify({
                               
