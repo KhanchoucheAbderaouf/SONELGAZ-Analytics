@@ -58,6 +58,14 @@ const router = new Router({
                     }
                 },
                 {
+                    path: '/dashboard/reports',
+                    name: 'dashboard-reports',
+                    component: () => import('./views/DashboardReports.vue'),
+                    meta: {
+                        rule: 'editor',
+                    }
+                },
+                {
                     path: '/dashboard/ecommerce',
                     name: 'dashboard-ecommerce',
                     component: () => import('./views/DashboardECommerce.vue'),

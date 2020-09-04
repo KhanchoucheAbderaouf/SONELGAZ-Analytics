@@ -40,6 +40,13 @@ export default [
         i18n: "Dashboard",
       },
       {
+        url: '/dashboard/reports',
+        name: "Report Saver",
+        slug: "dashboard-reports",
+        icon: "LayoutIcon",
+        i18n: "Report Saver",
+      },
+      {
         url: '/dashboard/dashboard',
         name: "Query Creater",
         slug: "dashboard",

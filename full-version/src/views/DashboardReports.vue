@@ -8,7 +8,7 @@
 ========================================================================================== -->
 
 <template>
-  <div id="dashboard-analytics" class="data-list-container">
+  <div id="dashboard-reports" class="data-list-container">
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
@@ -93,7 +93,7 @@
 
       <template slot="thead">
         <vs-th sort-key="name">Createur</vs-th>
-        <vs-th sort-key="category">Date De Creation</vs-th>
+       
        
         <vs-th sort-key="price">Titre</vs-th>
         <vs-th>Action</vs-th>
@@ -106,15 +106,6 @@
               <vs-td>
                 <p class="product-name font-medium truncate">{{ tr.creator }}</p>
               </vs-td>
-
-              <vs-td>
-                <p class="product-category">{{ tr.date_creation }}</p>
-              </vs-td>
-
-              
-
-              
-
               <vs-td>
                 <p class="product-price">{{ tr.titre }}</p>
               </vs-td>
@@ -122,7 +113,6 @@
               <vs-td class="whitespace-no-wrap">
                 <feather-icon icon="EditIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
                 <feather-icon icon="InboxIcon"  svgClasses="w-5 h-5 hover:text-success stroke-current" class="ml-2" @click.stop="createTable(tr)" />
-                <feather-icon icon="UserIcon"  svgClasses="w-5 h-5 hover:text-success stroke-current" class="ml-2" @click.stop="activePrompt4=true,queryRapport=tr.idquery" />
                  <feather-icon icon="TrashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="supprimePermission(tr)" />
               </vs-td>
 
@@ -130,16 +120,9 @@
           </tbody>
         </template>
     </vs-table>
-           <vx-card v-show="showTable">
-             <!--prompt requet Begin -->
+      <!--prompt requet Begin -->
      <vs-prompt title="Create Report" class="export-options" @cancle="clearFields" @accept="saveReport" accept-text="Save" @close="clearFields" :active.sync="activePrompt3">
          <vs-input label-placeholder="Title" v-model="titreRaport"/>
-        
-    </vs-prompt>
-    <!--prompt requet End -->
-         <!--prompt requet Begin -->
-     <vs-prompt title="insert into Report" class="export-options" @cancle="clearFields" @accept="addToRapport" accept-text="Save" @close="clearFields" :active.sync="activePrompt4">
-         <v-select v-model="rapport" :options="rapports" class="my-4" label="titre" />
         
     </vs-prompt>
     <!--prompt requet End -->
@@ -162,12 +145,15 @@
         
     </vs-prompt>
     <!--prompt Graphe End -->
+    <div v-for="table in tableau_des_resultas" >
+           <vx-card >
+           
 
    
 
 
-    <div v-show="showTable" class="export-table">
-      <vs-table :data="tableData" v-model="selectedUsers" pagination max-items="10" multiple search>
+    <div  class="export-table">
+      <vs-table :data="table.tableData" v-model="selectedUsers" pagination max-items="10" multiple search>
 
         <template slot="header" >
           <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
@@ -179,7 +165,7 @@
           <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Table Of Query</vs-button>
         </template>
   <template slot="thead">
-          <vs-th  v-for="heading in header" :key="heading" :sort-key="heading">{{ heading }}</vs-th>
+          <vs-th  v-for="heading in table.header" :key="heading" :sort-key="heading">{{ heading }}</vs-th>
   </template>
           <template slot-scope="{data}">
           <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
@@ -193,28 +179,13 @@
       </div>
      
     </vx-card>
-      <vx-card v-if="showGraphe" >
-        
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe=false" class="bg-danger" >Back</vs-button>
-        
-                    <vue-apex-charts :type="typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
-
-                   
-                </vx-card>
-                <vx-card v-if="showGraphe2" >
-        
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe2=false" class="bg-danger" >Back</vs-button>
-        
-                    <vue-apex-charts type="pie" height="500" :options="pieChart.chartOptions" :series="pieChart.series"></vue-apex-charts>
-                    
-                   
-                </vx-card>
+     </div>
   </div>
 </template>
 
 <script>
 import VueApexCharts from 'vue-apexcharts'
-import DataViewSidebar from '@/views/ui-elements/data-list/DataViewSidebar.vue'
+import DataViewSidebar from '@/views/ui-elements/data-list/DataViewSidebarRapport.vue'
 import moduleDataList from "@/store/data-list/moduleDataList.js"
 import vSelect from 'vue-select'
 
@@ -234,7 +205,7 @@ export default {
       // Data Sidebar
       addNewDataSidebar: false,
       sidebarData: {},
-      queryRapport:null,
+
       //data table resulta
           attributeGraphe:'',
           setsGraphe:[],
@@ -247,7 +218,7 @@ export default {
          showGraphe2:false,
          showTable:false,
          showRequestCreater:true,
-
+        tableau_des_resultas:[],
  lineAreaChartSpline: {
         series: [{
                 name: 'series1',
@@ -294,14 +265,11 @@ export default {
       selectedUsers: [],
       activePrompt: false,
       activePrompt2: false,
-      activePrompt4: false,
       titreRaport:'',
       requetOlap:'',
       titreRequet:'',
       header : [],
       tableData:[],
-      rapports:[],
-      rapport:null,
     }
   },
   computed: {
@@ -348,29 +316,9 @@ export default {
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },
-    addToRapport(){
-       this.$http.get(' http://localhost:8087/rapports/addQueryRapport/'+this.rapport.idrapport+'/'+this.queryRapport,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
-                          .then((result) => {
-                          ;
-                                
-                            this.$vs.notify({
-                              
-                            title: ' Requet partage Rapport envoyé  ',
-                            text: 'votre requet a été envoyé avec succès',
-                            color: 'success'
-                          })
-                    
-                          }).catch(error => {
-                            this.$vs.notify({
-                            title: ' Requet partage Rapport erroné  ',
-                            text: error,
-                            color: 'danger'
-                          })
-                    });
-    },
     supprimePermission(tr){
       this.$vs.loading();
-       this.$http.delete('http://localhost:8087/queries/deleteAuthorizationOthers/'+tr.idquery,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+       this.$http.delete('http://localhost:8087/rapports/deleteAuthorizationOthers/'+tr.idrapport,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
         this.$vs.loading.close();
             
@@ -500,10 +448,11 @@ export default {
         
       },
       createTable(tr){
-        this.$vs.loading();
-             this.$http.get('http://localhost:8087/requests/'+tr.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+       this.tableau_des_resultas=[];
+        tr.listQueries.forEach(val => {
+             this.$http.get('http://localhost:8087/requests/'+val.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
-        this.$vs.loading.close();
+       
             
         this.$vs.notify({
           
@@ -511,14 +460,14 @@ export default {
         text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
-      var valueDorF=false;
-            this.header=Object.getOwnPropertyNames(result.data[0]);
-        
-        
-      this.tableData = result.data;
-      this.showTable=true;
       this.showRequestCreater=false;
-         this.header.forEach(h => {
+         var   resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data};
+        
+        
+      this.tableau_des_resultas.push(resulta);
+      //this.showTable=true;
+     // this.showRequestCreater=false;
+        /* this.header.forEach(h => {
           valueDorF=false;
          this.operationGrapheControle.forEach(op => {
             
@@ -534,15 +483,19 @@ export default {
           this.setsGraphe.push(h);
         }
          
-        });
+        });*/
       }).catch(error => {
-        this.$vs.loading.close();
+       
          this.$vs.notify({
         title: ' Requet erroné  ',
         text: error,
         color: 'danger'
       })
       });
+       
+      
+      });
+      console.log(this.tableau_des_resultas);
       }
   },
   created() {
@@ -554,13 +507,11 @@ export default {
   },
   mounted() {
     this.isMounted = true;
-    this.$http.get('http://localhost:8087/users/queriesUser/'+this.$store.state.AppActiveUser.uid,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
-      .then((result) => {this.products=result.data;
-      console.log(result.data);
-      
-      });
     this.$http.get('http://localhost:8087/users/rapports/'+this.$store.state.AppActiveUser.uid,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
-      .then((result) => {this.rapports=result.data});
+      .then((result) => {this.products=result.data;
+      console.log(this.products);
+      });
+    
   },
 
 }
