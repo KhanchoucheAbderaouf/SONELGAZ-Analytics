@@ -42,7 +42,26 @@ public class Users {
             )
     private List<Queries> listQueries;
 
+    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable
+            (
+                    name="table_ref_user_rapport",
+                    joinColumns={ @JoinColumn(name="iduser", referencedColumnName="iduser") },
+                    inverseJoinColumns={@JoinColumn(name="idrapport", referencedColumnName="idrapport" ) }
+            )
+    private List<Rapports> listRapports;
 
+    public List<Rapports> getListRapports() {
+        return listRapports;
+    }
+
+    public void setListRapports(List<Rapports> listRapports) {
+        this.listRapports = listRapports;
+    }
+
+    public void setListRapports(Rapports rapport) {
+        this.listRapports.add(rapport);
+    }
 
     public long getIduser() {
         return iduser;

@@ -33,15 +33,15 @@ public class RapportsController {
         return rapportsRepository.findAll() ;
     }
 
-    @PostMapping("/addRapport/{iduser}")
-    public Rapports addRapport(@RequestBody Rapports rapport, @PathVariable("iduser") Long iduser) throws Exception {
+    @GetMapping("/addRapport/{iduser}/{titre}")
+    public Rapports addRapport( @PathVariable("iduser") Long iduser,@PathVariable("titre") String titre) throws Exception {
 
         if (userRepository.findById(iduser).isPresent()) {
             Rapports R = new Rapports();
-            R.setTitre(rapport.getTitre());
+            R.setTitre(titre);
             Users U = userRepository.findById(iduser).get();
             R.setCreator(U.getUsername());
-            R.setListUsers(U);
+            U.setListRapports(R);
             return rapportsRepository.save(R);
         } else {
             throw new Exception(
@@ -74,9 +74,9 @@ public class RapportsController {
             Rapports R = rapportsRepository.findById(idrapport).get();
             List<Users> U = userRepository.findByIdorganism(idorganism).get();
             for (Users u : U) {
-                if (!(R.getListUsers().contains(u))) {
-                    R.setListUsers(u);
-                    rapportsRepository.save(R);
+                if (!(u.getListRapports().contains(R))) {
+                    u.setListRapports(R);
+                    userRepository.save(u);
                 }
             }
         } else {
@@ -107,9 +107,9 @@ public class RapportsController {
         if (userRepository.findById(iduser).isPresent() && rapportsRepository.findById(idrapport).isPresent()) {
             Rapports R = rapportsRepository.findById(idrapport).get();
             Users U = userRepository.findById(iduser).get();
-            if(!(R.getListUsers().contains(U))) {
-                R.setListUsers(U);
-                rapportsRepository.save(R);
+            if(!(U.getListRapports().contains(R))) {
+                U.setListRapports(R);
+                userRepository.save(U);
             }
         } else {
             throw new Exception(
@@ -120,7 +120,7 @@ public class RapportsController {
     }
 
 
-    @DeleteMapping("/deleteAuthorizationOthers/{idrapports}")
+    @DeleteMapping("/deleteAuthorizationOthers/{idrapport}")
     public void deleteAuthorizarionOthers( @PathVariable("idrapport") Long idrapport) throws Exception {
 
         if (!(rapportsRepository.findById(idrapport).isPresent())) {
@@ -130,11 +130,14 @@ public class RapportsController {
         } else {
             String createur = rapportsRepository.findById(idrapport).get().getCreator();
             Rapports R = rapportsRepository.findById(idrapport).get();
-            List<Users> users = R.getListUsers();
+
+            List<Users> users = userRepository.findAll();
             for (Users u: users) {
                 if (!(u.getUsername().equals(createur))) {
-                    R.getListQueries().remove(u);
-                    rapportsRepository.save(R);
+                   if(u.getListRapports().contains(R)){
+                       u.getListRapports().remove(R);
+                       userRepository.save(u);
+                   }
                 }
             }
         }
