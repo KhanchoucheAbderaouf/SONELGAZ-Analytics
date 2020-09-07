@@ -201,7 +201,7 @@
       <div slot="header">
         Dim-type-evenement
       </div>
-      <v-select multiple label="description_evenement" :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select multiple label="description_evenement" placeholder="Type Evenement"  :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_objectif">
@@ -388,6 +388,23 @@ export default {
         chartOptions: {
             dataLabels: {enabled: false},
             labels:[],
+             yaxis: {
+      showAlways: true,
+      forceNiceScale:true,
+      decimalsInFloat:0,
+        labels: {
+      /*
+      * Allows users to apply a custom formatter function to yaxis labels.
+      *
+      * @param { String } value - The generated value of the y-axis tick
+      * @param { index } index of the tick / currently executing iteration in yaxis labels array
+      */
+      formatter: function(val, index) {
+        return val.toPrecision(3);
+      }
+    }
+      
+     },
             stroke: {
                 curve: 'smooth'
             },
@@ -1023,6 +1040,26 @@ partitionBy:null,
      onFromChange(selectedDates, dateStr, instance) {
         this.$set(this.configTodateTimePicker, 'minDate', dateStr);
       },
+      
+   nFormatter(num, digits) {
+  var si = [
+    { value: 1, symbol: "" },
+    { value: 1E3, symbol: "k" },
+    { value: 1E6, symbol: "M" },
+    { value: 1E9, symbol: "G" },
+    { value: 1E12, symbol: "T" },
+    { value: 1E15, symbol: "P" },
+    { value: 1E18, symbol: "E" }
+  ];
+  var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+},
       onToChange(selectedDates, dateStr, instance) {
         this.$set(this.configFromdateTimePicker, 'maxDate', dateStr);
       },
