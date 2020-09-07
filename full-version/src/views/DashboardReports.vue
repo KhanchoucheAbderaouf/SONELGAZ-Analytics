@@ -291,7 +291,7 @@ export default {
         console.log(this.$store.state.AppActiveUser.uid);
         console.log(this.titreRaport);
         this.$vs.loading();
-  this.$http.post('http://localhost:8087/rapports/addRapport/' + this.$store.state.AppActiveUser.uid,{titre:this.titreRaport},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+  this.$http.get('http://localhost:8087/rapports/addRapport/' + this.$store.state.AppActiveUser.uid + '/' + this.titreRaport,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
          this.$vs.loading.close();
          this.$vs.notify({
         title: ' Report saved ',

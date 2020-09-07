@@ -140,21 +140,16 @@ public class UsersController {
     @GetMapping("/rapports/{iduser}")
     public List<Rapports> findUserRapports(@PathVariable("iduser") Long iduser) throws Exception{
         if(userRepository.findById(iduser).isPresent()) {
-            Users U = userRepository.findById(iduser).get();
-            List<Rapports> allRapports = rapportsRepository.findAll();
-            List<Rapports> listeRapportsUser = new ArrayList<Rapports>();
-            for (Rapports r: allRapports) {
-                if(r.getListUsers().contains(U)) listeRapportsUser.add(r);
-            }
-            return listeRapportsUser;
+            return userRepository.findById(iduser).get().getListRapports();
         }
         else{
             throw new Exception(
                     "User not found !!"
             );
         }
+        }
 
     }
 
 
-}
+

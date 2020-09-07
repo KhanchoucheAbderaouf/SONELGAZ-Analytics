@@ -18,14 +18,6 @@ public class Rapports {
     @Column(length = 255,nullable = false)
     private String creator;
 
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (
@@ -34,14 +26,7 @@ public class Rapports {
                     inverseJoinColumns={ @JoinColumn(name="idquery", referencedColumnName="idquery") }
             )
     private List<Queries> listQueries;
-    @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable
-            (
-                    name="table_ref_rapport_user",
-                    joinColumns={ @JoinColumn(name="idrapport", referencedColumnName="idrapport") },
-                    inverseJoinColumns={ @JoinColumn(name="iduser", referencedColumnName="iduser") }
-            )
-    private List<Users> listUsers;
+
 
     public long getIdrapport() {
         return idrapport;
@@ -71,14 +56,14 @@ public class Rapports {
         this.listQueries.add(query);
     }
 
-    public List<Users> getListUsers() {
-        return listUsers;
+
+
+    public String getCreator() {
+        return creator;
     }
 
-    public void setListUsers(List<Users> listUsers) {
-        this.listUsers = listUsers;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
-    public void setListUsers(Users user) {
-        this.listUsers.add(user);
-    }
+
 }
