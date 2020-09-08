@@ -1,6 +1,7 @@
 package com.pfe.loginpartjwt.controller;
 
 
+import com.pfe.loginpartjwt.Exceptions.CustomException;
 import com.pfe.loginpartjwt.models.AuthenticationRequest;
 import com.pfe.loginpartjwt.models.AuthenticationResponse;
 import com.pfe.loginpartjwt.models.MyUserDetails;
@@ -38,15 +39,14 @@ public class LogController {
 
     @CrossOrigin
     @PostMapping(value="/authenticate",consumes = "application/json",produces = "application/json")
-    public MyUserDetails createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public MyUserDetails createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws CustomException {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         }
         catch (BadCredentialsException e) {
-            System.out.println(e.toString());
-            throw new Exception("Incorrect username or password", e);
+            throw new CustomException();
         }
         System.out.println(authenticationRequest.getUsername() + " " + authenticationRequest.getPassword());
         final MyUserDetails theUserDetails = userDetailsService
