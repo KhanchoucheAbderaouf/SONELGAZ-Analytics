@@ -10,7 +10,7 @@
         name: 'CellRendererActions',
         methods: {
           editRecord() {
-            this.$router.push("/apps/user/user-edit/" + 268).catch(() => {})
+            this.$router.push("/apps/user/user-edit/" + this.params.data.iduser).catch(() => {})
 
             /*
               Below line will be for actual product
@@ -31,12 +31,12 @@
           },
           deleteRecord() {
             /* Below two lines are just for demo purpose */
-            this.showDeleteSuccess()
+            
 
             /* UnComment below lines for enabling true flow if deleting user */
-            // this.$store.dispatch("userManagement/removeRecord", this.params.data.id)
-            //   .then(()   => { this.showDeleteSuccess() })
-            //   .catch(err => { console.error(err)       })
+            this.$http.delete("http://localhost:8087/users/deleteUser/"+ this.params.data.iduser)
+               .then(()   => { this.showDeleteSuccess() })
+               .catch(err => { console.error(err)       })
           },
           showDeleteSuccess() {
             this.$vs.notify({

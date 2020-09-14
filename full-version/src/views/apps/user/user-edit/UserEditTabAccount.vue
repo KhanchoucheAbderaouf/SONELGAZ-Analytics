@@ -17,7 +17,7 @@
           <img :src="data.avatar" class="mr-8 rounded h-24 w-24" />
           <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
           <div>
-            <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">{{ data.name  }}</p>
+            <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">{{ data.nom }}</p>
             <input type="file" class="hidden" ref="update_avatar_input" @change="update_avatar" accept="image/*">
 
             <!-- Toggle comment of below buttons as one for actual flow & currently shown is only for demo -->
@@ -36,34 +36,42 @@
         <vs-input class="w-full mt-4" label="Username" v-model="data_local.username" v-validate="'required|alpha_num'" name="username" />
         <span class="text-danger text-sm"  v-show="errors.has('username')">{{ errors.first('username') }}</span>
 
-        <vs-input class="w-full mt-4" label="Name" v-model="data_local.name" v-validate="'required|alpha_spaces'" name="name" />
-        <span class="text-danger text-sm"  v-show="errors.has('name')">{{ errors.first('name') }}</span>
+        <vs-input class="w-full mt-4" label="Name" v-model="data_local.nom" v-validate="'required|alpha_spaces'" name="nom" />
+        <span class="text-danger text-sm"  v-show="errors.has('nom')">{{ errors.first('nom') }}</span>
 
         <vs-input class="w-full mt-4" label="Email" v-model="data_local.email" type="email" v-validate="'required|email'" name="email" />
         <span class="text-danger text-sm"  v-show="errors.has('email')">{{ errors.first('email') }}</span>
       </div>
 
       <div class="vx-col md:w-1/2 w-full">
-
+       <vs-input class="w-full mt-4" label="Telephone" v-model="data_local.telephone"  v-validate="'required|alpha_num'" name="telephone" />
+        <span class="text-danger text-sm"  v-show="errors.has('telephone')">{{ errors.first('telephone') }}</span>
         <div class="mt-4">
-          <label class="vs-input--label">Status</label>
-          <v-select v-model="status_local" :clearable="false" :options="statusOptions" v-validate="'required'" name="status" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-          <span class="text-danger text-sm"  v-show="errors.has('status')">{{ errors.first('status') }}</span>
+          <label class="vs-input--label">Organisme</label>
+          <v-select  :filter="fuseSearch" :options="organismes" v-model="organisme" :getOptionLabel="option => option.type_organisme">
+            <template  #option="{ nom_pole,nom_unite,nom_centrale,num_grpe, type_organisme }">
+              <cite>{{ type_organisme}}</cite>
+              <p v-if="type_organisme==='Pole'"> {{ nom_pole  }}</p>
+              <p v-if="type_organisme==='Unite'"> {{ nom_unite  }}</p>
+              <p v-if="type_organisme==='Centrale'"> {{ nom_centrale  }}</p>
+              <p v-if="type_organisme==='Groupe'"> {{ nom_centrale+ "-"+num_grpe }}</p>
+              <br />
+            </template>
+          </v-select>
         </div>
-
         <div class="mt-4">
           <label class="vs-input--label">Role</label>
           <v-select v-model="role_local" :clearable="false" :options="roleOptions" v-validate="'required'" name="role" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
           <span class="text-danger text-sm"  v-show="errors.has('role')">{{ errors.first('role') }}</span>
         </div>
-
-        <vs-input class="w-full mt-4" label="Company" v-model="data_local.company" v-validate="'alpha_spaces'" name="company" />
-        <span class="text-danger text-sm"  v-show="errors.has('company')">{{ errors.first('company') }}</span>
+        
+        <!--<vs-input class="w-full mt-4" label="Company" v-model="data_local.company" v-validate="'alpha_spaces'" name="company" />
+        <span class="text-danger text-sm"  v-show="errors.has('company')">{{ errors.first('company') }}</span>!-->
 
       </div>
     </div>
 
-    <!-- Permissions -->
+    <!-- Permissions 
     <vx-card class="mt-base" no-shadow card-border>
 
       <div class="vx-row">
@@ -79,11 +87,7 @@
       <div class="block overflow-x-auto">
         <table class="w-full">
           <tr>
-            <!--
-              You can also use `Object.keys(Object.values(data_local.permissions)[0])` this logic if you consider,
-              our data structure. You just have to loop over above variable to get table headers.
-              Below we made it simple. So, everyone can understand.
-             -->
+           
             <th class="font-semibold text-base text-left px-3 py-2" v-for="heading in ['Module', 'Read', 'Write', 'Create', 'Delete']" :key="heading">{{ heading }}</th>
           </tr>
 
@@ -96,7 +100,7 @@
         </table>
       </div>
 
-    </vx-card>
+    </vx-card>-->
 
     <!-- Save & Reset Button -->
     <div class="vx-row">
@@ -112,7 +116,7 @@
 
 <script>
 import vSelect from 'vue-select'
-
+import Fuse from "fuse.js"
 export default {
   components: {
     vSelect
@@ -125,18 +129,17 @@ export default {
   },
   data() {
     return {
-
+      organisme:null,
+      organismes:[],
       data_local: JSON.parse(JSON.stringify(this.data)),
 
       statusOptions: [
-        { label: "Active",  value: "active" },
-        { label: "Blocked",  value: "blocked" },
-        { label: "Deactivated",  value: "deactivated" },
+        { label: "Active",  value: true },
+        { label: "Deactivated",  value: false },
       ],
       roleOptions: [
         { label: "Admin",  value: "admin" },
-        { label: "User",  value: "user" },
-        { label: "Staff",  value: "staff" },
+        { label: "editeur",  value: "editeur" },
       ],
     }
   },
@@ -151,10 +154,10 @@ export default {
     },
     role_local: {
       get() {
-        return { label: this.capitalize(this.data_local.role),  value: this.data_local.role  }
+        return { label: this.capitalize(this.data_local.role.intitule),  value: this.data_local.role.intitule  }
       },
       set(obj) {
-        this.data_local.role = obj.value
+        this.data_local.role.intitule = obj.value
       }
     },
     validateForm() {
@@ -165,12 +168,35 @@ export default {
     capitalize(str) {
       return str.slice(0,1).toUpperCase() + str.slice(1,str.length)
     },
+     fuseSearch(options, search) {
+      const fuse = new Fuse(options, {
+        keys: ["type_organisme","nom_pole", "nom_unite","nom_centrale","num_grpe"],
+        shouldSort: true
+      });
+      return search.length
+        ? fuse.search(search).map(({ item }) => item)
+        : fuse.list;
+    },
     save_changes() {
       if(!this.validateForm) return
 
       // Here will go your API call for updating data
       // You can get data in "this.data_local"
-
+     this.data_local.idorganism=this.organisme.code_organisme;
+     this.$http.put('http://localhost:8087/users/updateUserInfos/'+this.data_local.iduser,{body:{'nom':this.data_local.nom,'prenom':this.data_local.prenom,'telephone':this.data_local.telephone,'email':this.data_local.email,'idorganisme':this.data_local.idorganism}},
+     {headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        .then(this.$vs.notify({
+              color: 'success',
+              title: 'User Updated',
+              text: 'The selected user was successfully Updated'
+            })).catch(error => {
+        this.$vs.loading.close();
+         this.$vs.notify({
+        title: ' Requet erroné  ',
+        text: error,
+        color: 'danger'
+      })
+      });
     },
     reset_data() {
       this.data_local = JSON.parse(JSON.stringify(this.data))
@@ -181,5 +207,15 @@ export default {
       // We haven't integrated it here, because data isn't saved in DB
     }
   },
+  mounted(){
+    this.$http.get('http://localhost:8087/requests/select * from bi.dim_organisme' ,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+          this.organismes=  result.data;
+       });
+
+         this.$http.get('http://localhost:8087/requests/organism/code_organisme = '+this.data_local.idorganism,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+          this.organisme= result.data;
+       })
+       
+  }
 }
 </script>

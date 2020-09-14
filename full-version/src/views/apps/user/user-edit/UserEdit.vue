@@ -27,7 +27,7 @@
               <user-edit-tab-account class="mt-4" :data="user_data" />
             </div>
           </vs-tab>
-          <vs-tab label="Information" icon-pack="feather" icon="icon-info">
+          <!--<vs-tab label="Information" icon-pack="feather" icon="icon-info">
             <div class="tab-text">
               <user-edit-tab-information class="mt-4" :data="user_data" />
             </div>
@@ -36,7 +36,7 @@
             <div class="tab-text">
               <user-edit-tab-social class="mt-4" :data="user_data" />
             </div>
-          </vs-tab>
+          </vs-tab>-->
         </vs-tabs>
 
       </div>
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     fetch_user_data(userId) {
-      this.$store.dispatch("userManagement/fetchUser", userId)
+      this.$http.get("http://localhost:8087/users/oneUser/"+ userId,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then(res => { this.user_data = res.data })
         .catch(err => {
           if(err.response.status === 404) {

@@ -166,8 +166,8 @@ export default {
   },
   data() {
     return {
-
-      // Filter Options
+ h:[],
+   // Filter Options
       roleFilter: { label: 'All', value: 'all' },
       roleOptions: [
         { label: 'All', value: 'all' },
@@ -212,7 +212,7 @@ export default {
       columnDefs: [
         {
           headerName: 'ID',
-          field: 'id',
+          field: 'iduser',
           width: 125,
           filter: true,
           checkboxSelection: true,
@@ -233,44 +233,44 @@ export default {
           width: 225,
         },
         {
-          headerName: 'Name',
-          field: 'name',
+          headerName: 'Nom',
+          field: 'nom',
           filter: true,
           width: 200,
         },
         {
-          headerName: 'Country',
-          field: 'country',
+          headerName: 'Prenom',
+          field: 'prenom',
           filter: true,
           width: 150,
         },
         {
           headerName: 'Role',
-          field: 'role',
+          field: 'role.intitule',
           filter: true,
           width: 150,
         },
-        {
+        /*{
           headerName: 'Status',
           field: 'status',
           filter: true,
           width: 150,
           cellRendererFramework: 'CellRendererStatus'
-        },
+        },*/
         {
-          headerName: 'Verified',
-          field: 'is_verified',
+          headerName: 'Active',
+          field: 'active',
           filter: true,
           width: 125,
           cellRendererFramework: 'CellRendererVerified',
           cellClass: "text-center"
         },
-        {
+       /* {
           headerName: 'Department',
           field: 'department',
           filter: true,
           width: 150,
-        },
+        },*/
         {
           headerName: 'Actions',
           field: 'transactions',
@@ -305,7 +305,14 @@ export default {
   },
   computed: {
     usersData() {
-      return this.$store.state.userManagement.users
+    
+       this.$http.get('http://localhost:8087/users/allUsers' ,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+         this.h=result.data;
+          
+          
+       });
+      
+      return this.h;
     },
     paginationPageSize() {
       if(this.gridApi) return this.gridApi.paginationGetPageSize()
