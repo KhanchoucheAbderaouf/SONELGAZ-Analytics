@@ -48,9 +48,6 @@ public class Rapports {
         return listQueries;
     }
 
-    public void setListQueries(List<Queries> listQueries) {
-        this.listQueries = listQueries;
-    }
 
     public void setListQueries(Queries query) {
         this.listQueries.add(query);

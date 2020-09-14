@@ -55,10 +55,6 @@ public class Users {
         return listRapports;
     }
 
-    public void setListRapports(List<Rapports> listRapports) {
-        this.listRapports = listRapports;
-    }
-
     public void setListRapports(Rapports rapport) {
         this.listRapports.add(rapport);
     }
@@ -150,8 +146,6 @@ public class Users {
     public void setRole(Roles role) {
         this.role = role;
     }
-
-
 
     public List<Queries> getListQueries() {
         return listQueries;
