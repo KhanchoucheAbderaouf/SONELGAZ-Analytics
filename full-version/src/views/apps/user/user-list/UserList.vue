@@ -165,7 +165,9 @@ export default {
     CellRendererActions,
   },
   data() {
+    
     return {
+      usersData : null,
  h:[],
    // Filter Options
       roleFilter: { label: 'All', value: 'all' },
@@ -304,16 +306,7 @@ export default {
     },
   },
   computed: {
-    usersData() {
     
-       this.$http.get('http://localhost:8087/users/allUsers' ,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
-         this.h=result.data;
-          
-          
-       });
-      
-      return this.h;
-    },
     paginationPageSize() {
       if(this.gridApi) return this.gridApi.paginationGetPageSize()
       else return 10
@@ -359,6 +352,11 @@ export default {
     }
   },
   mounted() {
+   
+       this.$http.get('http://localhost:8087/users/allUsers' ,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+         this.usersData=result.data;          
+       });
+
     this.gridApi = this.gridOptions.api
 
     /* =================================================================
