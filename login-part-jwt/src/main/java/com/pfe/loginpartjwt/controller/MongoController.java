@@ -18,11 +18,11 @@ public class MongoController {
     private RestTemplate restTemplate;
 
 
-    @GetMapping(value = "/getOneResult/{idresult}")
-    public String Requests(@PathVariable("idresult") long idresult) {
-        System.out.println(idresult);
+    @GetMapping(value = "/getOneResult/{title}")
+    public String Requests(@PathVariable("title") String title) {
+        System.out.println(title);
         String jsonAnswer =
-                restTemplate.getForObject("http://ms-mongodb/mongo/getOneResult/" + idresult, String.class);
+                restTemplate.getForObject("http://ms-mongodb/mongo/getOneResult/" + title, String.class);
         return jsonAnswer;
     }
 

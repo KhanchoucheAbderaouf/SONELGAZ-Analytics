@@ -1143,7 +1143,19 @@ partitionBy:null,
         color: 'danger'
       })
       });
-
+this.$http.post('http://localhost:8087/mongo/addResult',{title:this.titreRequet,JsonAnswer:this.tableData},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {        
+         this.$vs.notify({
+        title: ' Requet saved ',
+        text: this.titreRequet,
+        color: 'success'
+      })
+       }).catch(error => { 
+         this.$vs.notify({
+        title: ' Requet Not Saved  ',
+        text: error,
+        color: 'danger'
+      })
+      });
       },
       operationWatcher:function(){
           this.operationGraphe=[];

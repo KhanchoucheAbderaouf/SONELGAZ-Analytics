@@ -501,16 +501,43 @@ export default {
       },
       createTable(tr){
         this.$vs.loading();
-             this.$http.get('http://localhost:8087/requests/'+tr.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+             this.$http.get('http://localhost:8087/mongo/getOneResult/'+tr.titre,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
         this.$vs.loading.close();
             
         this.$vs.notify({
           
-        title: ' Requet envoyé  ',
+        title: ' Requet envoyé mongo ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      }).catch(error => {
+        this.$http.get('http://localhost:8087/requests/'+tr.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {
+        this.$vs.loading.close();
+            
+        this.$vs.notify({
+          
+        title: ' Requet envoyé postgres ',
         text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
+      });
+      this.$http.post('http://localhost:8087/mongo/addResult',{title:tr.titre,JsonAnswer:},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {        
+         this.$vs.notify({
+        title: ' Requet saved ',
+        text: this.titreRequet,
+        color: 'success'
+      })
+       }).catch(error => { 
+         this.$vs.notify({
+        title: ' Requet Not Saved  ',
+        text: error,
+        color: 'danger'
+      })
+      });
+      })
+
+      
       var valueDorF=false;
             this.header=Object.getOwnPropertyNames(result.data[0]);
         

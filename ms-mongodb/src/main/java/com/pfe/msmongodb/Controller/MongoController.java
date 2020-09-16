@@ -53,20 +53,24 @@ public class MongoController {
     }
 
 
-    @GetMapping("/getOneResult/{idresult}")
-    public String oneResult(@PathVariable("idresult") long id) throws JSONException {
+    @GetMapping("/getOneResult/{title}")
+    public String oneResult(@PathVariable("title") String title) throws Exception {
 
-        Results client =mongoTemplate.findOne(Query.query(Criteria.where("idresult").is(id)), Results.class,"results");
-        System.out.println(client.getJsonAnswer());
-        JSONArray jsonArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-        for (int i = 0; i < client.getJsonAnswer().size(); i++) {
-            jsonObject = new JSONObject(client.getJsonAnswer().get(i));
-            jsonArray.put(jsonObject);
+        Results client =mongoTemplate.findOne(Query.query(Criteria.where("title").is(title)), Results.class,"results");
+        if(client == null){
+            throw new Exception("no client found");
+        }else {
+            System.out.println(client.getJsonAnswer());
+            JSONArray jsonArray = new JSONArray();
+            JSONObject jsonObject = new JSONObject();
+            for (int i = 0; i < client.getJsonAnswer().size(); i++) {
+                jsonObject = new JSONObject(client.getJsonAnswer().get(i));
+                jsonArray.put(jsonObject);
+            }
+
+            System.out.println(jsonArray.toString());
+            return jsonArray.toString();
         }
-
-        System.out.println(jsonArray.toString());
-        return jsonArray.toString();
     }
 
     public JSONArray listmap_to_json_string(List<Map<String, Object>> list)

@@ -13,7 +13,7 @@ public class Results {
 
     @Id
     private String id;
-    private long idresult;
+    private String title;
     private List<String> JsonAnswer;
 
     public String getId() {
@@ -24,12 +24,12 @@ public class Results {
         this.id = id;
     }
 
-    public long getIdresult() {
-        return idresult;
+    public String getTitle() {
+        return title;
     }
 
-    public void setIdresult(long idresult) {
-        this.idresult = idresult;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setJsonAnswer(List<String> jsonAnswer) {
