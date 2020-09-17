@@ -540,7 +540,15 @@ export default {
         this.$vs.loading.close();
         var valueDorF=false;
       this.header=Object.getOwnPropertyNames(result.data[0]); 
-      this.tableData = result.data;       
+      this.tableData = result.data;  
+      this.$http.post('http://localhost:8087/mongo/addResult',{title:tr.titre,JsonAnswer:this.tableData},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {        
+         this.$vs.notify({
+        title: ' Requet saved ',
+        text: this.titreRequet,
+        color: 'success'
+      })
+       });
+      console.log(this.tableData);     
       this.showTable=true;
       this.showRequestCreater=false;
          this.header.forEach(h => {
@@ -566,14 +574,7 @@ export default {
         color: 'success'
       })
       });
-      this.$http.post('http://localhost:8087/mongo/addResult',{title:tr.titre,JsonAnswer:this.tableData},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {        
-         this.$vs.notify({
-        title: ' Requet saved ',
-        text: this.titreRequet,
-        color: 'success'
-      })
-       })
-
+      
       })
       }
   },

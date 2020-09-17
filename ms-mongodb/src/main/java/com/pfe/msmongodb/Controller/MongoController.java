@@ -10,7 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +32,9 @@ public class MongoController {
     @Autowired
     MongoTemplate mongoTemplate;
 
+   /* @Autowired
+    GridFsOperations gridFsOperations;
+*/
     @GetMapping("/allInfo")
     public String allInfo() throws JSONException {
 
@@ -45,10 +53,16 @@ public class MongoController {
 
 
     @PostMapping("/addResult")
-    public void insert(@RequestBody LinkedHashMap result) throws JSONException {
+    public void insert(@RequestBody LinkedHashMap result) throws JSONException, ParseException {
         System.out.println(result);
         JSONObject jsonObject = new JSONObject(result.toString());
         System.out.println(jsonObject);
+        //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        //String date = format.format(new Date());
+        //Date date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date);
+       // jsonObject.put("creationDate",date);
+        //System.out.println(result.keySet().contains("JsonAnswer"));
+      //  gridFsOperations.store(jsonObject,"results");
         mongoTemplate.insert(jsonObject.toString(),"results");
     }
 
