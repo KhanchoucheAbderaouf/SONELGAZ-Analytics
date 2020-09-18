@@ -513,6 +513,8 @@ export default {
 
       
       var valueDorF=false;
+     
+      console.log(result);
       this.header=Object.getOwnPropertyNames(result.data[0]); 
       this.tableData = result.data;       
       this.showTable=true;
@@ -535,6 +537,7 @@ export default {
          
         });
       }).catch(error => {
+
         this.$http.get('http://localhost:8087/requests/'+tr.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
         this.$vs.loading.close();

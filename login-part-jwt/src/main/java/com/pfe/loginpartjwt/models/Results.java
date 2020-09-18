@@ -1,57 +1,43 @@
 package com.pfe.loginpartjwt.models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Map;
 
 
 public class Results {
 
-    @Id
-    private String id;
-    private String title;
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date creationDate;
-    private List<String> JsonAnswer;
+        private String title;
+        @JsonProperty("JsonAnswer")
+        private List<Map<String, Object>> JsonAnswer;
+        @CreatedDate
+        private Date creationDate;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+        public String getTitle() {
+            return title;
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public Date getCreationDate() {
+            return creationDate;
+        }
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
+        public void setCreationDate(Date creationDate) {
+            this.creationDate = creationDate;
+        }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
+        public List<Map<String, Object>> getJsonAnswer() {
+            return JsonAnswer;
+        }
 
-    public void setJsonAnswer(List<String> jsonAnswer) {
-        JsonAnswer = jsonAnswer;
-    }
-
-    public List<String> getJsonAnswer() {
-        return this.JsonAnswer;
-    }
-
+        public void setJsonAnswer(List<Map<String, Object>> jsonAnswer) {
+            JsonAnswer = jsonAnswer;
+        }
 }

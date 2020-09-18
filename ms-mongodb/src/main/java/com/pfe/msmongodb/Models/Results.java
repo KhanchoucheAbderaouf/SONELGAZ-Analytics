@@ -1,9 +1,13 @@
 package com.pfe.msmongodb.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,18 +15,12 @@ import java.util.Map;
 @Document("results")
 public class Results {
 
-    @Id
-    private String id;
     private String title;
-    private List<String> JsonAnswer;
+    @JsonProperty("JsonAnswer")
+    private List<Map<String, Object>> JsonAnswer;
+    @CreatedDate
+    private Date creationDate;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -32,12 +30,20 @@ public class Results {
         this.title = title;
     }
 
-    public void setJsonAnswer(List<String> jsonAnswer) {
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public List<Map<String, Object>> getJsonAnswer() {
+        return JsonAnswer;
+    }
+
+    public void setJsonAnswer(List<Map<String, Object>> jsonAnswer) {
         JsonAnswer = jsonAnswer;
     }
-
-    public List<String> getJsonAnswer() {
-        return this.JsonAnswer;
-    }
-
 }
+

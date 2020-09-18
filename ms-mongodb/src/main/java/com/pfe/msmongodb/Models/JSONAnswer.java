@@ -11,7 +11,8 @@ public class JSONAnswer {
 
     }
     public JSONAnswer(List<Map<String, Object>> jsonAnswer) {
-        JsonAnswer = jsonAnswer;
+
+        this.JsonAnswer = jsonAnswer;
     }
 
     public List<Map<String, Object>> getJsonAnswer() {
