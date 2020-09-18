@@ -5,15 +5,12 @@ import com.pfe.loginpartjwt.models.Queries;
 import com.pfe.loginpartjwt.models.Rapports;
 import com.pfe.loginpartjwt.models.Roles;
 import com.pfe.loginpartjwt.models.Users;
-import com.pfe.loginpartjwt.repositories.QueryRepository;
-import com.pfe.loginpartjwt.repositories.RapportsRepository;
 import com.pfe.loginpartjwt.repositories.RoleRepository;
 import com.pfe.loginpartjwt.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.*;
 
 
@@ -28,8 +25,7 @@ public class UsersController {
     @Autowired
     RoleRepository roleRepository;
 
-    @Autowired
-    RapportsRepository rapportsRepository;
+
 
 
     @Autowired
