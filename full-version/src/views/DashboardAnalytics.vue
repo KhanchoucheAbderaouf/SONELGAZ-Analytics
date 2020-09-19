@@ -59,11 +59,7 @@
             </vs-dropdown-menu>
           </vs-dropdown>
 
-          <!-- ADD NEW -->
-          <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="activePrompt3=true">
-              <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-              <span class="ml-2 text-base text-primary">Add Report</span>
-          </div>
+          
         </div>
 
         <!-- ITEMS PER PAGE -->
@@ -144,7 +140,7 @@
     </vs-prompt>
     <!--prompt requet End -->
            <!--prompt Excel Begin -->
-        <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
+        <vs-prompt title="Exporter les résultats" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Exporter" @close="clearFields" :active.sync="activePrompt">
         <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
         <v-select v-model="selectedFormat" :options="formats" class="my-4" />
         <div class="flex">
@@ -155,7 +151,7 @@
     <!--prompt Excel End -->
 
     <!--prompt Graphe Begin -->
-     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Create" @close="clearFields" :active.sync="activePrompt2">
+     <vs-prompt title="Créer des Graphes" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Créer" @close="clearFields" :active.sync="activePrompt2">
         <v-select v-model="attributeGraphe" :options="operationGraphe"  class="my-4" />
         <v-select v-model="DimGraphe" :options="setsGraphe" label="value" class="my-4" />
         <v-select v-model="typeGraphe" :options="typesGraphes" class="my-4" />
@@ -170,13 +166,13 @@
       <vs-table :data="tableData" v-model="selectedUsers" pagination max-items="10" multiple search>
 
         <template slot="header" >
-          <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
+          <vs-button @click="activePrompt=true" style="margin-right:30px;">Exporter les Résultats</vs-button>
         </template>
         <template slot="header">
-          <vs-button style="margin-right:30px;" @click="activePrompt2=true">Create Charts</vs-button>
+          <vs-button style="margin-right:30px;" @click="activePrompt2=true">Créer des Graphes</vs-button>
         </template>
         <template slot="header">
-          <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Table Of Query</vs-button>
+          <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Retour aux requêtes</vs-button>
         </template>
   <template slot="thead">
           <vs-th  v-for="heading in header" :key="heading" :sort-key="heading">{{ heading }}</vs-th>
