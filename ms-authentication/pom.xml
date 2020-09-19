@@ -10,10 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pfe</groupId>
-    <artifactId>login-part-jwt</artifactId>
+    <artifactId>msauthentication</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>login-part-jwt</name>
-    <description>Demo project for Spring Boot</description>
+    <name>ms-authentication</name>
+    <description>Microservice d'authentification et gestion des accès</description>
 
     <properties>
         <java.version>1.8</java.version>
