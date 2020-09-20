@@ -248,6 +248,20 @@ const router = new Router({
                         rule: 'editor'
                     },
                 },
+                {
+                    path: '/apps/user/user-add',
+                    name: 'app-user-add',
+                    component: () => import('@/views/apps/user/user-add/UserAdd.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'User' },
+                            { title: 'Add', active: true },
+                        ],
+                        pageTitle: 'User Add',
+                        rule: 'editor'
+                    },
+                },
         // =============================================================================
         // UI ELEMENTS
         // =============================================================================
