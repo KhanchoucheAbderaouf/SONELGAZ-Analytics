@@ -1,0 +1,5 @@
+commands to create the database mongodb :
+
+1 - use tester.
+2 - db.createCollection("results")
+3 - db.eventlog.createIndex( { "creationDate": 1 }, { expireAfterSeconds: 86400 } )

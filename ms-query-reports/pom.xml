@@ -12,7 +12,7 @@
     <groupId>com.pfe</groupId>
     <artifactId>msqueryreports</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MSQueryReports</name>
+    <name>ms-query-reports</name>
     <description>microservices pour la gestions des requetes et rapports</description>
 
     <properties>

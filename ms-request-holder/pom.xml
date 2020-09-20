@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pfe</groupId>
-    <artifactId>spring-test</artifactId>
+    <artifactId>msrequestholder</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-test</name>
-    <description>Demo project for Spring Boot</description>
+    <name>ms-request-holder</name>
+    <description>microservices pour le chargement du Data Warehouse avec l'éxecution des requêtes dans ce dernier.</description>
 
     <properties>
         <java.version>1.8</java.version>

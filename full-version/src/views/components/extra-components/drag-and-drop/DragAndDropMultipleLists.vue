@@ -19,12 +19,12 @@
         <div class="vx-row">
             <div class="vx-col w-full md:w-1/3">
                 <vs-list>
-                    <vs-list-header title="La List Des Attributes" color="primary"></vs-list-header>
+                    <vs-list-header title="La liste des Attributs" color="primary"></vs-list-header>
                     <vs-collapse :type="type" accordion>
                     <!--fait_consommation-->
                       <vs-collapse-item class="bg-primary text-white"  >
                         <div slot="header">
-                          fait_consommation
+                          Consommation
                         </div>
                     <draggable :list="list1" group="people" class="p-2 cursor-move">
                       <div v-for="(listItem, index) in list1" :key="index" >
@@ -32,21 +32,11 @@
                         </div>
                     </draggable>
                       </vs-collapse-item>
-                      <!--fait_objectif-->
-                    <vs-collapse-item class="bg-primary text-white" >
-                        <div slot="header">
-                          fait_objectif
-                        </div>
-                    <draggable :list="list1" group="people" class="p-2 cursor-move">
-                      <div v-for="(listItem, index) in list1" :key="index" >
-                        <vs-list-item  v-if="listItem.TableFait==='fait_objectif'" :title="listItem.attributeName" ></vs-list-item>
-                        </div>
-                    </draggable>
-                      </vs-collapse-item>
+                    
                     <!--fait_production-->
                       <vs-collapse-item class="bg-primary text-white" >
                         <div slot="header">
-                          fait_production
+                          Production
                         </div>
                     <draggable :list="list1" group="people" class="p-2 cursor-move">
                       <div v-for="(listItem, index) in list1" :key="index" >
@@ -57,7 +47,7 @@
                     <!--fait_pv-->
                         <vs-collapse-item class="bg-primary text-white" >
                         <div slot="header">
-                          fait_pv
+                          PV
                         </div>
                     <draggable :list="list1" group="people" class="p-2 cursor-move">
                       <div v-for="(listItem, index) in list1" :key="index" >
@@ -68,7 +58,7 @@
                         <!--fait_qualite_service-->
                         <vs-collapse-item class="bg-primary text-white" >
                         <div slot="header">
-                          fait_qualite_service
+                          Qualité de service
                         </div>
                     <draggable :list="list1" group="people" class="p-2 cursor-move">
                       <div v-for="(listItem, index) in list1" :key="index" >
@@ -76,21 +66,10 @@
                         </div>
                     </draggable>
                       </vs-collapse-item>
-                        <!-- fait_qualite_service_imed-->
-                        <vs-collapse-item class="bg-primary text-white" >
-                        <div slot="header">
-                          fait_qualite_service_imed
-                        </div>
-                    <draggable :list="list1" group="people" class="p-2 cursor-move">
-                      <div v-for="(listItem, index) in list1" :key="index" >
-                        <vs-list-item  v-if="listItem.TableFait==='fait_qualite_service_imed'" :title="listItem.attributeName" ></vs-list-item>
-                        </div>
-                    </draggable>
-                      </vs-collapse-item>
                        <!-- fait_separation_reseau-->
                         <vs-collapse-item class="bg-primary text-white" >
                         <div slot="header">
-                          fait_separation_reseau
+                          Séparation réseau
                         </div>
                     <draggable :list="list1" group="people" class="p-2 cursor-move">
                       <div v-for="(listItem, index) in list1" :key="index" >
@@ -103,7 +82,7 @@
             </div>
             <div class="vx-col w-full md:w-1/3">
                 <vs-list>
-                    <vs-list-header title="Les Attributes Choisi" color="primary"></vs-list-header>
+                    <vs-list-header title="Les Attributs Choisient" color="primary"></vs-list-header>
                     <draggable :list="list2" group="people" class="p-2 cursor-move">
                     <vs-list-item v-for="(listItem, index) in list2" :key="index" :title="listItem.attributeName" >
                       <vs-dropdown class="cursor-pointer flex" vs-custom-content>
@@ -123,7 +102,7 @@
             </div>
             <div class="vx-col w-full md:w-1/3">
                 <vs-list>
-                    <vs-list-header title="La List Des Dimentions" color="primary"></vs-list-header>
+                    <vs-list-header title="La liste des Dimensions" color="primary"></vs-list-header>
                     
                      
 
@@ -131,7 +110,7 @@
 
     <vs-collapse-item  v-show="ck_cause">
       <div slot="header">
-        Dim-cause
+        Causes
       </div>
       <v-select multiple label="description_cause" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
@@ -139,14 +118,14 @@
 
     <vs-collapse-item v-show="ck_objectif">
       <div slot="header" >
-        Dim-objectif
+        Objectif
       </div><v-select multiple label="code_objectif" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
     <vs-collapse-item v-show="ck_type_organisme">
       <div slot="header">
-        Dim-organisme
+        Organisme
       </div>
      
     
@@ -168,21 +147,21 @@
 
     <vs-collapse-item v-show="ck_regime_fct">
       <div slot="header" >
-        Dim-regime-fct
+        Régime Fonctionnel
       </div>
        <v-select multiple label="description_regime" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_reseau">
       <div slot="header">
-        Dim-reseau
+        Réseaux
       </div>
        <v-select multiple label="libelle_reseau" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_temps">
       <div slot="header" >
-        Dim-temps
+        Temps
       </div>
       
  <flat-pickr :config="configFromdateTimePicker" v-model="contraintes.tempsDebut" placeholder="From Date" @on-change="onFromChange" />
@@ -192,28 +171,28 @@
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_centrale">
       <div slot="header">
-        Dim-type-centrale
+        Type Centrale
       </div>
      <v-select multiple label="description_type_centrale" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_evenement">
       <div slot="header">
-        Dim-type-evenement
+        Type d'évènement
       </div>
       <v-select multiple label="description_evenement" placeholder="Type Evenement"  :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_objectif">
       <div slot="header">
-        Dim-type-objectif
+        Type Objectif
       </div>
       <v-select multiple label="libelle_objectif" :options="type_objectif" v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_saisie_objectif">
       <div slot="header">
-        Dim-saisie-objectif
+        Saisie Objectif
       </div>
      <v-select multiple label="libelle_type_saisieobjectif" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
@@ -241,7 +220,7 @@
   <br><br> 
   <vs-row vs-type="flex" vs-justify="flex-end">
   <vs-button class="bg-success text-white"  @click="addFind">
-    add
+    Ajouter
   </vs-button>
   <br>
   </vs-row>
@@ -267,13 +246,13 @@
 
         
         <vs-row vs-type="flex" vs-justify="flex-end">
-        <vs-button color="success" v-on:click="greet" type="filled">Done</vs-button>
+        <vs-button color="success" v-on:click="greet" type="filled">Valider</vs-button>
         </vs-row>
          </vx-card>
         <!--le tableau des résultas-->
          <vx-card v-show="showTable">
            <!--prompt Excel Begin -->
-        <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
+        <vs-prompt title="Exporter Résultats" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Exporter" @close="clearFields" :active.sync="activePrompt">
         <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
         <v-select v-model="selectedFormat" :options="formats" class="my-4" />
         <div class="flex">
@@ -284,7 +263,7 @@
     <!--prompt Excel End -->
 
     <!--prompt Graphe Begin -->
-     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Create" @close="clearFields" :active.sync="activePrompt2">
+     <vs-prompt title="Créer des Graphes" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Créer" @close="clearFields" :active.sync="activePrompt2">
         <v-select v-model="attributeGraphe" :options="operationGraphe"  class="my-4" />
         <v-select v-model="DimGraphe" :options="setsGraphe" label="value" class="my-4" />
         <v-select v-model="typeGraphe" :options="typesGraphes" class="my-4" />
@@ -304,13 +283,13 @@
       <vs-table :data="tableData" v-model="selectedUsers" pagination max-items="10" multiple search>
 
         <template slot="header" >
-          <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
+          <vs-button @click="activePrompt=true" style="margin-right:30px;">Exporter les Résultats</vs-button>
         </template>
         <template slot="header">
-          <vs-button style="margin-right:30px;" @click="activePrompt2=true">Create Charts</vs-button>
+          <vs-button style="margin-right:30px;" @click="activePrompt2=true">Créer des Graphes</vs-button>
         </template>
         <template slot="header">
-          <vs-button class="bg-danger" @click="backToCreation">Back To Creation</vs-button>
+          <vs-button class="bg-danger" @click="backToCreation">Retour a la création requête</vs-button>
         </template>
   <template slot="thead">
           <vs-th  v-for="heading in header" :key="heading" :sort-key="heading">{{ heading }}</vs-th>
@@ -325,7 +304,7 @@
         
       </vs-table>
       </div>
-      <vs-button class="bg-success" @click="activePrompt3=true">Save Query</vs-button>
+      <vs-button class="bg-success" @click="activePrompt3=true">Sauvegarder la requête</vs-button>
     </vx-card>
       <vx-card v-if="showGraphe" >
         
