@@ -35,7 +35,8 @@
 
             /* UnComment below lines for enabling true flow if deleting user */
             this.$http.delete("http://localhost:8087/users/deleteUser/"+ this.params.data.iduser)
-               .then(()   => { this.showDeleteSuccess() })
+               .then(()   => { this.showDeleteSuccess() 
+               })
                .catch(err => { console.error(err)       })
           },
           showDeleteSuccess() {

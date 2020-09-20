@@ -189,9 +189,10 @@ export default {
      {headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then(this.$vs.notify({
               color: 'success',
-              title: 'User Updated',
-              text: 'The selected user was successfully Updated'
-            })).catch(error => {
+              title: 'User Added',
+              text: 'The  user was successfully Added'
+            })
+            ).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
         title: ' Requet erroné  ',
