@@ -197,6 +197,20 @@ export default {
         color: 'danger'
       })
       });
+      this.$http.put('http://localhost:8087/users/updateUserRole/'+this.data_local.iduser+'/'+this.role_local.value,{'nom':this.data_local.nom,'prenom':this.data_local.prenom,'telephone':this.data_local.telephone,'email':this.data_local.email,'idorganism':this.data_local.idorganism},
+     {headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        .then(this.$vs.notify({
+              color: 'success',
+              title: 'User Updated',
+              text: 'The selected user was successfully Updated'
+            })).catch(error => {
+        this.$vs.loading.close();
+         this.$vs.notify({
+        title: ' Requet erroné  ',
+        text: error,
+        color: 'danger'
+      })
+      });
     },
     reset_data() {
       this.data_local = JSON.parse(JSON.stringify(this.data))
