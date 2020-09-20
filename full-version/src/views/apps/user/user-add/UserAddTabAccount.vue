@@ -108,7 +108,7 @@
     <div class="vx-row">
       <div class="vx-col w-full">
         <div class="mt-8 flex flex-wrap items-center justify-end">
-          <vs-button class="ml-auto mt-2" @click="save_changes" :disabled="!validateForm">Save Changes</vs-button>
+          <vs-button class="ml-auto mt-2" @click="save_changes" :disabled="!validateForm">Sauvgarder</vs-button>
           <vs-button class="ml-4 mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
         </div>
       </div>
@@ -141,7 +141,7 @@ export default {
       ],
       roleOptions: [
         { label: "Admin",  value: "admin" },
-        { label: "editeur",  value: "editeur" },
+        { label: "Utilisateur Simple",  value: "simple_user" },
       ],
     }
   },
