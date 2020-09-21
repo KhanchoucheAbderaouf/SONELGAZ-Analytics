@@ -936,6 +936,7 @@ partitionBy:null,
         text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
+      console.log(result.data);
             this.header=Object.getOwnPropertyNames(result.data[0]);
         
         
