@@ -379,7 +379,7 @@ export default {
       * @param { index } index of the tick / currently executing iteration in yaxis labels array
       */
       formatter: function(val, index) {
-        return val.toPrecision(3);
+        return val > 999999 ?  (val / 1000000).toFixed(1) + 'M' : val > 999 ?  (val / 1000).toFixed(1) + 'k' : val;
       }
     }
       

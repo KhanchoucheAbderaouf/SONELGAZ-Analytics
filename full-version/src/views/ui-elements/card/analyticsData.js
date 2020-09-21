@@ -251,7 +251,7 @@ export default {
                 axisTicks: {
                     show: false,
                 },
-                categories: ['01', '05', '09', '13', '17', '21', '26', '31'],
+                categories: ['01', '02', '03', '04', '05', '06', '07', '08','09','10','11', '12', '13', '14', '15', '16', '17', '18','19','21', '22', '23', '24', '25', '26', '27', '28','29','30','31'],
                 axisBorder: {
                     show: false,
                 },
@@ -263,7 +263,7 @@ export default {
                         cssClass: 'text-grey fill-current',
                     },
                     formatter: function(val) {
-                        return val > 999 ? (val / 1000).toFixed(1) + 'k' : val;
+                        return val > 999999 ?  (val / 1000000).toFixed(1) + 'M' : val > 999 ?  (val / 1000).toFixed(1) + 'k' : val;
                     }
                 }
             },
@@ -953,7 +953,7 @@ export default {
                         cssClass: 'text-grey fill-current',
                     },
                     formatter: function(val) {
-                        return val > 999 ? (val / 1000).toFixed(1) + 'k' : val;
+                        return val > 999999 ?  (val / 1000000).toFixed(1) + 'M' : val > 999 ?  (val / 1000).toFixed(1) + 'k' : val;
                     }
                 }
             },
@@ -1015,6 +1015,9 @@ export default {
                 labels: {
                     style: {
                         cssClass: 'text-grey fill-current',
+                    },
+                    formatter: function(val) {
+                        return val > 999999 ?  (val / 1000000).toFixed(1) + 'M' : val > 999 ?  (val / 1000).toFixed(1) + 'k' : val;
                     }
                 }
             },

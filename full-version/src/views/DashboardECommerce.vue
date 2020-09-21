@@ -58,11 +58,11 @@
                         <div class="flex" v-if="revenueComparisonLine.analyticsData">
                             <div class="mr-6">
                                 <p class="mb-1 font-semibold">Production</p>
-                                <p class="text-3xl text-success"><sup class="text-base mr-1">$</sup>{{ revenueComparisonLine.analyticsData.thisMonth.toLocaleString() }}</p>
+                                <p class="text-3xl text-success"><sup class="text-base mr-1"></sup>{{ revenueComparisonLine.analyticsData.thisMonth | k_formatter}}</p>
                             </div>
                             <div>
-                                <p class="mb-1 font-semibold">Consommation</p>
-                                <p class="text-3xl"><sup class="text-base mr-1">$</sup>{{ revenueComparisonLine.analyticsData.lastMonth.toLocaleString() }}</p>
+                                <p class="mb-1 font-semibold">Energie Perdu</p>
+                                <p class="text-3xl"><sup class="text-base mr-1"></sup>{{ revenueComparisonLine.analyticsData.lastMonth | k_formatter }}</p>
                             </div>
                         </div>
                         <vue-apex-charts
@@ -136,8 +136,8 @@
             <div class="vx-col w-full md:w-2/3">
                 <vx-card title="State D'Energie Cette Année">
                     <div class="flex">
-                        <span class="flex items-center"><div class="h-3 w-3 rounded-full mr-1 bg-primary"></div><span>Energie Utiliser</span></span>
-                        <span class="flex items-center ml-4"><div class="h-3 w-3 rounded-full mr-1 bg-danger"></div><span>Energie Perdu</span></span>
+                        <span class="flex items-center"><div class="h-3 w-3 rounded-full mr-1 bg-primary"></div><span>Energie Perdu</span></span>
+                        <span class="flex items-center ml-4"><div class="h-3 w-3 rounded-full mr-1 bg-danger"></div><span>Energie Productible</span></span>
                     </div>
                     <vue-apex-charts type=bar height=277 :options="analyticsData.clientRetentionBar.chartOptions" :series="clientRetentionBar.series" />
                 </vx-card>
@@ -162,6 +162,8 @@ export default{
             remplisseur1:{data:[],name:null,},
             remplisseur2:{data:[],name:null,},
             remplisseur3:{data:[],name:null,},
+            remplisseur4:{data:[],name:null,},
+            remplisseur5:{data:[],name:null,},
             subscribersGained: {analyticsData:null,
             series:[]},
             revenueGenerated: {analyticsData:null,
@@ -171,11 +173,13 @@ export default{
             ordersRecevied: {analyticsData:null,
             series:[]},
 
-            revenueComparisonLine: {},
+            revenueComparisonLine:{analyticsData:{thisMonth:null,
+            lastMonth:null,},
+            series:[]},
             goalOverview: {},
 
             browserStatistics: [],
-            clientRetentionBar: {},
+            clientRetentionBar: {series:[]},
 
             sessionsData: {},
             chatLog: [],
@@ -211,6 +215,8 @@ export default{
             });
         this.remplisseur.name="consommation";
         this.subscribersGained. series.push(this.remplisseur);
+        this.revenueComparisonLine.analyticsData.thisMonth=this.subscribersGained.analyticsData;
+        this.revenueComparisonLine.series.push(this.remplisseur);
       
         })
         .catch((error) => { console.log(error) })
@@ -249,25 +255,23 @@ export default{
         })
         .catch((error) => { console.log(error) })
      //order
-      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(energie_perdue) + sum(energie_perdue_pointe)) AS sum_heure from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(energie_perdue) + sum(energie_perdue_pointe)) AS sum_energie from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then((response) => { 
           response.data.forEach(element => {
                 if(element.jour_du_mois==="ALL jour_du_moiss"){
-                    this.ordersRecevied.analyticsData=element.sum_heure.toFixed(0);
+                    this.ordersRecevied.analyticsData=element.sum_energie.toFixed(0);
                 }else{
-                    this.remplisseur3.data.push(element.sum_heure.toFixed(0));
+                    this.remplisseur3.data.push(element.sum_energie.toFixed(0));
                 }
             });
-        this.remplisseur3.name="heure";
+        this.remplisseur3.name="Energie Perdu";
         this.ordersRecevied.series.push(this.remplisseur3);
-    
+        this.revenueComparisonLine.analyticsData.lastMonth=this.ordersRecevied.analyticsData;
+        this.revenueComparisonLine.series.push(this.remplisseur3);
         })
         .catch((error) => { console.log(error) })
-      // Revenue Comparison
-      this.$http.get("/api/card/card-analytics/revenue-comparison")
-        .then((response) => { this.revenueComparisonLine = response.data ;
-        console.log(this.revenueComparisonLine)})
-        .catch((error) => { console.log(error) })
+     
+    
 
       // Goal Overview
       this.$http.get("/api/card/card-analytics/goal-overview")
@@ -280,8 +284,32 @@ export default{
         .catch((error) => { console.log(error) })
 
       // Client Retention
-      this.$http.get("/api/card/card-analytics/client-retention")
-        .then((response) => { this.clientRetentionBar = response.data })
+
+        this.$http.get("http://localhost:8087/requests/select case grouping(mois ) when 1 then 'ALL moiss' else cast(mois as varchar(255)) end ,(sum(energie_productible_qualite) + sum(energie_productible_pointe_qualite)) AS sum_energie from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where annee=2017  GROUP BY ROLLUP( (mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        .then((response) => { 
+            console.log(response.data);
+          response.data.forEach(element => {
+                if(element.jour_du_mois==="ALL moiss"){}else{
+                    this.remplisseur4.data.push(element.sum_energie.toFixed(0));
+                }
+            });
+            this.remplisseur4.name="Energie Productible";
+        this.clientRetentionBar.series.push(this.remplisseur4);
+        })
+        .catch((error) => { console.log(error) })
+
+
+          this.$http.get("http://localhost:8087/requests/select case grouping(mois ) when 1 then 'ALL moiss' else cast(mois as varchar(255)) end ,(sum(energie_perdue) + sum(energie_perdue_pointe)) AS sum_energie from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where annee=2017  GROUP BY ROLLUP( (mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        .then((response) => { 
+            console.log(response.data);
+          response.data.forEach(element => {
+                if(element.jour_du_mois==="ALL moiss"){}else{
+                    this.remplisseur5.data.push(-Math.abs(element.sum_energie.toFixed(0)));
+                }
+            });
+            this.remplisseur5.name="Energie perdu";
+        this.clientRetentionBar.series.push(this.remplisseur5);
+        })
         .catch((error) => { console.log(error) })
 
       // Sessions By Device
