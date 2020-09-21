@@ -5,9 +5,9 @@
         <div class="vx-row">
             <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
                 <statistics-card-line
-                  v-if="subscribersGained.analyticsData"
+                  v-if="subscribersGained.analyticsData "
                   icon="UsersIcon"
-                  :statistic="subscribersGained.analyticsData | k_formatter"
+                  :statistic="subscribersGained.analyticsData | k_formatter "
                   statisticTitle="Consommation Du Mois"
                   :chartData="subscribersGained.series"
                   type='area' />
@@ -17,7 +17,7 @@
                 <statistics-card-line
                   v-if="revenueGenerated.analyticsData"
                   icon="DollarSignIcon"
-                  :statistic="revenueGenerated.analyticsData.revenue | k_formatter"
+                  :statistic="revenueGenerated.analyticsData | k_formatter"
                   statisticTitle="Production Du Mois"
                   :chartData="revenueGenerated.series"
                   color='success'
@@ -28,8 +28,8 @@
                 <statistics-card-line
                   v-if="quarterlySales.analyticsData"
                   icon="ShoppingCartIcon"
-                  :statistic="quarterlySales.analyticsData.sales"
-                  statisticTitle="Energie Perdu Du Mois"
+                  :statistic="quarterlySales.analyticsData | k_formatter"
+                  statisticTitle="Heures De Marche Du Mois"
                   :chartData="quarterlySales.series"
                   color='danger'
                   type='area' />
@@ -38,8 +38,8 @@
                 <statistics-card-line
                   v-if="ordersRecevied.analyticsData"
                   icon="ShoppingBagIcon"
-                  :statistic="ordersRecevied.analyticsData.orders | k_formatter"
-                  statisticTitle="Heures De Marche Du Mois"
+                  :statistic="ordersRecevied.analyticsData | k_formatter"
+                  statisticTitle=" Energie Perdu Du Mois"
                   :chartData="ordersRecevied.series"
                   color='warning'
                   type='area' />
@@ -159,11 +159,17 @@ export default{
     data() {
         return {
             remplisseur:{data:[],name:null,},
+            remplisseur1:{data:[],name:null,},
+            remplisseur2:{data:[],name:null,},
+            remplisseur3:{data:[],name:null,},
             subscribersGained: {analyticsData:null,
             series:[]},
-            revenueGenerated: {},
-            quarterlySales: {},
-            ordersRecevied: {},
+            revenueGenerated: {analyticsData:null,
+            series:[]},
+            quarterlySales:{analyticsData:null,
+            series:[]},
+            ordersRecevied: {analyticsData:null,
+            series:[]},
 
             revenueComparisonLine: {},
             goalOverview: {},
@@ -198,32 +204,65 @@ export default{
         .then((response) => { 
             response.data.forEach(element => {
                 if(element.jour_du_mois==="ALL jour_du_moiss"){
-                    this.subscribersGained.analyticsData=element.sum_consommation_commune;
+                    this.subscribersGained.analyticsData=element.sum_consommation_commune.toFixed(0);
                 }else{
-                    this.remplisseur.data.push(element.sum_consommation_commune);
+                    this.remplisseur.data.push(element.sum_consommation_commune.toFixed(0));
                 }
             });
         this.remplisseur.name="consommation";
         this.subscribersGained. series.push(this.remplisseur);
-
+      
         })
         .catch((error) => { console.log(error) })
 
-      // Revenue Generated
-      this.$http.get("/api/card/card-statistics/revenue")
-        .then((response) => { this.revenueGenerated = response.data })
+     // Revenue Generated
+      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(production_bu_grpe)+sum(production_ba_grpe)) AS sum_production from bi.fait_production natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        .then((response) => { 
+          response.data.forEach(element => {
+                if(element.jour_du_mois==="ALL jour_du_moiss"){
+                    this.revenueGenerated.analyticsData=element.sum_production.toFixed(0);
+                }else{
+                    this.remplisseur1.data.push(element.sum_production.toFixed(0));
+                }
+            });
+        this.remplisseur1.name="production";
+        this.revenueGenerated. series.push(this.remplisseur1);
+        
+        })
         .catch((error) => { console.log(error) })
+
+      
 
       // Sales
-      this.$http.get("/api/card/card-statistics/sales")
-        .then((response) => { this.quarterlySales = response.data })
+      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(heure_marche_gaz) + sum(heure_marche_fuel)) AS sum_heure from bi.fait_separation_reseau natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        .then((response) => { 
+          response.data.forEach(element => {
+                if(element.jour_du_mois==="ALL jour_du_moiss"){
+                    this.quarterlySales.analyticsData=element.sum_heure.toFixed(0);
+                }else{
+                    this.remplisseur2.data.push(element.sum_heure.toFixed(0));
+                }
+            });
+        this.remplisseur2.name="heure";
+        this.quarterlySales.series.push(this.remplisseur2);
+    
+        })
         .catch((error) => { console.log(error) })
-
-      // Orders - Statistics
-      this.$http.get("/api/card/card-statistics/orders")
-        .then((response) => { this.ordersRecevied = response.data })
+     //order
+      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(energie_perdue) + sum(energie_perdue_pointe)) AS sum_heure from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        .then((response) => { 
+          response.data.forEach(element => {
+                if(element.jour_du_mois==="ALL jour_du_moiss"){
+                    this.ordersRecevied.analyticsData=element.sum_heure.toFixed(0);
+                }else{
+                    this.remplisseur3.data.push(element.sum_heure.toFixed(0));
+                }
+            });
+        this.remplisseur3.name="heure";
+        this.ordersRecevied.series.push(this.remplisseur3);
+    
+        })
         .catch((error) => { console.log(error) })
-
       // Revenue Comparison
       this.$http.get("/api/card/card-analytics/revenue-comparison")
         .then((response) => { this.revenueComparisonLine = response.data ;
