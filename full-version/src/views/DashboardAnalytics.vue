@@ -437,7 +437,7 @@ export default {
         //console.log(this.attributeGraphe);
         var contrlerIndex=this.header.indexOf(this.DimGraphe);
         var contrlerGraphe=this.header[contrlerIndex+1];
-         this.operationGraphe=[];
+        
         this.operationGraphe.forEach(op => {
 
           //if next is an operation
@@ -508,6 +508,8 @@ export default {
       this.tableData = result.data;       
       this.showTable=true;
       this.showRequestCreater=false;
+      this.operationGraphe=[];
+          this.setsGraphe=[];
          this.header.forEach(h => {
           valueDorF=false;
          this.operationGrapheControle.forEach(op => {
@@ -518,7 +520,8 @@ export default {
             }
          
         });
-         this.setsGraphe=[];
+         
+          
         if (valueDorF===true){
           this.operationGraphe.push(h);
         }else{
@@ -544,6 +547,8 @@ export default {
       console.log(this.tableData);     
       this.showTable=true;
       this.showRequestCreater=false;
+      this.operationGraphe=[];
+          this.setsGraphe=[];
          this.header.forEach(h => {
           valueDorF=false;
          this.operationGrapheControle.forEach(op => {
