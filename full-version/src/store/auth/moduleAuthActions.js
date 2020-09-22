@@ -328,7 +328,7 @@ export default {
               userInfo.username=response.data.username;
               userInfo.uid=response.data.iduser;
               userInfo.displayName=response.data.nom;
-              userInfo.userRole=response.data.authorities[0].authority
+              userInfo.userRole=response.data.authorities[0].authority;
               userInfo.code_organisme=response.data.idorganism;
 
               // Update user details

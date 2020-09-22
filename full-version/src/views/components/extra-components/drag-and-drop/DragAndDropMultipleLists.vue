@@ -241,7 +241,9 @@
 
         
         <vs-row vs-type="flex" vs-justify="flex-end">
-        <vs-button color="success" v-on:click="greet" type="filled">Valider</vs-button>
+        <vs-button color="success" style="margin-right:20px;" v-on:click="greet" type="filled">Valider</vs-button>
+        
+        <vs-button color="warning" v-on:click="reset" type="filled">Reset</vs-button>
         </vs-row>
          </vx-card>
         <!--le tableau des résultas-->
@@ -764,6 +766,12 @@ partitionBy:null,
         this.contraintes.saisieObjectif=null;
 
         
+      },
+      reset: function () {
+        var x=this.list2.length;
+for (let i = 0; i <x ; i++) {
+        this.list1.push(this.list2.pop());
+        };
       },
       greet: function () {
       var requet="select ";
