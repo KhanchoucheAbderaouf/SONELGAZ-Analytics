@@ -3,8 +3,10 @@ package com.pfe.msqueryreports.controllers;
 
 
 import com.pfe.msqueryreports.models.Queries;
+import com.pfe.msqueryreports.models.Rapports;
 import com.pfe.msqueryreports.models.Users;
 import com.pfe.msqueryreports.repositories.QueryRepository;
+import com.pfe.msqueryreports.repositories.RapportsRepository;
 import com.pfe.msqueryreports.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class QueriesController {
     @Autowired
     UserRepository userRepository;
 
+
+    @Autowired
+    RapportsRepository rapportsRepository;
 
     @GetMapping("/allQueries")
     public List<Queries> allQueries() {
@@ -78,10 +83,15 @@ public class QueriesController {
                     "This query  doesn't exists !! "
             );
         } else {
+            List<Rapports> rapports = rapportsRepository.findAll();
             List<Users> liste = userRepository.findAll();
             for (Users user : liste
             ) {
                 user.getListQueries().remove(queryRepository.findById(idquery).get());
+            }
+            for (Rapports rapport : rapports
+            ) {
+                rapport.getListQueries().remove(queryRepository.findById(idquery).get());
             }
 
             queryRepository.delete(queryRepository.findById(idquery).get());
