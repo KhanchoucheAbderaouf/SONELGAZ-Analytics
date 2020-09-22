@@ -1149,6 +1149,7 @@ switch (this.organisme_utilisateur.type_organisme) {
         text: this.titreRequet,
         color: 'success'
       })
+       this.$router.push("/dashboard/analytics");
        }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
