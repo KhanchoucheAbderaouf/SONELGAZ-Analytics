@@ -564,6 +564,12 @@ partitionBy:null,
      mounted(){
       var id_user=this.$store.state.AppActiveUser.code_organisme;
  //requet pour avoir Dim organisme
+  if(this.$store.state.AppActiveUser.userRole==="admin" ){
+
+     this.$http.get('http://localhost:8087/requests/select * from bi.dim_organisme' ,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
+          this.organismes=  result.data;
+       });
+  }else{
       this.$http.get('http://localhost:8087/requests/codeorganism/' + id_user,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
       var type_organisme=  result.data[0].type_organisme;
       this.organisme_utilisateur= result.data[0];
@@ -588,7 +594,7 @@ partitionBy:null,
        this.$http.get('http://localhost:8087/requests/organism/' + requet_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
           this.organismes=  result.data;
        })
-      });
+      });}
       //requet pour avoir Dim cause
           this.$http.get('http://localhost:8087/requests/causes',{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
           .then((result) => {   
