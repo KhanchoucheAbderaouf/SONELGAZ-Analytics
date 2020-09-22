@@ -241,9 +241,11 @@
 
         
         <vs-row vs-type="flex" vs-justify="flex-end">
-        <vs-button color="success" style="margin-right:20px;" v-on:click="greet" type="filled">Valider</vs-button>
+          
+        <vs-button color="warning" style="margin-right:20px;" v-on:click="reset" type="filled">Reset</vs-button>
         
-        <vs-button color="warning" v-on:click="reset" type="filled">Reset</vs-button>
+        <vs-button color="success"  v-on:click="greet" type="filled">Valider</vs-button>
+        
         </vs-row>
          </vx-card>
         <!--le tableau des résultas-->
@@ -305,7 +307,7 @@
     </vx-card>
       <vx-card v-if="showGraphe" >
         
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe=false" class="bg-danger" >Back</vs-button>
+          <vs-button style="margin:0 0 30px 30px;" @click="backToResulta" class="bg-danger" >Back</vs-button>
         
                     <vue-apex-charts :type="typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
 
@@ -313,7 +315,7 @@
                 </vx-card>
                 <vx-card v-if="showGraphe2" >
         
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, showGraphe2=false" class="bg-danger" >Back</vs-button>
+          <vs-button style="margin:0 0 30px 30px;" @click="backToResulta" class="bg-danger" >Back</vs-button>
         
                     <vue-apex-charts type="pie" height="500" :options="pieChart.chartOptions" :series="pieChart.series"></vue-apex-charts>
                     
@@ -766,6 +768,12 @@ partitionBy:null,
         this.contraintes.saisieObjectif=null;
 
         
+      },
+      backToResulta:function(){
+      this.showTable=true;
+      this.showGraphe=false;
+      this.showGraphe2=false;
+
       },
       reset: function () {
         var x=this.list2.length;
