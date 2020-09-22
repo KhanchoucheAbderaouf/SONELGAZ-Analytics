@@ -1,6 +1,7 @@
 package com.pfe.msqueryreports.controllers;
 
 
+import com.pfe.msqueryreports.models.Queries;
 import com.pfe.msqueryreports.models.Rapports;
 import com.pfe.msqueryreports.models.Users;
 import com.pfe.msqueryreports.repositories.QueryRepository;
@@ -9,6 +10,7 @@ import com.pfe.msqueryreports.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -86,18 +88,39 @@ public class RapportsController {
     }
 
 
-    @DeleteMapping("/deleteRapport/{idrapport}")
-    public void deleteUser(@PathVariable("idrapport") Long idrapport) throws Exception {
+    @DeleteMapping("/deleteQueriesRapport/{idrapport}")
+    public void deleteAllQueries(@PathVariable("idrapport") Long idrapport) throws Exception {
 
-        if (!(queryRepository.findById(idrapport).isPresent())) {
+        if (!(rapportsRepository.findById(idrapport).isPresent())) {
             throw new Exception(
                     "This rapport  doesn't exists !! "
             );
         } else {
-             queryRepository.delete(queryRepository.findById(idrapport).get());
+            List<Queries> queries = new ArrayList<Queries>();
+            Rapports R = rapportsRepository.findById(idrapport).get();
+            R.setListQueries2(null);
+            rapportsRepository.save(R);
         }
     }
 
+
+    @DeleteMapping("/deleteRapport/{idrapport}")
+    public void deleteRapport(@PathVariable("idrapport") Long idrapport) throws Exception {
+
+        if (!(rapportsRepository.findById(idrapport).isPresent())) {
+            throw new Exception(
+                    "This rapport  doesn't exists !! "
+            );
+        } else {
+            List<Users> liste = userRepository.findAll();
+            for (Users user : liste
+            ) {
+                user.getListRapports().remove(rapportsRepository.findById(idrapport).get());
+            }
+            deleteAllQueries(idrapport);
+            rapportsRepository.delete(rapportsRepository.findById(idrapport).get());
+        }
+    }
 
     @GetMapping("/addRapportUser/{idrapport}/{iduser}")
     public void addAuthorizationUser(@PathVariable("idrapport") Long idrapport, @PathVariable("iduser") Long iduser) throws Exception {

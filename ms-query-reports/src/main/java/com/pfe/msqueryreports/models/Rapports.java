@@ -52,7 +52,10 @@ public class Rapports {
         this.listQueries.add(query);
     }
 
+    public void setListQueries2(List<Queries> query) {
 
+        this.listQueries = query;
+    }
 
     public String getCreator() {
         return creator;
