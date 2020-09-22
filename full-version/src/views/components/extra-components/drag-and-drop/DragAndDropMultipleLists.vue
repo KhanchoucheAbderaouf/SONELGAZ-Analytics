@@ -813,9 +813,9 @@ partitionBy:null,
        condition=true;
         }
       }
-      if(condition===true){
+    //requet admin
         requet=requet+" where ";
-      } 
+       
       if (this.contraintes.typeCentrale && this.contraintes.typeCentrale.length>0){
       requet=requet+"description_type_centrale IN ('";
         this.contraintes.typeCentrale.forEach(set => {
@@ -918,9 +918,9 @@ switch (this.organisme_utilisateur.type_organisme) {
       requet=requet.substring(0, requet.length -2)+") and ";
       }
 
-      if(condition===true){
+      //requet admin
       requet=requet.substring(0, requet.length -4);
-      }
+      
       requet=requet+" GROUP BY "+this.radios2+"( ";
 
 
