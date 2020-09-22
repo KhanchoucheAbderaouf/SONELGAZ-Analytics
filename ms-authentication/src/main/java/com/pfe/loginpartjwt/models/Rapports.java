@@ -1,5 +1,7 @@
 package com.pfe.loginpartjwt.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,7 @@ public class Rapports {
     @Column(length = 255,nullable = false)
     private String creator;
 
+    @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (
