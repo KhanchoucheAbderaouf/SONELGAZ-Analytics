@@ -1,18 +1,11 @@
-<!-- =========================================================================================
-    File Name: DragAndDropMultipleLists.vue
-    Description: Drag and Drop to multiple lists
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
+
 
 
 <template>
  
       
     <div title="Multiple Lists">
-    <vx-card v-show="showRequestCreater"  code-toggler>
+    <vx-card v-show="showRequestCreater"  >
         
 
         <!-- List 1 -->
@@ -88,7 +81,7 @@
                       <vs-dropdown class="cursor-pointer flex" vs-custom-content>
 
                             <!--<feather-icon icon="InfoIcon" color="primary" svgClasses="h-7 w-7" @click.prevent></feather-icon>-->
-                             <vs-button radius color="primary" type="flat" iconPack="feather" icon="icon-code" @click.prevent></vs-button> 
+                             <vs-button radius color="primary" type="flat" iconPack="feather" icon="icon-plus" @click.prevent></vs-button> 
 
                             <vs-dropdown-menu style="z-index: 200001">
                                     <vs-dropdown-item v-for="(tag, index) in operationsets" :key="index">
@@ -211,13 +204,14 @@
       <li>
         <vs-radio color="danger" v-model="radios2" vs-value="GROUPING SETS">Sets</vs-radio>
       </li>
-      
+    
       </ul>
+      <br>
       <div v-for="(set, index) in sets">
     <v-select multiple :closeOnSelect="false" class="bg-white" v-model="set.value" :key="index" :options="groupeBy" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
    
   </div>
-  <br><br> 
+  <br>
   <vs-row vs-type="flex" vs-justify="flex-end">
   <vs-button class="bg-success text-white"  @click="addFind">
     Ajouter
@@ -225,6 +219,7 @@
   <br>
   </vs-row>
   <br>
+  <vs-divider> <h4 class="text-white">Le Rang</h4> </vs-divider>
   <v-select class="bg-white" v-model="orderBy" placeholder="Order BY" :key="index" :options="operationGraphe" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
   <v-select class="bg-white" v-model="partitionBy" placeholder="Partition BY" :key="index" :options="groupeBy" :dir="$vs.rtl ? 'rtl' : 'ltr'" /><br>
 
@@ -428,7 +423,7 @@ export default {
         header : [],
       tableData:[],
           groupeBy:[],
-          sets: [],
+          sets: [{ value: [] }],
           operationsets:["sum","AVG","MIN","MAX"],
            radios2:'GROUPING SETS',
            ck_cause:false,
@@ -520,23 +515,23 @@ list1: [
 {attributeName: "energie_perdue_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "energie_productible_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "energie_productible_pointe_qualite",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_indispo",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_indispo_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_indispo",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_indispo_pointe",TableFait: "fait_qualite_service",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 //fait_qualite_service_imed
 {attributeName: "energie_perdue_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "energie_perdue_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "energie_productible_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "energie_productible_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_indispo_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_indispo_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_indispo_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_indispo_pointe_imed",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "date_debut",TableFait: "fait_qualite_service_imed",TablesDimentions:["dim_reseau","dim_type_evenement","dim_type_centrale","dim_cause","dim_temps","dim_organisme"],  operation:["sum"]},
 //fait_separation_reseau
 {attributeName: "nombre_dt",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_marche_vide",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_marche_gaz",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_marche_fuel",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_indiponibilite",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
-{attributeName: "heur_reserve",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_marche_vide",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_marche_gaz",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_marche_fuel",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_indiponibilite",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
+{attributeName: "heure_reserve",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "nombre_demarrage",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
 {attributeName: "nbre_declanchement_reussi",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
 
@@ -821,14 +816,14 @@ partitionBy:null,
       if(condition===true){
         requet=requet+" where ";
       } 
-      if (this.contraintes.typeCentrale){
+      if (this.contraintes.typeCentrale && this.contraintes.typeCentrale.length>0){
       requet=requet+"description_type_centrale IN ('";
         this.contraintes.typeCentrale.forEach(set => {
          requet=requet+set.description_type_centrale+"', '";
         });
         requet=requet.substring(0, requet.length -3)+") and ";
       }
-      if (this.contraintes.cause){
+      if (this.contraintes.cause && this.contraintes.cause.length>0){
       requet=requet+"description_cause IN ('";
       this.contraintes.cause.forEach(set => {
          requet=requet+set.description_cause+"', '";
@@ -844,7 +839,7 @@ partitionBy:null,
       
       }
       
-      if (this.contraintes.organisme){
+      if (this.contraintes.organisme && this.contraintes.organisme.length>0){
       switch (this.contraintes.organisme.type_organisme) {
         case "Pole":
           requet=requet+"id_pole = "+this.contraintes.organisme.id_pole+" and ";
@@ -862,42 +857,42 @@ partitionBy:null,
           requet=requet+"code_organisme = "+this.contraintes.organisme.code_organisme+" and ";
       }
       }
-       if (this.contraintes.objectif){
+       if (this.contraintes.objectif && this.contraintes.objectif.length>0){
       requet=requet+"code_objectif IN (";
       this.contraintes.objectif.forEach(set => {
          requet=requet+set.code_objectif+", ";
         });
         requet=requet.substring(0, requet.length -2)+") and ";
       }
-       if (this.contraintes.regimeFct){
+       if (this.contraintes.regimeFct && this.contraintes.regimeFct.length>0){
       requet=requet+"code_regime IN (";
        this.contraintes.regimeFct.forEach(set => {
          requet=requet+set.code_regime+", ";
         });
         requet=requet.substring(0, requet.length -2)+") and ";
       }
-      if (this.contraintes.reseau){
+      if (this.contraintes.reseau && this.contraintes.reseau.length>0){
       requet=requet+"code_reseau IN (";
       this.contraintes.reseau.forEach(set => {
          requet=requet+set.code_reseau+", ";
         });
       requet=requet.substring(0, requet.length -2)+") and ";
       }
-       if (this.contraintes.evenment){
+       if (this.contraintes.evenment && this.contraintes.evenment.length>0){
       requet=requet+"code_evenement IN (";
       this.contraintes.evenment.forEach(set => {
          requet=requet+set.code_evenement+", ";
         });
       requet=requet.substring(0, requet.length -2)+") and ";
       }
-      if (this.contraintes.typeObjectif){
+      if (this.contraintes.typeObjectif && this.contraintes.typeObjectif.length>0){
       requet=requet+"code_type_objectif IN (";
       this.contraintes.typeObjectif.forEach(set => {
          requet=requet+set.code_type_objectif+", ";
         });
       requet=requet.substring(0, requet.length -2)+") and ";
       }
-      if (this.contraintes.saisieObjectif){
+      if (this.contraintes.saisieObjectif && this.contraintes.saisieObjectif.length>0){
       requet=requet+"code_typesaisie IN (";
       this.contraintes.saisieObjectif.forEach(set => {
          requet=requet+set.code_typesaisie+", ";
