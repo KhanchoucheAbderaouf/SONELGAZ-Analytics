@@ -813,9 +813,12 @@ partitionBy:null,
        condition=true;
         }
       }
-    //requet admin
-        requet=requet+" where ";
-       
+    if(this.$store.state.AppActiveUser.userRole==="admin" ){
+      if(condition===true){
+        requet=requet+" where ";}
+    }else{
+      requet=requet+" where ";
+    }
       if (this.contraintes.typeCentrale && this.contraintes.typeCentrale.length>0){
       requet=requet+"description_type_centrale IN ('";
         this.contraintes.typeCentrale.forEach(set => {
@@ -857,7 +860,7 @@ partitionBy:null,
           requet=requet+"code_organisme = "+this.contraintes.organisme.code_organisme+" and ";
       }
       }
-      else{
+      else if(this.$store.state.AppActiveUser.userRole!=="admin"){
 switch (this.organisme_utilisateur.type_organisme) {
         case "Pole":
           requet=requet+"id_pole = "+this.organisme_utilisateur.id_pole+" and ";
@@ -918,8 +921,12 @@ switch (this.organisme_utilisateur.type_organisme) {
       requet=requet.substring(0, requet.length -2)+") and ";
       }
 
-      //requet admin
-      requet=requet.substring(0, requet.length -4);
+      if(this.$store.state.AppActiveUser.userRole==="admin" ){
+      if(condition===true){
+      requet=requet.substring(0, requet.length -4);}}
+      else{
+        requet=requet.substring(0, requet.length -4);
+      }
       
       requet=requet+" GROUP BY "+this.radios2+"( ";
 
