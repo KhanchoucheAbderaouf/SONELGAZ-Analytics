@@ -109,10 +109,11 @@
               </vs-td>
 
               <vs-td class="whitespace-no-wrap">
-                <feather-icon icon="EditIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
-                <feather-icon icon="InboxIcon"  svgClasses="w-5 h-5 hover:text-success stroke-current" class="ml-2" @click.stop="createTable(tr)" />
-                <feather-icon icon="UserIcon"  svgClasses="w-5 h-5 hover:text-success stroke-current" class="ml-2" @click.stop="activePrompt4=true,queryRapport=tr.idquery" />
-                 <feather-icon icon="TrashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="supprimePermission(tr)" />
+                <feather-icon icon="ShareIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
+                <feather-icon icon="EyeIcon"  svgClasses="w-5 h-5 hover:text-dark stroke-current" class="ml-2" @click.stop="createTable(tr)" />
+                <feather-icon icon="FolderPlusIcon"  svgClasses="w-5 h-5 hover:text-success stroke-current" class="ml-2" @click.stop="activePrompt4=true,queryRapport=tr.idquery" />
+                 <feather-icon icon="SlashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-warning stroke-current" class="ml-2" @click.stop="supprimePermission(tr)" />
+                  <feather-icon icon="TrashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="supprimeRequet(tr)" />
               </vs-td>
 
             </vs-tr>
@@ -377,6 +378,28 @@ export default {
         color: 'danger'
       })
       });
+    },
+    supprimeRequet(tr){
+       this.$vs.loading();
+         this.$http.delete('http://localhost:8087/queries/deleteQuery/'+tr.idquery,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {
+        this.$vs.loading.close();
+            
+        this.$vs.notify({
+          
+        title: ' querie deleted  ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      })
+      }).catch(error => {
+        this.$vs.loading.close();
+         this.$vs.notify({
+        title: ' Requet erroné  ',
+        text: error,
+        color: 'danger'
+      })
+      });
+
     },
     getOrderStatusColor(status) {
       if(status == 'on_hold') return "warning"
