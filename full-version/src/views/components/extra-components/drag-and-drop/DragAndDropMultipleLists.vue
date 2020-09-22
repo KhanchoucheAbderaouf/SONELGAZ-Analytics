@@ -105,14 +105,14 @@
       <div slot="header">
         Causes
       </div>
-      <v-select multiple label="description_cause" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select multiple label="description_cause" placeholder="Type Cause" :options="causes" v-model="contraintes.cause" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
     <vs-collapse-item v-show="ck_objectif">
       <div slot="header" >
         Objectif
-      </div><v-select multiple label="code_objectif" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      </div><v-select multiple label="code_objectif" placeholder="L'Organisme" v-model="contraintes.objectif" :options="objectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
 
@@ -122,7 +122,7 @@
       </div>
      
     
-  <v-select  :filter="fuseSearch" :options="organismes" v-model="contraintes.organisme" :getOptionLabel="option => option.type_organisme">
+  <v-select  :filter="fuseSearch" :options="organismes"  v-model="contraintes.organisme" :getOptionLabel="option => option.type_organisme">
     <template  #option="{ nom_pole,nom_unite,nom_centrale,num_grpe, type_organisme }">
       <cite>{{ type_organisme}}</cite>
      <p v-if="type_organisme==='Pole'"> {{ nom_pole  }}</p>
@@ -142,14 +142,14 @@
       <div slot="header" >
         Régime Fonctionnel
       </div>
-       <v-select multiple label="description_regime" :options="regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+       <v-select multiple label="description_regime" :options="regime" placeholder="Type De Regime" v-model="contraintes.regimeFct" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_reseau">
       <div slot="header">
         Réseaux
       </div>
-       <v-select multiple label="libelle_reseau" :options="reseau"  v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+       <v-select multiple label="libelle_reseau" :options="reseau" placeholder="Type De Reseau" v-model="contraintes.reseau" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_temps">
@@ -166,28 +166,28 @@
       <div slot="header">
         Type Centrale
       </div>
-     <v-select multiple label="description_type_centrale" :options="type_centrale" v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+     <v-select multiple label="description_type_centrale" :options="type_centrale" placeholder="Type De Centrale"  v-model="contraintes.typeCentrale" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_evenement">
       <div slot="header">
         Type d'évènement
       </div>
-      <v-select multiple label="description_evenement" placeholder="Type Evenement"  :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select multiple label="description_evenement" placeholder="Type D'Evenement"  :options="type_evenement" v-model="contraintes.evenment" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_type_objectif">
       <div slot="header">
         Type Objectif
       </div>
-      <v-select multiple label="libelle_objectif" :options="type_objectif" v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+      <v-select multiple label="libelle_objectif" :options="type_objectif" placeholder="Type D'Objectif"  v-model="contraintes.typeObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item v-show="ck_saisie_objectif">
       <div slot="header">
         Saisie Objectif
       </div>
-     <v-select multiple label="libelle_type_saisieobjectif" :options="type_saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+     <v-select multiple label="libelle_type_saisieobjectif" :options="type_saisie" placeholder="Type De Saisie" v-model="contraintes.saisieObjectif" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
       <br><br><br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br><br><br>
     </vs-collapse-item>
     <vs-collapse-item class="bg-primary text-white" >
@@ -536,7 +536,7 @@ list1: [
 {attributeName: "nbre_declanchement_reussi",TableFait: "fait_separation_reseau",TablesDimentions:["dim_regime_fct","dim_type_centrale","dim_temps","dim_organisme"],  operation:["sum"]},
 
 ],
-
+organisme_utilisateur:null,
 list2: [],
 //les tables de DIM
 organismes:[],
@@ -565,8 +565,8 @@ partitionBy:null,
       var id_user=this.$store.state.AppActiveUser.code_organisme;
  //requet pour avoir Dim organisme
       this.$http.get('http://localhost:8087/requests/codeorganism/' + id_user,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
-        console.log(result.data);
       var type_organisme=  result.data[0].type_organisme;
+      this.organisme_utilisateur= result.data[0];
       console.log(type_organisme);
       var requet_organisme='';
          switch (type_organisme) {
@@ -855,6 +855,24 @@ partitionBy:null,
           break;
         default:
           requet=requet+"code_organisme = "+this.contraintes.organisme.code_organisme+" and ";
+      }
+      }
+      else{
+switch (this.organisme_utilisateur.type_organisme) {
+        case "Pole":
+          requet=requet+"id_pole = "+this.organisme_utilisateur.id_pole+" and ";
+          break;
+        case "Unite" :
+          requet=requet+"id_unite = "+this.organisme_utilisateur.id_unite+" and ";
+          break;
+        case "Centrale" :
+          requet=requet+"id_centrale = "+this.organisme_utilisateur.id_centrale+" and ";
+          break;
+        case "Groupe" :
+          requet=requet+"id_grpe = "+this.organisme_utilisateur.id_grpe+" and ";
+          break;
+        default:
+          requet=requet+"code_organisme = "+this.organisme_utilisateur.code_organisme+" and ";
       }
       }
        if (this.contraintes.objectif && this.contraintes.objectif.length>0){
