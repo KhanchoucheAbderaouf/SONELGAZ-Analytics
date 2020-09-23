@@ -1,7 +1,7 @@
 <template>
   <div>
     <vs-input
-        v-validate="'required|min:3'"
+        v-validate="'required'"
         data-vv-validate-on="blur"
         name="username"
         icon-no-border
@@ -14,7 +14,7 @@
 
     <vs-input
         data-vv-validate-on="blur"
-        v-validate="'required|min:6|max:10'"
+        v-validate="'required'"
         type="password"
         name="password"
         icon-no-border
@@ -26,8 +26,8 @@
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
     <div class="flex flex-wrap justify-between my-5">
-        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Remember Me</vs-checkbox>
-        <router-link to="/pages/forgot-password">Forgot Password?</router-link>
+        <vs-checkbox v-model="checkbox_remember_me" class="mb-3">Se souvenir de moi</vs-checkbox>
+        <router-link to="/pages/forgot-password">Oublier Mot de passe?</router-link>
     </div>
     <div class="flex flex-wrap justify-between mb-3">
       
@@ -40,8 +40,8 @@
 export default {
   data() {
     return {
-      username: 'drakswolfs',
-      password: '048565835',
+      username: '',
+      password: '',
       checkbox_remember_me: false
     }
   },
@@ -91,7 +91,7 @@ export default {
           this.$vs.loading.close()
           this.$vs.notify({
             title: 'Error',
-            text: error.message,
+            text: 'username ou password éronné',
             iconPack: 'feather',
             icon: 'icon-alert-circle',
             color: 'danger'

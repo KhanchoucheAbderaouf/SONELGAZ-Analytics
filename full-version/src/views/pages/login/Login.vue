@@ -25,11 +25,11 @@
 
                 <div class="vx-card__title mb-4">
                   <h4 class="mb-4">Login</h4>
-                  <p>Welcome back, please login to your account.</p>
+                  <p>Bienvenue, Veuillez s'il vous plait entrez vos coordonnées pour vous authentifier.</p>
                 </div>
 
                 <vs-tabs>
-                  <vs-tab label="JWT">
+                  
                     <login-jwt></login-jwt>
                   </vs-tab>
 
