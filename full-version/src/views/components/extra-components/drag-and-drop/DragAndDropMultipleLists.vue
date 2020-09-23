@@ -974,7 +974,7 @@ switch (this.organisme_utilisateur.type_organisme) {
             
         this.$vs.notify({
           
-        title: ' Requet envoyé  ',
+        title: ' resultas reçu  ',
         text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
@@ -1168,13 +1168,13 @@ switch (this.organisme_utilisateur.type_organisme) {
       });
 this.$http.post('http://localhost:8087/mongo/addResult',{title:this.titreRequet,JsonAnswer:this.tableData},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {        
          this.$vs.notify({
-        title: ' Requet saved ',
+        title: ' Requet sauvgarder ',
         text: this.titreRequet,
         color: 'success'
       })
        }).catch(error => { 
          this.$vs.notify({
-        title: ' Requet Not Saved  ',
+        title: ' Requet erroné  ',
         text: error,
         color: 'danger'
       })

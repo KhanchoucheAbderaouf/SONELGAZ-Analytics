@@ -171,12 +171,7 @@ export default {
      this.data_local.idorganism=this.organisme.code_organisme;
      this.$http.put('http://localhost:8087/users/updateUserInfos/'+this.data_local.iduser,{'nom':this.data_local.nom,'prenom':this.data_local.prenom,'telephone':this.data_local.telephone,'email':this.data_local.email,'idorganism':this.data_local.idorganism},
      {headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
-        .then(this.$vs.notify({
-              color: 'success',
-              title: 'User Updated',
-              text: 'The selected user was successfully Updated'
-            })
-            ).catch(error => {
+        .then().catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
         title: ' Requet erroné  ',

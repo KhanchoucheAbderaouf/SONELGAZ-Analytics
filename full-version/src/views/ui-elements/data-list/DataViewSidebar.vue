@@ -90,19 +90,10 @@ export default {
       .then((result) => {
        ;
             
-        this.$vs.notify({
-          
-        title: ' Requet all user envoyé  ',
-        text: 'votre requet a été envoyé avec succès',
-        color: 'success'
-      })
+     
  this.Users_choices=result.data;
       }).catch(error => {
-         this.$vs.notify({
-        title: ' Requet all user erroné  ',
-        text: error,
-        color: 'danger'
-      })
+      
       });
 
 
@@ -110,19 +101,10 @@ export default {
       .then((result) => {
        ;
             
-        this.$vs.notify({
-          
-        title: ' Requet all organisme envoyé  ',
-        text: 'votre requet a été envoyé avec succès',
-        color: 'success'
-      })
+      
  this.Organismes_choices=result.data;
       }).catch(error => {
-         this.$vs.notify({
-        title: ' Requet all organisme erroné  ',
-        text: error,
-        color: 'danger'
-      })
+    
       });
       if(!val) return
       if(Object.entries(this.data).length === 0) {
@@ -192,15 +174,12 @@ export default {
 
             if(this.partageUser) {
                     this.$http.get(' http://localhost:8087/queries/addQueryUser/'+this.dataId+'/'+this.dataUser.iduser,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
-                          .then((result) => {   
-                            ;
-
-                            this.$vs.notify({
-                              
-                            title: ' Requet partage user envoyé  ',
-                            text: 'votre requet a été envoyé avec succès',
+                          .then((result) => {  
+                               this.$vs.notify({
+                            title: ' Requete partager ',
+                            text: error,
                             color: 'success'
-                          })
+                          }) 
                     
                           }).catch(error => {
                             this.$vs.notify({
@@ -212,16 +191,12 @@ export default {
             };
             if(this.partageOrganisme){
                this.$http.get(' http://localhost:8087/queries/addQueryOrganism/'+this.dataId+'/'+this.dataOrganisme.code_organisme,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
-                          .then((result) => {
-                          ;
-                                
-                            this.$vs.notify({
-                              
-                            title: ' Requet partage organisme envoyé  ',
-                            text: 'votre requet a été envoyé avec succès',
+                          .then((result) => { 
+                                this.$vs.notify({
+                            title: ' Requete partager ',
+                            text: error,
                             color: 'success'
-                          })
-                    
+                          }) 
                           }).catch(error => {
                             this.$vs.notify({
                             title: ' Requet partage organisme erroné  ',

@@ -272,14 +272,14 @@ export default {
   this.$http.post('http://localhost:8087/rapports/addRapport/' + this.$store.state.AppActiveUser.uid,{titre:this.titreRaport},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
          this.$vs.loading.close();
          this.$vs.notify({
-        title: ' Report saved ',
+        title: ' Rapport sauvgarder ',
         text: this.titreRequet,
         color: 'success'
       })
        }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
-        title: ' Report Not Saved  ',
+        title: ' Rapport No Sauvgarder  ',
         text: error,
         color: 'danger'
       })
@@ -301,7 +301,7 @@ export default {
                                 
                             this.$vs.notify({
                               
-                            title: ' Requet partage Rapport envoyé  ',
+                            title: ' Requete partager avec Rapport  ',
                             text: 'votre requet a été envoyé avec succès',
                             color: 'success'
                           })
@@ -322,8 +322,8 @@ export default {
             
         this.$vs.notify({
           
-        title: ' Requet envoyé  ',
-        text: 'votre requet a été envoyé avec succès',
+        title: ' Autorisation supprimer  avec  succès',
+        text: 'votre requet a été supprimer avec succès',
         color: 'success'
       })
       }).catch(error => {
@@ -343,8 +343,8 @@ export default {
             
         this.$vs.notify({
           
-        title: ' querie deleted  ',
-        text: 'votre requet a été envoyé avec succès',
+        title: ' requete supprimer avec succés  ',
+        text: 'votre requet a été supprimer avec succès',
         color: 'success'
       })
        this.$http.get('http://localhost:8087/users/queriesUser/'+this.$store.state.AppActiveUser.uid,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
@@ -477,7 +477,7 @@ export default {
         this.$vs.loading.close(); 
         this.$vs.notify({
           
-        title: ' Requet envoyé mongo ',
+        title: ' resultas reçus',
         text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
@@ -520,11 +520,7 @@ export default {
       this.header=Object.getOwnPropertyNames(result.data[0]); 
       this.tableData = result.data;  
       this.$http.post('http://localhost:8087/mongo/addResult',{title:tr.titre,JsonAnswer:this.tableData},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {        
-         this.$vs.notify({
-        title: ' Requet saved ',
-        text: this.titreRequet,
-        color: 'success'
-      })
+       
        });
       console.log(this.tableData);     
       this.showTable=true;
@@ -549,8 +545,9 @@ export default {
         }
          
         });  
-        this.$vs.notify({ 
-        title: ' Requet envoyé postgres ',
+         this.$vs.notify({
+          
+        title: ' resultas reçus',
         text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
