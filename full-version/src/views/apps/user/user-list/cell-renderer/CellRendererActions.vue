@@ -26,7 +26,7 @@
               title: `Confirm Delete`,
               text: `You are about to delete "${this.params.data.username}"`,
               accept: this.deleteRecord,
-              acceptText: "Delete"
+              acceptText: "Supprimer"
             })
           },
           deleteRecord() {

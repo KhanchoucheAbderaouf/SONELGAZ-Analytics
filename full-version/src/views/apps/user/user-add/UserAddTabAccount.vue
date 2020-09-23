@@ -3,6 +3,7 @@
 <template>
   <div id="user-add-tab-info">
 
+   
 
     <!-- Content Row -->
     <div class="vx-row">
@@ -89,9 +90,8 @@
     <div class="vx-row">
       <div class="vx-col w-full">
         <div class="mt-8 flex flex-wrap items-center justify-end">
-           <vs-button class="ml-4 mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
+          <vs-button class="ml-4 mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
           <vs-button class="ml-auto mt-2" @click="save_changes" :disabled="!validateForm">Sauvgarder</vs-button>
-   
         </div>
       </div>
     </div>
