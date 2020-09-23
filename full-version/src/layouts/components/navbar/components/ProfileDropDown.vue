@@ -9,8 +9,8 @@
     <vs-dropdown vs-custom-content vs-trigger-click class="cursor-pointer">
 
       <div class="con-img ml-3">
-      <vs-avatar v-if="!activeUserInfo.photoURL"  color="primary" :text="activeUserInfo.username"/>
-      <img v-if="activeUserInfo.photoURL" key="onlineImg" :src="activeUserInfo.photoURL" alt="user-img" width="40" height="40" class="rounded-full shadow-md cursor-pointer block" />
+      <vs-avatar   color="warning" :text="activeUserInfo.username"/>
+     
       </div>
 
       <vs-dropdown-menu class="vx-navbar-dropdown">

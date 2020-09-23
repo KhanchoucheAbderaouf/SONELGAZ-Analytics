@@ -5,11 +5,11 @@ export default {
    
      
       // DASHBOARDS
-      {title: "Query Saver",                url: "/dashboard/analytics",              icon: "ArchiveIcon",          is_bookmarked: true},
-      {title: "Dashboard",                  url: "/dashboard/ecommerce",              icon: "LayoutIcon",           is_bookmarked: true},
-      {title: "Import",                     url: "/import-export/import",             icon: "FileTextIcon",         is_bookmarked: true},
-      {title: "Query Creater",              url: "/dashboard/dashboard",              icon: "PieChartIcon",         is_bookmarked: true},
-      {title: "KnowledgeBase Page",         url: "/pages/knowledge-base",             icon: "BookIcon",             is_bookmarked: false},
+      {title: "Query Saver",                url: "/dashboard/analytics",              icon: "FileIcon",          is_bookmarked: true},
+      {title: "Dashboard",                  url: "/dashboard/ecommerce",              icon: "PieChartIcon",           is_bookmarked: true},
+      {title: "Import",                     url: "/import-export/import",             icon: "PlusIcon",         is_bookmarked: true},
+      {title: "Query Creater",              url: "/dashboard/dashboard",              icon: "DatabaseIcon",         is_bookmarked: true},
+      {title: "KnowledgeBase Page",         url: "/pages/knowledge-base",             icon: "HelpCircleIcon",             is_bookmarked: false},
       {title: "User Settings",              url: "/pages/user-settings",              icon: "SettingsIcon",         is_bookmarked: false},
 
       /* APPS

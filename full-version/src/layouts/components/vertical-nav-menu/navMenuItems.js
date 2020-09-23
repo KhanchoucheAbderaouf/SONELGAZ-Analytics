@@ -36,34 +36,34 @@ export default [
         url: '/dashboard/ecommerce',
         name: "Dashboard",
         slug: "dashboard-ecommerce",
-        icon: "LayoutIcon",
+        icon: "PieChartIcon",
         i18n: "Dashboard",
       },
       {
         url: '/dashboard/reports',
         name: "Report Saver",
         slug: "dashboard-reports",
-        icon: "LayoutIcon",
+        icon: "FolderIcon",
         i18n: "Report Saver",
       },
       {
         url: '/dashboard/dashboard',
         name: "Query Creater",
         slug: "dashboard",
-        icon: "PieChartIcon",
+        icon: "DatabaseIcon",
         i18n: "Query Creater",
       },
       {
         url: '/dashboard/analytics',
         name: "Query Saver",
         slug: "dashboard-analytics",
-        icon: "ArchiveIcon",
+        icon: "FileIcon",
         i18n: "Query Saver",
       },
       {
         url: "/import-export/import",
         name: "Import",
-        icon: "MoreHorizontalIcon",
+        icon: "PlusIcon",
         slug: "import",
         i18n: "Import"
       },
@@ -653,18 +653,15 @@ export default [
         url: '/pages/knowledge-base',
         slug: 'page-knowledge-base',
         name: "Knowledge Base",
-        icon: "InfoIcon",
+        icon: "HelpCircleIcon",
         i18n: "KnowledgeBase",
       },
-      {
-        url: null,
-        name: "User",
-        icon: "UserIcon",
-        i18n: "User",
-        submenu: [
+      
+       
           {
             url: '/apps/user/user-list',
             name: "List",
+            icon: "UserIcon",
             slug: "app-user-list",
             i18n: "List",
           },
@@ -785,8 +782,7 @@ export default [
           }
         ]
       },*/
-    ]
-  },
+   
  /* {
     header: "Charts & Maps",
     icon: "PieChartIcon",
