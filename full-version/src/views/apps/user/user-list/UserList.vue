@@ -304,7 +304,9 @@ export default {
        this.$http.get('http://localhost:8087/users/allUsers' ,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
          this.usersData=result.data;          
        });
-
+      this.$root.$on('myEvent', (text) => { // here you need to use the arrow function
+     this.usersData = text;
+    })
     this.gridApi = this.gridOptions.api
 
     /* =================================================================
