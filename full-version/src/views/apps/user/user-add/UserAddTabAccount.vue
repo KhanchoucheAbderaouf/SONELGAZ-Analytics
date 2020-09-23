@@ -90,8 +90,9 @@
     <div class="vx-row">
       <div class="vx-col w-full">
         <div class="mt-8 flex flex-wrap items-center justify-end">
-          <vs-button class="ml-4 mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
-          <vs-button class="ml-auto mt-2" @click="save_changes" :disabled="!validateForm">Sauvgarder</vs-button>
+          <vs-button class="ml-4 mt-2" color="danger" @click="retour" >Retour</vs-button>
+          <vs-button class="ml-auto mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
+          <vs-button class="ml-4 mt-2" @click="save_changes" :disabled="!validateForm">Sauvgarder</vs-button>
         </div>
       </div>
     </div>
@@ -161,6 +162,9 @@ export default {
         ? fuse.search(search).map(({ item }) => item)
         : fuse.list;
     },
+    retour(){
+ this.$router.push("/apps/user/user-list");
+    },
     save_changes() {
       if(!this.validateForm) return
 
@@ -173,7 +177,8 @@ export default {
               color: 'success',
               title: 'User Added',
               text: 'The  user was successfully Added'
-            })
+            }),
+      this.$router.push("/apps/user/user-list")
             ).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
