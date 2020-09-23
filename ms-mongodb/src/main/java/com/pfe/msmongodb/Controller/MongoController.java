@@ -22,8 +22,6 @@ public class MongoController {
     @Autowired
     ResultsRepository resultsRepository;
 
-    @Autowired
-    MongoTemplate mongoTemplate;
 
 
 
