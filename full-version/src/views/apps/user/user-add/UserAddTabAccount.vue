@@ -3,25 +3,6 @@
 <template>
   <div id="user-add-tab-info">
 
-    <!-- Avatar Row -->
-    <div class="vx-row">
-      <div class="vx-col w-full">
-        <div class="flex items-start flex-col sm:flex-row">
-          <img :src="data.avatar" class="mr-8 rounded h-24 w-24" />
-          <!-- <vs-avatar :src="data.avatar" size="80px" class="mr-4" /> -->
-          <div>
-            <p class="text-lg font-medium mb-2 mt-4 sm:mt-0">{{ data.nom }}</p>
-            <input type="file" class="hidden" ref="update_avatar_input" @change="update_avatar" accept="image/*">
-
-            <!-- Toggle comment of below buttons as one for actual flow & currently shown is only for demo -->
-            <vs-button class="mr-4 mb-4">Change Avatar</vs-button>
-            <!-- <vs-button type="border" class="mr-4" @click="$refs.update_avatar_input.click()">Change Avatar</vs-button> -->
-
-            <vs-button type="border" color="danger">Remove Avatar</vs-button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Content Row -->
     <div class="vx-row">
@@ -108,8 +89,9 @@
     <div class="vx-row">
       <div class="vx-col w-full">
         <div class="mt-8 flex flex-wrap items-center justify-end">
+           <vs-button class="ml-4 mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
           <vs-button class="ml-auto mt-2" @click="save_changes" :disabled="!validateForm">Sauvgarder</vs-button>
-          <vs-button class="ml-4 mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
+   
         </div>
       </div>
     </div>
