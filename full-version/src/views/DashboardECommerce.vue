@@ -204,7 +204,7 @@ export default{
     },
     created() {
       // Subscribers gained - Statistics
-      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,sum(consommation_commune) AS sum_consommation_commune from bi.fait_consommation natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      this.$http.get("http://localhost:8087/dashboard/getOneResult/consommation du mois",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then((response) => { 
             response.data.forEach(element => {
                 if(element.jour_du_mois==="ALL jour_du_moiss"){
@@ -222,7 +222,7 @@ export default{
         .catch((error) => { console.log(error) })
 
      // Revenue Generated
-      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(production_bu_grpe)+sum(production_ba_grpe)) AS sum_production from bi.fait_production natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      this.$http.get("http://localhost:8087/dashboard/getOneResult/production du mois",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then((response) => { 
           response.data.forEach(element => {
                 if(element.jour_du_mois==="ALL jour_du_moiss"){
@@ -240,7 +240,7 @@ export default{
       
 
       // Sales
-      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(heure_marche_gaz) + sum(heure_marche_fuel)) AS sum_heure from bi.fait_separation_reseau natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      this.$http.get("http://localhost:8087/dashboard/getOneResult/heures du mois",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then((response) => { 
           response.data.forEach(element => {
                 if(element.jour_du_mois==="ALL jour_du_moiss"){
@@ -255,7 +255,7 @@ export default{
         })
         .catch((error) => { console.log(error) })
      //order
-      this.$http.get("http://localhost:8087/requests/select case grouping(jour_du_mois ) when 1 then 'ALL jour_du_moiss' else cast(jour_du_mois as varchar(255)) end ,(sum(energie_perdue) + sum(energie_perdue_pointe)) AS sum_energie from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where date %3E= '2017-09-01' and date %3C= '2017-09-30'  GROUP BY ROLLUP( (jour_du_mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      this.$http.get("http://localhost:8087/dashboard/getOneResult/energie perdue mois",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then((response) => { 
           response.data.forEach(element => {
                 if(element.jour_du_mois==="ALL jour_du_moiss"){
@@ -285,7 +285,7 @@ export default{
 
       // Client Retention
 
-        this.$http.get("http://localhost:8087/requests/select case grouping(mois ) when 1 then 'ALL moiss' else cast(mois as varchar(255)) end ,(sum(energie_productible_qualite) + sum(energie_productible_pointe_qualite)) AS sum_energie from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where annee=2017  GROUP BY ROLLUP( (mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+        this.$http.get("http://localhost:8087/dashboard/getOneResult/energie productible annee",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then((response) => { 
             console.log(response.data);
           response.data.forEach(element => {
@@ -299,7 +299,7 @@ export default{
         .catch((error) => { console.log(error) })
 
 
-          this.$http.get("http://localhost:8087/requests/select case grouping(mois ) when 1 then 'ALL moiss' else cast(mois as varchar(255)) end ,(sum(energie_perdue) + sum(energie_perdue_pointe)) AS sum_energie from bi.fait_qualite_service natural join bi.dim_reseau natural join bi.dim_regime_fct natural join bi.dim_type_centrale natural join bi.dim_temps natural join bi.dim_organisme where annee=2017  GROUP BY ROLLUP( (mois  )  )",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+          this.$http.get("http://localhost:8087/dashboard/getOneResult/energie perdue annee",{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
         .then((response) => { 
             console.log(response.data);
           response.data.forEach(element => {
