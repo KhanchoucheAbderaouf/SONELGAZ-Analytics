@@ -854,7 +854,7 @@ export default {
         // ],
         // series: [690, 258, 149],
         chartOptions: {
-            labels: ['New', 'Returning', 'Referrals'],
+            labels: ['Pole Est ', 'Pole Centre', 'Pole West'],
             dataLabels: {
                 enabled: false
             },

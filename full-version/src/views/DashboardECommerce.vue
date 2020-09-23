@@ -50,7 +50,7 @@
 
             <!-- LINE CHART -->
             <div class="vx-col w-full md:w-2/3 mb-base">
-                <vx-card title="Consommation vs Production Ce Mois">
+                <vx-card title="Energie Perdu vs Production Ce Mois">
                     <template slot="actions">
                         <feather-icon icon="SettingsIcon" svgClasses="w-6 h-6 text-grey"></feather-icon>
                     </template>
@@ -107,7 +107,7 @@
         
             <!-- CUSTOMERS CHART -->
             <div class="vx-col w-full lg:w-1/3 lg:mt-0 mt-base">
-                <vx-card title="Consommation">
+                <vx-card title="Consommation Par Pole">
                     <!-- SLOT = ACTIONS -->
                     <template slot="actions">
                         <change-time-duration-dropdown />
@@ -324,7 +324,8 @@ export default{
 
       // Customers
       this.$http.get("/api/card/card-analytics/customers")
-        .then((response) => { this.customersData = response.data })
+        .then((response) => { this.customersData = response.data ;
+        console.log(this.customersData)})
         .catch((error) => { console.log(error) })
     }
 }
