@@ -12,7 +12,7 @@ public class Queries {
     @GeneratedValue(generator="queries",strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "queries", sequenceName = "id_query",initialValue=1, allocationSize=1)
     private long idquery;
-    @Column(length = 100,nullable = false)
+    @Column(length = 100,nullable = false,unique = true)
     private String titre;
     @Lob
     @Column
