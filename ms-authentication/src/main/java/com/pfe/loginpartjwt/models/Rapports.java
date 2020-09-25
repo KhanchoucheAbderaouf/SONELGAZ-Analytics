@@ -20,7 +20,7 @@ public class Rapports {
     @Column(length = 255,nullable = false)
     private String creator;
 
-    @JsonIgnore
+
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (

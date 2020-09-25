@@ -35,7 +35,7 @@ public class Users {
     @OneToOne
     @JoinColumn(name="idrole")
     private Roles role;
-    @JsonIgnore
+
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (
@@ -44,7 +44,7 @@ public class Users {
                     inverseJoinColumns={ @JoinColumn(name="idquery", referencedColumnName="idquery") }
             )
     private List<Queries> listQueries;
-    @JsonIgnore
+
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (
