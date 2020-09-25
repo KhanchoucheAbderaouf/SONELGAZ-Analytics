@@ -1,11 +1,4 @@
-<!-- =========================================================================================
-  File Name: DataListListView.vue
-  Description: Data List - List View
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
+
 
 <template>
   <div id="dashboard-reports" class="data-list-container">
@@ -18,7 +11,7 @@
 
         <div class="flex flex-wrap-reverse items-center data-list-btn-container">
 
-          
+        
 
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="activePrompt3=true">
@@ -72,21 +65,22 @@
               </vs-td>
 
               <vs-td class="whitespace-no-wrap">
-                <feather-icon icon="EditIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
-                <feather-icon icon="InboxIcon"  svgClasses="w-5 h-5 hover:text-success stroke-current" class="ml-2" @click.stop="createTable(tr)" />
-                 <feather-icon icon="TrashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="supprimePermission(tr)" />
+                <feather-icon icon="ShareIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
+                <feather-icon icon="EyeIcon"  svgClasses="w-5 h-5 hover:text-dark stroke-current" class="ml-2" @click.stop="createTable(tr)" />
+                 <feather-icon icon="SlashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-warning stroke-current" class="ml-2" @click.stop="supprimePermission(tr)" />
+               <feather-icon icon="TrashIcon" v-if="tr.creator==$store.state.AppActiveUser.username" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="supprimeRapport(tr)" />
               </vs-td>
 
             </vs-tr>
           </tbody>
         </template>
     </vs-table>
-      <!--prompt requete Begin -->
+      <!--prompt requet Begin -->
      <vs-prompt title="Create Report" class="export-options" @cancle="clearFields" @accept="saveReport" accept-text="Save" @close="clearFields" :active.sync="activePrompt3">
          <vs-input label-placeholder="Title" v-model="titreRaport"/>
         
     </vs-prompt>
-    <!--prompt requete End -->
+    <!--prompt requet End -->
            <!--prompt Excel Begin -->
         <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
         <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
@@ -255,10 +249,13 @@ export default {
   this.$http.get('http://localhost:8087/rapports/addRapport/' + this.$store.state.AppActiveUser.uid + '/' + this.titreRaport,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
          this.$vs.loading.close();
          this.$vs.notify({
-        title: ' Rapport sauvegarder',
+        title: ' Report saved ',
         text: this.titreRequet,
         color: 'success'
-      })
+      }),
+       this.$http.get('http://localhost:8087/users/rapports/'+this.$store.state.AppActiveUser.uid,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {this.products=result.data;
+      });
        }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
@@ -271,6 +268,31 @@ export default {
       },
     deleteData(id) {
       this.$store.dispatch("dataList/removeItem", id).catch(err => { console.error(err) })
+    },
+    supprimeRapport(tr){
+       this.$vs.loading();
+         this.$http.delete('http://localhost:8087/rapports/deleteRapport/'+tr.idrapport,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {
+        this.$vs.loading.close();
+            
+        this.$vs.notify({
+          
+        title: ' rapport supprimer avec succés  ',
+        text: 'votre requet a été supprimer avec succès',
+        color: 'success'
+      })
+       this.$http.get('http://localhost:8087/users/rapports/'+this.$store.state.AppActiveUser.uid,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {this.products=result.data;
+      });
+      }).catch(error => {
+        this.$vs.loading.close();
+         this.$vs.notify({
+        title: ' Requet erroné  ',
+        text: error,
+        color: 'danger'
+      })
+      });
+
     },
     editData(data) {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
@@ -285,14 +307,14 @@ export default {
             
         this.$vs.notify({
           
-        title: ' Requête envoyé  ',
-        text: 'votre requête a été envoyé avec succès',
+        title: ' Requet envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
       }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
-        title: ' Requête erroné  ',
+        title: ' Requet erroné  ',
         text: error,
         color: 'danger'
       })
@@ -417,8 +439,8 @@ export default {
             
         this.$vs.notify({
           
-        title: ' Requête envoyé  ',
-        text: 'votre requête a été envoyé avec succès',
+        title: ' Requet envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
         color: 'success'
       })
       this.showRequestCreater=false;
@@ -448,7 +470,7 @@ export default {
       }).catch(error => {
        
          this.$vs.notify({
-        title: ' Requête erroné  ',
+        title: ' Requet erroné  ',
         text: error,
         color: 'danger'
       })
