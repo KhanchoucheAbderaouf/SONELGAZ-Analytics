@@ -421,8 +421,8 @@ export default {
           this.intergraphe.seriesPie.push(element2[contrlerGraphe]); 
               }else{
            this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe])  ;   
-          this.intergraphe.seriesLine[0].data.push(element2[contrlerGraphe]); } }  
-          console.log(element3[this.attributeGraphe.toLowerCase()]);
+          this.intergraphe.seriesLine[0].data.push(element2[this.attributeGraphe.toLowerCase()]); } }  
+          console.log(element2[this.attributeGraphe.toLowerCase()]);
            });
           }
           else{
@@ -439,7 +439,7 @@ export default {
 
           this.lineAreaChartSpline.chartOptions.labels.push(element3[this.DimGraphe]);   
           this.intergraphe.seriesLine[0].data.push(element3[this.attributeGraphe.toLowerCase()]);} } }  
-          
+           console.log(element3[this.attributeGraphe.toLowerCase()]);
            });
 
           }
