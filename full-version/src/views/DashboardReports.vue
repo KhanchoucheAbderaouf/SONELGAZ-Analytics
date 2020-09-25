@@ -92,18 +92,18 @@
     </vs-prompt>
     <!--prompt Excel End -->
 
-    <!--prompt Graphe Begin -->
-     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe" accept-text="Create" @close="clearFields" :active.sync="activePrompt2">
-        <v-select v-model="attributeGraphe" :options="operationGraphe"  class="my-4" />
-        <v-select v-model="DimGraphe" :options="setsGraphe" label="value" class="my-4" />
+    
+    <div v-for="table in tableau_des_resultas" >
+           <vx-card >
+           
+<!--prompt Graphe Begin -->
+     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe(table)" accept-text="Create" @close="clearFields" :active.sync="table.prom">
+        <v-select v-model="attributeGraphe" :options="table.operationGraphe"  class="my-4" />
+        <v-select v-model="DimGraphe" :options="table.setsGraphe" label="value" class="my-4" />
         <v-select v-model="typeGraphe" :options="typesGraphes" class="my-4" />
         
     </vs-prompt>
     <!--prompt Graphe End -->
-    <div v-for="table in tableau_des_resultas" >
-           <vx-card >
-           
-
    
 
 
@@ -114,7 +114,7 @@
           <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
         </template>
         <template slot="header">
-          <vs-button style="margin-right:30px;" @click="activePrompt2=true">Create Charts</vs-button>
+          <vs-button style="margin-right:30px;" @click="table.prom=true">Create Charts</vs-button>
         </template>
         <template slot="header">
           <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Table Of Query</vs-button>
@@ -134,6 +134,22 @@
       </div>
      
     </vx-card>
+     <vx-card v-if="table.showGraphe" >
+        
+          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, table.showGraphe=false" class="bg-danger" >Back</vs-button>
+        
+                    <vue-apex-charts :type="typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
+
+                   
+                </vx-card>
+                <vx-card v-if="table.showGraphe2" >
+        
+          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, table.showGraphe2=false" class="bg-danger" >Back</vs-button>
+        
+                    <vue-apex-charts type="pie" height="500" :options="pieChart.chartOptions" :series="pieChart.series"></vue-apex-charts>
+                    
+                   
+                </vx-card>
      </div>
   </div>
 </template>
@@ -160,7 +176,7 @@ export default {
       // Data Sidebar
       addNewDataSidebar: false,
       sidebarData: {},
-
+     valueDorF:false,
       //data table resulta
           attributeGraphe:'',
           setsGraphe:[],
@@ -367,7 +383,7 @@ export default {
       this.cellAutoWidth = true
       this.selectedFormat = "xlsx"
     },
-       createGraphe:function(){
+       createGraphe:function(table){
         var value=false;
        
        this.lineAreaChartSpline.chartOptions.labels=[];
@@ -376,10 +392,10 @@ export default {
        this.pieChart.series=[];
       // alert( this.attributeGraphe+";"+this.DimGraphe+";"+this.typeGraphe);
         //console.log(this.attributeGraphe);
-        var contrlerIndex=this.header.indexOf(this.DimGraphe);
-        var contrlerGraphe=this.header[contrlerIndex+1];
+        var contrlerIndex=table.header.indexOf(this.DimGraphe);
+        var contrlerGraphe=table.header[contrlerIndex+1];
          
-        this.operationGraphe.forEach(op => {
+        table.operationGraphe.forEach(op => {
 
           //if next is an operation
        if(contrlerGraphe.includes(op.toLowerCase())){
@@ -391,7 +407,7 @@ export default {
       
       
           if(value){
-            this.tableData.forEach(element2=>{
+            table.tableData.forEach(element2=>{
               if(element2[this.DimGraphe].includes("ALL")===false){ 
               if(this.typeGraphe=="pie"){
           this.pieChart.chartOptions.labels.push(element2[this.DimGraphe])  ;
@@ -403,7 +419,7 @@ export default {
            });
           }
           else{
-               this.tableData.forEach(element3=>{
+              table.tableData.forEach(element3=>{
             if(element3[this.DimGraphe].includes("ALL")===false){   
             if(element3[contrlerGraphe].includes("ALL")){
               if(this.typeGraphe=="pie"){
@@ -420,8 +436,8 @@ export default {
         if(this.typeGraphe=="pie"){
 
         
-        this.showGraphe2=true;}else{
-          this.showGraphe=true;
+        table.showGraphe2=true;}else{
+          table.showGraphe=true;
         }
 
         this.showTable=false;
@@ -446,14 +462,15 @@ export default {
       }),
 
       this.showRequestCreater=false;
-         var   resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data};
+      var  resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data};
+
         
         
-      this.tableau_des_resultas.push(resulta);
+     
       //this.showTable=true;
      // this.showRequestCreater=false;
-        /* this.header.forEach(h => {
-          valueDorF=false;
+         resulta.header.forEach(h => {
+         var valueDorF=false;
          this.operationGrapheControle.forEach(op => {
             
            if(h.includes(op.toLowerCase())){
@@ -468,7 +485,12 @@ export default {
           this.setsGraphe.push(h);
         }
          
-        });*/
+        })
+        resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data,operationGraphe:this.operationGraphe,setsGraphe:this.setsGraphe,
+        prom:false,showGraphe2:false,showGraphe2:false};
+       this.operationGraphe=[];
+       this.setsGraphe=[];
+       this.tableau_des_resultas.push(resulta);
       }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
