@@ -18,46 +18,7 @@
 
         <div class="flex flex-wrap-reverse items-center data-list-btn-container">
 
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click class="dd-actions cursor-pointer mr-4 mb-4">
-
-            <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32 w-full">
-              <span class="mr-2">Actions</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
-
-            <vs-dropdown-menu>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="TrashIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Delete</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="ArchiveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Archive</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="FileIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Print</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="SaveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Another Action</span>
-                </span>
-              </vs-dropdown-item>
-
-            </vs-dropdown-menu>
-          </vs-dropdown>
+          
 
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="activePrompt3=true">
@@ -120,12 +81,12 @@
           </tbody>
         </template>
     </vs-table>
-      <!--prompt requet Begin -->
+      <!--prompt requete Begin -->
      <vs-prompt title="Create Report" class="export-options" @cancle="clearFields" @accept="saveReport" accept-text="Save" @close="clearFields" :active.sync="activePrompt3">
          <vs-input label-placeholder="Title" v-model="titreRaport"/>
         
     </vs-prompt>
-    <!--prompt requet End -->
+    <!--prompt requete End -->
            <!--prompt Excel Begin -->
         <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
         <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
@@ -294,7 +255,7 @@ export default {
   this.$http.get('http://localhost:8087/rapports/addRapport/' + this.$store.state.AppActiveUser.uid + '/' + this.titreRaport,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
          this.$vs.loading.close();
          this.$vs.notify({
-        title: ' Report saved ',
+        title: ' Rapport sauvegarder',
         text: this.titreRequet,
         color: 'success'
       })
@@ -324,14 +285,14 @@ export default {
             
         this.$vs.notify({
           
-        title: ' Requet envoyé  ',
-        text: 'votre requet a été envoyé avec succès',
+        title: ' Requête envoyé  ',
+        text: 'votre requête a été envoyé avec succès',
         color: 'success'
       })
       }).catch(error => {
         this.$vs.loading.close();
          this.$vs.notify({
-        title: ' Requet erroné  ',
+        title: ' Requête erroné  ',
         text: error,
         color: 'danger'
       })
@@ -456,8 +417,8 @@ export default {
             
         this.$vs.notify({
           
-        title: ' Requet envoyé  ',
-        text: 'votre requet a été envoyé avec succès',
+        title: ' Requête envoyé  ',
+        text: 'votre requête a été envoyé avec succès',
         color: 'success'
       })
       this.showRequestCreater=false;
@@ -487,7 +448,7 @@ export default {
       }).catch(error => {
        
          this.$vs.notify({
-        title: ' Requet erroné  ',
+        title: ' Requête erroné  ',
         text: error,
         color: 'danger'
       })
