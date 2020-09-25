@@ -14,7 +14,7 @@ public class Rapports {
     @GeneratedValue(generator="rapports",strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "rapports", sequenceName = "id_rapports",initialValue=1, allocationSize=1)
     private long idrapport;
-    @Column(length = 100,nullable = false)
+    @Column(length = 100,nullable = false,unique=true)
     private String titre;
     @Column(length = 255,nullable = false)
     private String creator;
