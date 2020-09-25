@@ -1121,7 +1121,7 @@ switch (this.organisme_utilisateur.type_organisme) {
           this.pieChart.series.push(element2[contrlerGraphe]); 
               }else{
            this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe])  ;   
-          this.lineAreaChartSpline.series[0].data.push(element2[contrlerGraphe]); } }  
+          this.lineAreaChartSpline.series[0].data.push(element2[this.attributeGraphe.toLowerCase()]); } }  
            });
           }
           else{
