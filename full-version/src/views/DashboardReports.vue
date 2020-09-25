@@ -116,9 +116,7 @@
         <template slot="header">
           <vs-button style="margin-right:30px;" @click="table.prom=true">Create Charts</vs-button>
         </template>
-        <template slot="header">
-          <vs-button class="bg-danger" @click="showRequestCreater=true, showTable=false">Back To Table Of Query</vs-button>
-        </template>
+       
   <template slot="thead">
           <vs-th  v-for="heading in table.header" :key="heading" :sort-key="heading">{{ heading }}</vs-th>
   </template>
@@ -134,22 +132,24 @@
       </div>
      
     </vx-card>
-     <vx-card v-if="table.showGraphe" >
+    <div v-for="graphe in table.graphesCree">
+     <vx-card v-if="graphe.showGraphe" >
         
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, table.showGraphe=false" class="bg-danger" >Back</vs-button>
+          <vs-button style="margin:0 0 30px 30px;" @click=" graphe.showGraphe=false" class="bg-danger" >Back</vs-button>
         
-                    <vue-apex-charts :type="table.typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
+                    <vue-apex-charts :type="graphe.typeGraphe" height="700" :options="lineAreaChartSpline.chartOptions" :series="graphe.seriesLine"></vue-apex-charts>
 
                    
                 </vx-card>
-                <vx-card v-if="table.showGraphe2" >
+                <vx-card v-if="graphe.showGraphe2" >
         
-          <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, table.showGraphe2=false" class="bg-danger" >Back</vs-button>
+          <vs-button style="margin:0 0 30px 30px;" @click=" graphe.showGraphe2=false" class="bg-danger" >Back</vs-button>
         
-                    <vue-apex-charts type="pie" height="500" :options="pieChart.chartOptions" :series="pieChart.series"></vue-apex-charts>
+                    <vue-apex-charts type="pie" height="700" :options="pieChart.chartOptions" :series="graphe.seriesPie"></vue-apex-charts>
                     
                    
                 </vx-card>
+    </div>
      </div>
   </div>
 </template>
@@ -168,6 +168,12 @@ export default {
   },
   data() {
     return {
+      intergraphe:{typeGraphe:'area',seriesLine:[{
+                name: 'series1',
+                data:[],
+            }],seriesPie:[],
+            showGraphe:false,
+            showGraphe2:flase,},
       selected: [],
       products: [],
       itemsPerPage: 4,
@@ -412,10 +418,10 @@ export default {
               if(table.typeGraphe=="pie"){
           this.pieChart.chartOptions.labels.push(element2[this.DimGraphe])  ;
           
-          this.pieChart.series.push(element2[contrlerGraphe]); 
+          this.intergraphe.seriesPie.push(element2[contrlerGraphe]); 
               }else{
            this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe])  ;   
-          this.lineAreaChartSpline.series[0].data.push(element2[contrlerGraphe]); } }  
+          this.intergraphe.seriesLine[0].data.push(element2[contrlerGraphe]); } }  
            });
           }
           else{
@@ -424,22 +430,28 @@ export default {
             if(element3[contrlerGraphe].includes("ALL")){
               if(table.typeGraphe=="pie"){
           this.pieChart.chartOptions.labels.push(element3[this.DimGraphe]);   
-          this.pieChart.series.push(element3[this.attributeGraphe.toLowerCase()]);
+          this.intergraphe.seriesPie.push(element3[this.attributeGraphe.toLowerCase()]);
           
               }else{
 
           this.lineAreaChartSpline.chartOptions.labels.push(element3[this.DimGraphe]);   
-          this.lineAreaChartSpline.series[0].data.push(element3[this.attributeGraphe.toLowerCase()]);} } }  
+          this.intergraphe.seriesLine[0].data.push(element3[this.attributeGraphe.toLowerCase()]);} } }  
            });
 
           }
         if(table.typeGraphe=="pie"){
 
         
-        table.showGraphe2=true;}else{
-          table.showGraphe=true;
+        this.intergraphe.showGraphe2=true;this.intergraphe.typeGraphe="pie"; }else{
+        this.intergraphe.showGraphe=true;this.intergraphe.typeGraphe=table.typeGraphe;
         }
-
+        table.graphesCree.push(this.intergraphe);
+        this.intergraphe={typeGraphe:'area',seriesLine:[{
+                name: 'series1',
+                data:[],
+            }],seriesPie:[],
+            showGraphe:false,
+            showGraphe2:flase,};
         this.showTable=false;
 
 
@@ -487,7 +499,10 @@ export default {
          
         })
         resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data,operationGraphe:this.operationGraphe,setsGraphe:this.setsGraphe,
-        prom:false,showGraphe2:false,showGraphe2:false,typeGraphe:'area',};
+        prom:false,showGraphe2:false,showGraphe:false,typeGraphe:'area',seriesLine:[{
+                name: 'series1',
+                data:[],
+            }],seriesPie:[],graphesCree:[],};
        this.operationGraphe=[];
        this.setsGraphe=[];
        this.tableau_des_resultas.push(resulta);
