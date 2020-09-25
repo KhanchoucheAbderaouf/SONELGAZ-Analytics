@@ -13,7 +13,7 @@
 
     <!-- Save & Reset Button -->
     <div class="flex flex-wrap items-center justify-end">
-      <vs-button class="ml-auto mt-2" @click="submitForm">Save Changes</vs-button>
+      <vs-button class="ml-auto mt-2" @click="submitForm">Sauvegarder</vs-button>
      
     </div>
   </vx-card>
