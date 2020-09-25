@@ -100,7 +100,7 @@
      <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe(table)" accept-text="Create" @close="clearFields" :active.sync="table.prom">
         <v-select v-model="attributeGraphe" :options="table.operationGraphe"  class="my-4" />
         <v-select v-model="DimGraphe" :options="table.setsGraphe" label="value" class="my-4" />
-        <v-select v-model="typeGraphe" :options="typesGraphes" class="my-4" />
+        <v-select v-model="table.typeGraphe" :options="typesGraphes" class="my-4" />
         
     </vs-prompt>
     <!--prompt Graphe End -->
@@ -138,7 +138,7 @@
         
           <vs-button style="margin:0 0 30px 30px;" @click="showTable=true, table.showGraphe=false" class="bg-danger" >Back</vs-button>
         
-                    <vue-apex-charts :type="typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
+                    <vue-apex-charts :type="table.typeGraphe" height="500" :options="lineAreaChartSpline.chartOptions" :series="lineAreaChartSpline.series"></vue-apex-charts>
 
                    
                 </vx-card>
@@ -181,7 +181,7 @@ export default {
           attributeGraphe:'',
           setsGraphe:[],
           DimGraphe:'',
-          typeGraphe:'area',
+          
           operationGrapheControle:['sum_','avg_','min_','max_'],
           operationGraphe:[],
           typesGraphes:["area","bar","pie"],
@@ -409,7 +409,7 @@ export default {
           if(value){
             table.tableData.forEach(element2=>{
               if(element2[this.DimGraphe].includes("ALL")===false){ 
-              if(this.typeGraphe=="pie"){
+              if(table.typeGraphe=="pie"){
           this.pieChart.chartOptions.labels.push(element2[this.DimGraphe])  ;
           
           this.pieChart.series.push(element2[contrlerGraphe]); 
@@ -422,7 +422,7 @@ export default {
               table.tableData.forEach(element3=>{
             if(element3[this.DimGraphe].includes("ALL")===false){   
             if(element3[contrlerGraphe].includes("ALL")){
-              if(this.typeGraphe=="pie"){
+              if(table.typeGraphe=="pie"){
           this.pieChart.chartOptions.labels.push(element3[this.DimGraphe]);   
           this.pieChart.series.push(element3[this.attributeGraphe.toLowerCase()]);
           
@@ -433,7 +433,7 @@ export default {
            });
 
           }
-        if(this.typeGraphe=="pie"){
+        if(table.typeGraphe=="pie"){
 
         
         table.showGraphe2=true;}else{
@@ -487,7 +487,7 @@ export default {
          
         })
         resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data,operationGraphe:this.operationGraphe,setsGraphe:this.setsGraphe,
-        prom:false,showGraphe2:false,showGraphe2:false};
+        prom:false,showGraphe2:false,showGraphe2:false,typeGraphe:'area',};
        this.operationGraphe=[];
        this.setsGraphe=[];
        this.tableau_des_resultas.push(resulta);

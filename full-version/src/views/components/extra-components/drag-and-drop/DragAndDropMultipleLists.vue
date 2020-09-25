@@ -787,7 +787,13 @@ for (let i = 0; i <x ; i++) {
     this.setsGraphe=[];
   this.sets.forEach(set => {
         if (set.value.length > 0){
-          if(!this.setsGraphe.includes(set.value[set.value.length-1])) {this.setsGraphe.push(set.value[set.value.length-1]);}
+          if(this.radios2==="GROUPING SETS"){
+          if(!this.setsGraphe.includes(set.value[set.value.length-1])) {this.setsGraphe.push(set.value[set.value.length-1]);}}else
+          {
+            set.value.forEach(a=>{
+              this.setsGraphe.push(a);
+            });
+          }
         set.value.forEach(element=>{
          
           requet=requet+"case grouping("+element+" ) when 1 then 'ALL " +element+"s' else cast("+element+" as varchar(255)) end ,";
