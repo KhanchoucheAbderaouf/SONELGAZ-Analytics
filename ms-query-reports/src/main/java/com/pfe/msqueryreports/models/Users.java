@@ -2,6 +2,8 @@ package com.pfe.msqueryreports.models;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +35,7 @@ public class Users {
     @OneToOne
     @JoinColumn(name="idrole")
     private Roles role;
+    @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (
@@ -41,7 +44,7 @@ public class Users {
                     inverseJoinColumns={ @JoinColumn(name="idquery", referencedColumnName="idquery") }
             )
     private List<Queries> listQueries;
-
+    @JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (

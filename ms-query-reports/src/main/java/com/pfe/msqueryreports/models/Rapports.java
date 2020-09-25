@@ -1,5 +1,7 @@
 package com.pfe.msqueryreports.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class Rapports {
     private String titre;
     @Column(length = 255,nullable = false)
     private String creator;
-
+@JsonIgnore
     @ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable
             (
