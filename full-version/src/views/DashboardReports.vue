@@ -396,7 +396,7 @@ export default {
        this.lineAreaChartSpline.series[0].data=[];
        this.pieChart.chartOptions.labels=[];
        this.pieChart.series=[];
-      // alert( this.attributeGraphe+";"+this.DimGraphe+";"+this.typeGraphe);
+      
         //console.log(this.attributeGraphe);
         var contrlerIndex=table.header.indexOf(this.DimGraphe);
         var contrlerGraphe=table.header[contrlerIndex+1];
@@ -422,6 +422,7 @@ export default {
               }else{
            this.lineAreaChartSpline.chartOptions.labels.push(element2[this.DimGraphe])  ;   
           this.intergraphe.seriesLine[0].data.push(element2[contrlerGraphe]); } }  
+          console.log(element3[this.attributeGraphe.toLowerCase()]);
            });
           }
           else{
@@ -429,13 +430,16 @@ export default {
             if(element3[this.DimGraphe].includes("ALL")===false){   
             if(element3[contrlerGraphe].includes("ALL")){
               if(table.typeGraphe=="pie"){
-          this.pieChart.chartOptions.labels.push(element3[this.DimGraphe]);   
+          this.pieChart.chartOptions.labels.push(element3[this.DimGraphe]);  
+
           this.intergraphe.seriesPie.push(element3[this.attributeGraphe.toLowerCase()]);
+          
           
               }else{
 
           this.lineAreaChartSpline.chartOptions.labels.push(element3[this.DimGraphe]);   
           this.intergraphe.seriesLine[0].data.push(element3[this.attributeGraphe.toLowerCase()]);} } }  
+          
            });
 
           }
@@ -445,7 +449,7 @@ export default {
         this.intergraphe.showGraphe2=true;this.intergraphe.typeGraphe="pie"; }else{
         this.intergraphe.showGraphe=true;this.intergraphe.typeGraphe=table.typeGraphe;
         };
-        console.log(this.intergraphe);
+       
         table.graphesCree.push(this.intergraphe);
         this.intergraphe={typeGraphe:'area',seriesLine:[{
                 name: 'series1',
@@ -453,7 +457,7 @@ export default {
             }],seriesPie:[],
             showGraphe:false,
             showGraphe2:false,};
-            console.log(this.intergraphe);
+            
         this.showTable=false;
 
 
