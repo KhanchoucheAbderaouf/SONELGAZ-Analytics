@@ -431,18 +431,20 @@ export default {
       },
       createTable(tr){
        this.tableau_des_resultas=[];
+       
         tr.listQueries.forEach(val => {
-           this.$vs.loading();
+            this.$vs.loading();
              this.$http.get('http://localhost:8087/requests/'+val.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
-        this.$vs.loading.close();
+      this.$vs.loading.close();
             
         this.$vs.notify({
           
         title: ' Requet envoyé  ',
         text: 'votre requet a été envoyé avec succès',
         color: 'success'
-      })
+      }),
+
       this.showRequestCreater=false;
          var   resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data};
         
@@ -478,6 +480,7 @@ export default {
        
       
       });
+    
       console.log(this.tableau_des_resultas);
       }
   },
