@@ -173,7 +173,7 @@ export default {
                 data:[],
             }],seriesPie:[],
             showGraphe:false,
-            showGraphe2:flase,},
+            showGraphe2:false,},
       selected: [],
       products: [],
       itemsPerPage: 4,
@@ -451,7 +451,7 @@ export default {
                 data:[],
             }],seriesPie:[],
             showGraphe:false,
-            showGraphe2:flase,};
+            showGraphe2:false,};
         this.showTable=false;
 
 
