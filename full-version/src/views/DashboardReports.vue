@@ -244,7 +244,6 @@ export default {
  
         saveReport:function(){
         console.log(this.$store.state.AppActiveUser.uid);
-        console.log(this.titreRaport);
         this.$vs.loading();
   this.$http.get('http://localhost:8087/rapports/addRapport/' + this.$store.state.AppActiveUser.uid + '/' + this.titreRaport,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {
          this.$vs.loading.close();
@@ -433,9 +432,10 @@ export default {
       createTable(tr){
        this.tableau_des_resultas=[];
         tr.listQueries.forEach(val => {
+           this.$vs.loading();
              this.$http.get('http://localhost:8087/requests/'+val.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
-       
+        this.$vs.loading.close();
             
         this.$vs.notify({
           
@@ -468,7 +468,7 @@ export default {
          
         });*/
       }).catch(error => {
-       
+        this.$vs.loading.close();
          this.$vs.notify({
         title: ' Requet erroné  ',
         text: error,
