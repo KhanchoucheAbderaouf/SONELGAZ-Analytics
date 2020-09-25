@@ -444,7 +444,8 @@ export default {
         
         this.intergraphe.showGraphe2=true;this.intergraphe.typeGraphe="pie"; }else{
         this.intergraphe.showGraphe=true;this.intergraphe.typeGraphe=table.typeGraphe;
-        }
+        };
+        console.log(this.intergraphe);
         table.graphesCree.push(this.intergraphe);
         this.intergraphe={typeGraphe:'area',seriesLine:[{
                 name: 'series1',
@@ -452,6 +453,7 @@ export default {
             }],seriesPie:[],
             showGraphe:false,
             showGraphe2:false,};
+            console.log(this.intergraphe);
         this.showTable=false;
 
 
