@@ -82,7 +82,7 @@
     </vs-prompt>
     <!--prompt requet End -->
            <!--prompt Excel Begin -->
-        <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
+        <vs-prompt title="Exporter les Résultats" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Exporter" @close="clearFields" :active.sync="activePrompt">
         <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
         <v-select v-model="selectedFormat" :options="formats" class="my-4" />
         <div class="flex">
@@ -97,7 +97,7 @@
            <vx-card >
            
 <!--prompt Graphe Begin -->
-     <vs-prompt title="Create Charts" class="export-options" @cancle="clearFields" @accept="createGraphe(table)" accept-text="Create" @close="clearFields" :active.sync="table.prom">
+     <vs-prompt title="Créer des Graphes" class="export-options" @cancle="clearFields" @accept="createGraphe(table)" accept-text="créer" @close="clearFields" :active.sync="table.prom">
         <v-select v-model="attributeGraphe" :options="table.operationGraphe"  class="my-4" />
         <v-select v-model="DimGraphe" :options="table.setsGraphe" label="value" class="my-4" />
         <v-select v-model="table.typeGraphe" :options="typesGraphes" class="my-4" />
@@ -111,10 +111,10 @@
       <vs-table :data="table.tableData" v-model="selectedUsers" pagination max-items="10" multiple search>
 
         <template slot="header" >
-          <vs-button @click="activePrompt=true" style="margin-right:30px;">Export Selected</vs-button>
+          <vs-button @click="activePrompt=true" style="margin-right:30px;">Exporter les Résultats</vs-button>
         </template>
         <template slot="header">
-          <vs-button style="margin-right:30px;" @click="table.prom=true">Create Charts</vs-button>
+          <vs-button style="margin-right:30px;" @click="table.prom=true">Créer des Graphes</vs-button>
         </template>
        
   <template slot="thead">
@@ -135,7 +135,7 @@
     <div v-for="graphe in table.graphesCree">
      <vx-card v-if="graphe.showGraphe" >
         
-          <vs-button style="margin:0 0 30px 30px;" @click=" graphe.showGraphe=false" class="bg-danger" >Back</vs-button>
+          <vs-button style="margin:0 0 30px 30px;" @click=" graphe.showGraphe=false" class="bg-danger" >Supprimer</vs-button>
         
                     <vue-apex-charts :type="graphe.typeGraphe" height="700" :options="lineAreaChartSpline.chartOptions" :series="graphe.seriesLine"></vue-apex-charts>
 
