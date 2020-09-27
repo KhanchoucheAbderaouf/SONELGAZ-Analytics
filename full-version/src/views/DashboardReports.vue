@@ -468,7 +468,7 @@ export default {
        
         tr.listQueries.forEach(val => {
             this.$vs.loading();
-             this.$http.get('http://localhost:8087/requests/'+val.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+             this.$http.get('http://localhost:8087/mongo/getOneResult/'+val.titre,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
       .then((result) => {
       this.$vs.loading.close();
             
@@ -513,17 +513,59 @@ export default {
        this.setsGraphe=[];
        this.tableau_des_resultas.push(resulta);
       }).catch(error => {
+         this.$http.get('http://localhost:8087/requests/'+val.valeur,{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}})
+      .then((result) => {
         this.$vs.loading.close();
-         this.$vs.notify({
-        title: ' Requet erroné  ',
-        text: error,
-        color: 'danger'
-      })
+          this.$vs.notify({
+          
+        title: ' Requet envoyé  ',
+        text: 'votre requet a été envoyé avec succès',
+        color: 'success'
+      }),
+
+      this.showRequestCreater=false;
+      var  resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data};
+
+        this.$http.post('http://localhost:8087/mongo/addResult',{title:val.titre,JsonAnswer: resulta.tableData},{headers : {'Authorization' :"Bearer "  + localStorage.accessToken}}).then((result) => {        
+       
+       });
+        
+     
+      //this.showTable=true;
+     // this.showRequestCreater=false;
+         resulta.header.forEach(h => {
+         var valueDorF=false;
+         this.operationGrapheControle.forEach(op => {
+            
+           if(h.includes(op.toLowerCase())){
+              valueDorF=true;
+              
+            }
+         
+        });
+        if (valueDorF===true){
+          this.operationGraphe.push(h);
+        }else{
+          this.setsGraphe.push(h);
+        }
+         
+        })
+        resulta={header:Object.getOwnPropertyNames(result.data[0]),tableData : result.data,operationGraphe:this.operationGraphe,setsGraphe:this.setsGraphe,
+        prom:false,showGraphe2:false,showGraphe:false,typeGraphe:'area',seriesLine:[{
+                name: 'series1',
+                data:[],
+            }],seriesPie:[],graphesCree:[],};
+       this.operationGraphe=[];
+       this.setsGraphe=[];
+       this.tableau_des_resultas.push(resulta);
+      }).catch(error => {});
+
       });
        
       
+
       });
-    
+    //end
       console.log(this.tableau_des_resultas);
       }
   },
