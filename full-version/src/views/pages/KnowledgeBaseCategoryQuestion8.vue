@@ -1,7 +1,7 @@
 
 
 <template>
-    <div id="knowledge-base-article">
+    <div id="knowledge-base-article8">
         <div class="vx-row">
             <div class="vx-col w-full md:w-2/5 lg:w-1/4">
                 <vx-card title="Related Questions">

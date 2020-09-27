@@ -6,7 +6,7 @@
             <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
                 <statistics-card-line
                   v-if="subscribersGained.analyticsData "
-                  icon="UsersIcon"
+                  icon="ActivityIcon"
                   :statistic="subscribersGained.analyticsData | k_formatter "
                   statisticTitle="Consommation Du Mois"
                   :chartData="subscribersGained.series"
@@ -16,7 +16,7 @@
             <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
                 <statistics-card-line
                   v-if="revenueGenerated.analyticsData"
-                  icon="DollarSignIcon"
+                  icon="ClipboardIcon"
                   :statistic="revenueGenerated.analyticsData | k_formatter"
                   statisticTitle="Production Du Mois"
                   :chartData="revenueGenerated.series"
@@ -27,7 +27,7 @@
             <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
                 <statistics-card-line
                   v-if="quarterlySales.analyticsData"
-                  icon="ShoppingCartIcon"
+                  icon="ClockIcon"
                   :statistic="quarterlySales.analyticsData | k_formatter"
                   statisticTitle="Heures De Marche Du Mois"
                   :chartData="quarterlySales.series"
@@ -37,7 +37,7 @@
             <div class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
                 <statistics-card-line
                   v-if="ordersRecevied.analyticsData"
-                  icon="ShoppingBagIcon"
+                  icon="ZapIcon"
                   :statistic="ordersRecevied.analyticsData | k_formatter"
                   statisticTitle=" Energie Perdu Du Mois"
                   :chartData="ordersRecevied.series"
@@ -92,11 +92,11 @@
                     <div class="flex justify-between text-center mt-6" slot="no-body-bottom">
                         <div class="w-1/2 border border-solid d-theme-border-grey-light border-r-0 border-b-0 border-l-0">
                             <p class="mt-4">Heures De Marche</p>
-                            <p class="mb-4 text-3xl font-semibold">786,617</p>
+                            <p class="mb-4 text-3xl font-semibold">143</p>
                         </div>
                         <div class="w-1/2 border border-solid d-theme-border-grey-light border-r-0 border-b-0">
                             <p class="mt-4">Heures D'Arrête</p>
-                            <p class="mb-4 text-3xl font-semibold">13,561</p>
+                            <p class="mb-4 text-3xl font-semibold">25</p>
                         </div>
                     </div>
                 </vx-card>

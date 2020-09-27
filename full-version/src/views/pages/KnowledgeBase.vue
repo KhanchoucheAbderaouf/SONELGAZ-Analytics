@@ -1,11 +1,4 @@
-<!-- =========================================================================================
-    File Name: KnowledgeBase.vue
-    Description: Knowledge Base Page
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-      Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
+
 
 
 <template>
@@ -41,45 +34,66 @@ export default{
             kb: [
                 {
                   id          : 1,
-                  title       : 'Sales Automation',
+                  title       : 'Authentification',
                   description : 'Muffin lemon drops chocolate carrot cake chocolate bar sweet roll.',
                   graphic     : require("@/assets/images/pages/graphic-1.png"),
-                  url         : '/pages/knowledge-base/category'
+                  url         : '/pages/knowledge-base/category/question1'
                 },
                 {
                   id          : 2,
-                  title       : 'Marketing Automation',
+                  title       : 'Creation De Requête',
                   description : 'Gingerbread sesame snaps wafer soufflé. Macaroon brownie ice cream',
                   graphic     : require("@/assets/images/pages/graphic-2.png"),
-                  url         : '/pages/knowledge-base/category'
+                  url         : '/pages/knowledge-base/category/question2'
                 },
                 {
                   id          : 3,
                   title       : 'Marketing BI',
                   description : 'cotton candy caramels danish chocolate cake pie candy. Lemon drops tart.',
                   graphic     : require("@/assets/images/pages/graphic-3.png"),
-                  url         : '/pages/knowledge-base/category'
+                  url         : '/pages/knowledge-base/category/question3'
                 },
                 {
                   id          : 4,
                   title       : 'Personalization',
                   description : 'Pudding oat cake carrot cake lemon drops gummies marshmallow.',
                   graphic     : require("@/assets/images/pages/graphic-4.png"),
-                  url         : '/pages/knowledge-base/category'
+                  url         : '/pages/knowledge-base/category/question4'
                 },
                 {
                   id          : 5,
                   title       : 'Email Marketing',
                   description : 'Gummi bears pudding icing sweet caramels chocolate',
                   graphic     : require("@/assets/images/pages/graphic-5.png"),
-                  url         : '/pages/knowledge-base/category'
+                  url         : '/pages/knowledge-base/category/question5'
                 },
                 {
                   id          : 6,
                   title       : 'Demand Generation',
                   description : 'Dragée jelly beans candy canes pudding cake wafer. Muffin croissant.',
                   graphic     : require("@/assets/images/pages/graphic-6.png"),
-                  url         : '/pages/knowledge-base/category'
+                  url         : '/pages/knowledge-base/category/question6'
+                },
+                  {
+                  id          : 6,
+                  title       : 'Demand Generation',
+                  description : 'Dragée jelly beans candy canes pudding cake wafer. Muffin croissant.',
+                  graphic     : require("@/assets/images/pages/graphic-6.png"),
+                  url         : '/pages/knowledge-base/category/question7'
+                },
+                  {
+                  id          : 6,
+                  title       : 'Demand Generation',
+                  description : 'Dragée jelly beans candy canes pudding cake wafer. Muffin croissant.',
+                  graphic     : require("@/assets/images/pages/graphic-6.png"),
+                  url         : '/pages/knowledge-base/category/question8'
+                },
+                  {
+                  id          : 6,
+                  title       : 'Demand Generation',
+                  description : 'Dragée jelly beans candy canes pudding cake wafer. Muffin croissant.',
+                  graphic     : require("@/assets/images/pages/graphic-6.png"),
+                  url         : '/pages/knowledge-base/category/question'
                 },
             ]
         }

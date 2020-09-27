@@ -19,9 +19,9 @@ const data = {
   },
   customers: {
     analyticsData: [
-        { 'customerType': 'New', 'counts': 890, color: 'primary' },
-        { 'customerType': 'Returning', 'counts': 258, color: 'warning' },
-        { 'customerType': 'Referrals ', 'counts': 149, color: 'danger' },
+        { 'customerType': 'Pole Est', 'counts': 8900000, color: 'primary' },
+        { 'customerType': 'Pole Ouest', 'counts': 2580000, color: 'warning' },
+        { 'customerType': 'Pole centre ', 'counts': 1490000, color: 'danger' },
     ],
     series: [690, 258, 149],
   },

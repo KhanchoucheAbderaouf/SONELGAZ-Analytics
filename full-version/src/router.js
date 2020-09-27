@@ -70,7 +70,7 @@ const router = new Router({
                     name: 'dashboard-ecommerce',
                     component: () => import('./views/DashboardECommerce.vue'),
                     meta: {
-                        rule: 'admin'
+                        rule: 'editor'
                     }
                 },
                 {
@@ -79,7 +79,7 @@ const router = new Router({
                     component: () => import('./views/Dashboard.vue'),
                  
                     meta: {
-                        rule: 'admin',
+                        rule: 'editor',
                         authRequired: true,
                     }
                
@@ -217,7 +217,7 @@ const router = new Router({
                             { title: 'List', active: true },
                         ],
                         pageTitle: 'User List',
-                        rule: 'editor'
+                        rule: 'admin'
                     },
                 },
                 {
@@ -984,6 +984,134 @@ const router = new Router({
                     path: '/pages/knowledge-base/category/question',
                     name: 'page-knowledge-base-category-question',
                     component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question1',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion1.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question2',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion2.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question3',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion3.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question4',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion4.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question5',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion5.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question6',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion6.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question7',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion7.vue'),
+                    meta: {
+                        breadcrumb: [
+                            { title: 'Home', url: '/' },
+                            { title: 'Pages' },
+                            { title: 'KnowledgeBase', url: '/pages/knowledge-base' },
+                            { title: 'Category', url: '/pages/knowledge-base/category' },
+                            { title: 'Question', active: true },
+                        ],
+                        parent: 'page-knowledge-base',
+                        rule: 'editor'
+                    },
+                },
+                {
+                    path: '/pages/knowledge-base/category/question8',
+                    name: 'page-knowledge-base-category-question',
+                    component: () => import('@/views/pages/KnowledgeBaseCategoryQuestion8.vue'),
                     meta: {
                         breadcrumb: [
                             { title: 'Home', url: '/' },
