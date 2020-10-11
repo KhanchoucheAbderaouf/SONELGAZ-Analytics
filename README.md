@@ -1,4 +1,4 @@
 # Analytics-Microservices
 
-A Microservices application designed as a business intelligence tool to generate reports and dashboards at the request of the decision maker and with various graphical representations.
+A Business Intelligence tool to help the decision making process. The system was designed with respect to the microservices architecture.
 
