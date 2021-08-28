@@ -28,6 +28,7 @@ public class LoginPartJwtApplication {
         HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
         clientHttpRequestFactory.setConnectTimeout(3000);
         return new RestTemplate(clientHttpRequestFactory);
+        this is just a test
     */
         return new RestTemplate();
     }
